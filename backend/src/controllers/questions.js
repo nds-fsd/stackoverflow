@@ -41,17 +41,28 @@ const createQuestion = async (req, res) => {
 };
 
 const editQuestion = async (req, res) => {
-  const allQuestions = await Question.findByIdAndUpdate(req.params.id, req.body, { new: true });
-  console.log(allQuestions);
-  res.json(allQuestions);
+  try {
+    const updatedQuestion = await Question.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!updatedQuestion) {
+      return res.status(404).json({ message: 'Question not found' });
+    }
+    console.log(updatedQuestion);
+    res.json(updatedQuestion);
+  } catch (error) {
+    console.error('Error updating question', error);
+    res.status(500).json({ message: 'Error updating question' });
+  }
 };
 
 const deleteQuestion = async (req, res) => {
   try {
-    const allQuestions = await Question.findByIdAndDelete(req.params.id);
-    res.json(deleteQuestion);
+    const deletedQuestion = await Question.findByIdAndDelete(req.params.id);
+    if (!deletedQuestion) {
+      return res.status(404).json({ message: 'Question not found' });
+    }
+    res.status(204).send();
   } catch (error) {
-    console.error('Error saving question', error);
+    console.error('Error deleting question', error);
     res.status(500).json({ message: 'Error deleting question' });
   }
 };
