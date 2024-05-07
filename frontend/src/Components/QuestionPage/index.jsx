@@ -1,8 +1,6 @@
 import React from 'react';
 import '../../index.css';
-// Assuming ImagenesQP is a component you want to import.
-// Adjust the import according to what's actually being exported from './ImagenesQP'.
-import StackOverflowLogo from './ImagenesQP/StackOverflow.png'; // Adjust the path as necessary
+import StackOverflowLogo from './ImagenesQP/StackOverflow.png';
 
 const questions = [
   {
