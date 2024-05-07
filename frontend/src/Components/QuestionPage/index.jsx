@@ -60,7 +60,19 @@ const QuestionPage = () => {
           <h1>Popular Tags</h1>
         </div>
 
-        <div className='QuestionPageQuestions'>PageQuestions</div>
+        <div className='QuestionPageQuestions'>
+          {questions.map((question) => (
+            <div key={question.id} style={{ marginBottom: '20px' }}>
+              <h2>{question.title}</h2>
+              <p>{question.description}</p>
+              <ul>
+                {question.tags.map((tag) => (
+                  <li key={tag}>{tag}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
       </div>
     </>
   );

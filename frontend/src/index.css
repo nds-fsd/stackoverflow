@@ -59,13 +59,14 @@
   grid-row: 2 / 8; /* Start at the first row and end before the second row */
   grid-column: 2 / 6; /* Start at the first column and end after the sixth column */
   display: grid;
-  grid-template-columns: repeat(7, 1fr); /* Four columns */
+  grid-template-columns: repeat(1, 1fr); /* Four columns */
   grid-template-rows: repeat(7, 1fr); /* Four rows */
   align-items: center; /* Center content vertically */
   justify-content: center; /* Center content horizontally */
   background-color: #2e2a2a; /* Different background color to distinguish navbar */
   color: white;
   padding: 10px;
+  list-style-type: none;
 }
 
 .QuestionPageSOLogo {
