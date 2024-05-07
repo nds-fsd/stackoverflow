@@ -1,0 +1,57 @@
+.QuestionPageBody {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr); /* Four columns */
+  grid-template-rows: repeat(7, 1fr); /* Four rows */
+  height: 100vh;
+  align-items: stretch; /* Stretch to fill the cell */
+  justify-items: stretch; /* Stretch to fill the cell */
+  gap: 10px;
+  padding: 10px;
+  background-color: #d12b2b;
+  color: white;
+  overflow: auto;
+}
+
+.QuestionPageNavbar {
+  grid-row: 1 / 2; /* Start at the first row and end before the second row */
+  grid-column: 2 / 7; /* Start at the first column and end after the sixth column */
+  display: grid;
+  align-items: center; /* Center content vertically */
+  justify-content: center; /* Center content horizontally */
+  background-color: #333; /* Different background color to distinguish navbar */
+  color: white;
+  padding: 10px;
+}
+
+.QuestionPageLeftbar {
+  grid-row: 1 / 8; /* Start at the first row and end before the second row */
+  grid-column: 1 / 2; /* Start at the first column and end after the sixth column */
+  display: grid;
+  align-items: center; /* Center content vertically */
+  justify-content: center; /* Center content horizontally */
+  background-color: #333; /* Different background color to distinguish navbar */
+  color: white;
+  padding: 10px;
+}
+
+.QuestionPageRightbar {
+  grid-row: 2 / 8; /* Start at the first row and end before the second row */
+  grid-column: 6 / 7; /* Start at the first column and end after the sixth column */
+  display: grid;
+  align-items: center; /* Center content vertically */
+  justify-content: center; /* Center content horizontally */
+  background-color: #333; /* Different background color to distinguish navbar */
+  color: white;
+  padding: 10px;
+}
+
+.QuestionPageQuestions {
+  grid-row: 2 / 8; /* Start at the first row and end before the second row */
+  grid-column: 2 / 6; /* Start at the first column and end after the sixth column */
+  display: grid;
+  align-items: center; /* Center content vertically */
+  justify-content: center; /* Center content horizontally */
+  background-color: #333; /* Different background color to distinguish navbar */
+  color: white;
+  padding: 10px;
+}
