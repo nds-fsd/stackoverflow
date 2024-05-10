@@ -14,5 +14,7 @@
     "dotenv-cli": "^7.0.0",
     "turbo": "^1.13.3"
   },
-  "dependencies": {}
+  "dependencies": {
+    "express": "^4.19.2"
+  }
 }

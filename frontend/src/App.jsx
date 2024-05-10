@@ -1,6 +1,12 @@
+import React from 'react';
+import QuestionForm from './componentsSTA-8';
 
 function App() {
-    return <div>Your app here</div>;
+  return (
+    <div>
+      <QuestionForm />
+    </div>
+  );
 }
 
 export default App;
