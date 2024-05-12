@@ -1,6 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import QuestionForm from './componentsSTA-8/';
+import QuestionForm from './components/createQuestion';
 
 function App() {
   return (
