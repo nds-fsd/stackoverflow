@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Exo:wght@400;700&display=swap');
+.header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: #222020;
+  color: #f48024;
+  font-family: 'Exo', sans-serif; /* Fallback to sans-serif if Exo is not loaded */
+}
+
+.mobileMenu {
+  display: none;
+  flex-direction: column;
+  background-color: #363336;
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  width: 20%;
+  padding: 10px 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  font-size: 1rem;
+}
+
+.mobileMenu.open {
+  display: flex;
+}
+
+.logo {
+  height: 4rem;
+}
+
+.menuToggle {
+  cursor: pointer;
+}
+
+.hamburger {
+  width: 30px;
+  height: 3px;
+  background-color: #f48024;
+  margin: 6px 0;
+}
+
+.mobileMenu a {
+  color: #f48024;
+  text-decoration: none;
+  padding: 10px 20px;
+  transition: background-color 0.3s;
+}
+
+.mobileMenu a:hover {
+  background-color: #f48024;
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .menuToggle {
+    display: block;
+  }
+
+  .menuToggle:hover .hamburger {
+    background-color: #f48024;
+  }
+}
+
+.searchBar {
+  background-color: #222022;
+  border-color: #f48024;
+  border-radius: 15px;
+  padding: 10px;
+  width: 40%;
+  font-size: 1rem;
+}
+
+.loginBtn,
+.signInBtn {
+  background-color: #0077cc;
+  color: #fff;
+  border-radius: 15px;
+  border: none;
+  padding: 10px 20px;
+  font-size: 18px;
+}
+
+.loginBtn:hover,
+.signInBtn:hover {
+  background-color: #00508e;
+}
