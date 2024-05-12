@@ -1,10 +1,13 @@
 import React from 'react';
-import QuestionForm from './componentsSTA-8';
+import { Routes, Route } from 'react-router-dom';
+import QuestionForm from './componentsSTA-8/';
 
 function App() {
   return (
     <div>
-      <QuestionForm />
+      <Routes>
+        <Route path='/questions/new' element={<QuestionForm />} />
+      </Routes>
     </div>
   );
 }
