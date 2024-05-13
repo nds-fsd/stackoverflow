@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Exo:wght@400;700&display=swap');
 
+body {
+  margin: 0;
+}
+
 .QuestionPageBody {
   display: grid;
   grid-template-columns: repeat(6, 1fr); /* Four columns */
@@ -10,7 +14,7 @@
   gap: 10px;
   font-family: 'Exo', sans-serif; /* Fallback to sans-serif if Exo is not loaded */
   background-color: #222020;
-  color: white;
+  color: #222020;
   overflow: auto;
 }
 
@@ -35,7 +39,6 @@
   grid-template-columns: repeat(1, 1fr); /* Four columns */
   grid-template-rows: repeat(7, 1fr); /* Four rows */
   align-items: center;
-  font-family: 'Exo', sans-serif; /* Fallback to sans-serif if Exo is not loaded */ /* Center content vertically */
   justify-content: center; /* Center content horizontally */
   background-color: #222020; /* Different background color to distinguish navbar */
   color: white;
@@ -53,6 +56,7 @@
   background-color: #222020;
   padding: 10px; /* Different background color to distinguish navbar */
   color: white;
+  overflow-y: auto; /* Enables vertical scrolling when content exceeds max-height */
 }
 
 .QuestionPageQuestions {
@@ -61,6 +65,7 @@
   display: grid;
   grid-template-columns: repeat(1, 1fr); /* Four columns */
   grid-template-rows: repeat(7, 1fr); /* Four rows */
+  border-radius: 15px; /* Rounded corners */
   align-items: center; /* Center content vertically */
   justify-content: center; /* Center content horizontally */
   background-color: #2e2a2a; /* Different background color to distinguish navbar */
@@ -71,10 +76,10 @@
 }
 
 .QuestionPageSOLogo {
-  width: 100px; /* Set the width to 100 pixels */
+  width: 80px; /* Set the width to 100 pixels */
   height: auto; /* Maintain the aspect ratio */
   align-items: center;
-  margin-left: 70px;
+  margin-left: 80px;
 }
 
 .no-bullets {
@@ -84,7 +89,7 @@
 
 .LeftBarButton {
   padding: 10px 20px; /* Adjust padding to fit your design needs */
-  background-image: linear-gradient(to right, #d17122, #d68418); /* Gradient from dark green to light green */
+  background-image: linear-gradient(to right, #bb5e11, #eb9f3c); /* Gradient from dark green to light green */
   border: none; /* No border for a more modern look */
   border-radius: 5px; /* Slightly rounded corners */
   height: 60px;
@@ -101,10 +106,11 @@
 
 .LeftBarButton:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow for 3D effect */
+  background-image: linear-gradient(to right, #d68418, #d17122); /* Gradient from dark green to light green */
 }
 
 .LeftBarButton:focus {
-  box-shadow: 0 0 0 3px rgba(168, 224, 99, 0.5); /* Focus state with a light green glow */
+  box-shadow: 0 0 0 3px rgb(253, 110, 0); /* Focus state with a light green glow */
 }
 
 .orangeSearchBar {
@@ -131,4 +137,44 @@
   outline: none; /* Remove the default focus outline */
   border-color: #d68418; /* Darker orange for focus */
   box-shadow: 0 0 8px rgba(255, 69, 0, 0.5); /* Brighter and bigger shadow on focus */
+}
+
+.questionBubble {
+  background-color: #151517; /* Light gray background */
+  border-radius: 15px; /* Rounded corners */
+  padding: 20px; /* Space inside the bubble */
+  margin: 10px; /* Space outside the bubble */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  width: 1030px; /* Fixed width, adjust as needed */
+  max-width: 100%; /* Ensures responsiveness */
+  box-sizing: border-box; /* Includes padding in width calculation */
+}
+
+.QuestionPageRightbarBubbles {
+  background-color: #151517; /* Light gray background */
+  border-radius: 15px; /* Rounded corners */
+  padding: 20px; /* Space inside the bubble */
+  margin: 10px; /* Space outside the bubble */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  width: 210px; /* Fixed width, adjust as needed */
+  max-width: 100%; /* Ensures responsiveness */
+  box-sizing: border-box; /* Includes padding in width calculation */
+}
+
+.TagsRightBar {
+  padding: 10px; /* Adjust padding to fit your design needs */
+  background-image: linear-gradient(to right, #bb5e11, #eb9f3c); /* Gradient from dark green to light green */
+  border: none; /* No border for a more modern look */
+  border-radius: 5px; /* Slightly rounded corners */
+  height: 60px;
+  width: 160px;
+  color: white; /* Text color */
+  margin: 10px; /* Adds space around the button */
+  font-size: 16px; /* Suitable font size for readability */
+  font-weight: bold; /* Bold text to make it stand out */
+  cursor: pointer; /* Cursor changes to pointer to indicate it's clickable */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for interactive feedback */
+  outline: none;
+  text-align: center;
+  align-items: center;
 }

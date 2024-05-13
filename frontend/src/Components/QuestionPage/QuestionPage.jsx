@@ -66,17 +66,23 @@ const QuestionPage = () => {
         </div>
 
         <div className='QuestionPageRightbar'>
-          <h1>Top Questions</h1>
-          <p>Best practices for data fetching in a Next.js application with Server-Side Rendering (SSR)?</p>
-          <p>Async/Await Function Not Handling Errors Properly</p>
-          <p>What is the best modern tech stack we can use to create a Stackoverflow clone?</p>
-          <p>How can I get (query string) parameters from the URL in Next.js?</p>
-          <h1>Popular Tags</h1>
+          <div className='QuestionPageRightbarBubbles'>
+            <h1>Top Questions</h1>
+            <p>Best practices for data fetching in a Next.js application with Server-Side Rendering (SSR)?</p>
+            <p>Async/Await Function Not Handling Errors Properly</p>
+            <p>What is the best modern tech stack we can use to create a Stackoverflow clone?</p>
+            <p>How can I get (query string) parameters from the URL in Next.js?</p>
+            <h1>Popular Tags</h1>
+            <button className='TagsRightBar'>Mongo</button>
+            <button className='TagsRightBar'>Express</button>
+            <button className='TagsRightBar'>React</button>
+            <button className='TagsRightBar'>NodeJS</button>
+          </div>
         </div>
 
         <div className='QuestionPageQuestions'>
           {questions.map((question) => (
-            <div key={question.id} style={{ marginBottom: '20px' }}>
+            <div className='questionBubble' key={question.id} style={{ marginBottom: '20px' }}>
               <h2>{question.title}</h2>
               <p>{question.description}</p>
               <ul>
