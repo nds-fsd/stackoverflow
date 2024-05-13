@@ -58,10 +58,21 @@ const QuestionPage = () => {
 
         <div className='QuestionPageLeftbar'>
           <img className='QuestionPageSOLogo' src={StackOverflowLogo} alt='Stack Overflow Logo' />
-          <button className='LeftBarButton'>Home</button>
-          <button className='LeftBarButton'>Questions</button>
-          <button className='LeftBarButton'>Tags</button>
-          <button className='LeftBarButton'>Users</button>
+          <a href='/' class='LeftBarButton'>
+            Home
+          </a>
+
+          <a href='/questions' class='LeftBarButton'>
+            Questions
+          </a>
+
+          <a href='/tags' class='LeftBarButton'>
+            Tags
+          </a>
+
+          <a href='/users' class='LeftBarButton'>
+            Users
+          </a>
         </div>
 
         <div className='QuestionPageRightbar'>
@@ -80,9 +91,9 @@ const QuestionPage = () => {
         </div>
 
         <div className='QuestionPageQuestions'>
-          <button className='askNewQuestion' link to>
+          <a href='/questions/new' class='askNewQuestion'>
             Ask Question
-          </button>
+          </a>{' '}
           {questions.map((question) => (
             <div className='questionBubble' key={question.id} style={{ marginBottom: '20px' }}>
               <h2>{question.title}</h2>
