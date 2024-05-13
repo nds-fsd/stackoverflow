@@ -16,6 +16,8 @@ exports.connectDB = async () => {
       console.log(dbUrl);
     }
 
+    console.log('Connecting to MongoDB at:', dbUrl);
+
     await mongoose.connect(dbUrl);
     const mongo = mongoose.connection;
     mongo.on('error', (error) => console.error(error));

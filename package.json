@@ -12,7 +12,11 @@
   },
   "devDependencies": {
     "dotenv-cli": "^7.0.0",
+    "prettier": "^3.2.5",
     "turbo": "^1.13.3"
   },
-  "dependencies": {}
+  "dependencies": {
+    "express": "^4.19.2",
+    "react-router-dom": "^6.23.1"
+  }
 }
