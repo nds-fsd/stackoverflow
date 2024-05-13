@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Exo:ital@0;1&display=swap');
+
+body {
+  margin: 0;
+}
+
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  font-family: 'Exo', sans-serif;
+  background-color: #222020;
+}
+
+.searchBar {
+  display: flex;
+  align-self: center;
+  margin-top: 20px;
+  width: 400px;
+  height: 20px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid rgb(183, 182, 182);
+  background-color: transparent;
+}
+
+.advice {
+  width: 380px;
+  height: 190px;
+  position: absolute;
+  top: 156px;
+  right: 110px;
+  font-size: 12px;
+  padding: -5px 20px;
+  background-color: rgba(10, 86, 172, 0.776);
+  color: white;
+  border-radius: 10px;
+  margin-top: 4px;
+}
+.advice h3 {
+  padding-left: 15px;
+}
+.advice h4 {
+  padding-left: 15px;
+}
+.advice li {
+  margin-bottom: 4px;
+}
+
+h1 {
+  font-size: 35px;
+  color: white;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  margin-left: 70px;
+  margin-top: 15px;
+}
+
+.title {
+  font-size: 20px;
+  color: aliceblue;
+  background-color: rgb(14, 13, 13);
+  border: 1px solid rgba(128, 128, 128, 0.833);
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 10px;
+  width: 865px;
+  height: auto;
+}
+.title input {
+  width: 99%;
+  height: 20px;
+  border-radius: 5px;
+  margin-top: 10px;
+  color: whitesmoke;
+  background-color: transparent;
+  border: 1px solid rgba(128, 128, 128, 0.776);
+  padding: 4px;
+}
+
+.question {
+  font-size: 20px;
+  color: aliceblue;
+  background-color: rgb(14, 13, 13);
+  border: 1px solid rgba(128, 128, 128, 0.833);
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 10px;
+  width: 865px;
+  height: auto;
+  margin-top: 20px;
+}
+.question textarea {
+  width: 99%;
+  border-radius: 5px;
+  margin-top: 10px;
+  color: whitesmoke;
+  background-color: transparent;
+  border: 1px solid rgba(128, 128, 128, 0.776);
+  padding: 4px;
+  margin-top: 10px;
+}
+
+.tags {
+  font-size: 20px;
+  color: aliceblue;
+  background-color: rgb(14, 13, 13);
+  border: 1px solid rgba(128, 128, 128, 0.833);
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 10px;
+  width: 865px;
+  height: auto;
+  margin-top: 20px;
+}
+.tags input {
+  width: 99%;
+  height: 20px;
+  border-radius: 5px;
+  margin-top: 10px;
+  color: whitesmoke;
+  background-color: transparent;
+  border: 1px solid rgba(128, 128, 128, 0.776);
+  padding: 4px;
+}
+
+.submit {
+  width: 80px;
+  height: 40px;
+  border-radius: 5px;
+  padding: 5px;
+  margin-top: 15px;
+  border: 0;
+  font-size: 16px;
+  background-color: rgba(10, 86, 172, 0.776);
+  color: aliceblue;
+}
