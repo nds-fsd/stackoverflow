@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './FeaturesSection.module.css';
 
-function FeaturesSection() {
+const FeaturesSection = () => {
   return (
     <section className={styles.container}>
       <div className={styles.grayBox}>
@@ -83,6 +83,6 @@ function FeaturesSection() {
       </div>
     </section>
   );
-}
+};
 
 export default FeaturesSection;

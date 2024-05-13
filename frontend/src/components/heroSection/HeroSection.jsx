@@ -1,15 +1,15 @@
 import React from 'react';
 import styles from './HeroSection.module.css';
 
-function InfoBox({ children }) {
+const InfoBox = ({ children }) => {
   return <div className={styles['info-box']}>{children}</div>;
-}
+};
 
-function ListItem({ children }) {
+const ListItem = ({ children }) => {
   return <li>{children}</li>;
-}
+};
 
-function ImageBox({ src, alt, title, description, buttonLabel }) {
+const ImageBox = ({ src, alt, title, description, buttonLabel }) => {
   return (
     <div className={styles.box}>
       <img src={src} alt={alt} />
@@ -18,7 +18,7 @@ function ImageBox({ src, alt, title, description, buttonLabel }) {
       <button>{buttonLabel}</button>
     </div>
   );
-}
+};
 
 function HeroSection() {
   return (

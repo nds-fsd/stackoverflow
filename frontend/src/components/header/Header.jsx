@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styles from './Header.module.css';
 import logo from './img/logo.png';
 
-function Header() {
+const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const handleMenuToggle = () => {
@@ -82,6 +82,6 @@ function Header() {
       </div>
     </header>
   );
-}
+};
 
 export default Header;
