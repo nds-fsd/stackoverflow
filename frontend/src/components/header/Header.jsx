@@ -24,7 +24,7 @@ const Header = () => {
       <button className={`${styles.btn} ${styles.signInBtn}`}>Sign in</button>
 
       <div className={`${styles.mobileMenu} ${menuOpen ? styles.open : ''}`}>
-        <a href='/Home'>
+        <a href='/'>
           {' '}
           <svg
             xmlns='http://www.w3.org/2000/svg'
