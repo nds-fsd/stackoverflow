@@ -80,7 +80,9 @@ const QuestionPage = () => {
         </div>
 
         <div className='QuestionPageQuestions'>
-          <button className='askNewQuestion'>Ask Question</button>
+          <button className='askNewQuestion' link to>
+            Ask Question
+          </button>
           {questions.map((question) => (
             <div className='questionBubble' key={question.id} style={{ marginBottom: '20px' }}>
               <h2>{question.title}</h2>
