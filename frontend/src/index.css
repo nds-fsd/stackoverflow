@@ -102,6 +102,10 @@ body {
   outline: none;
   text-align: center;
   align-items: center;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .LeftBarButton:hover {
@@ -184,7 +188,7 @@ body {
   background-image: linear-gradient(to right, #bb5e11, #eb9f3c); /* Gradient from dark green to light green */
   border: none; /* No border for a more modern look */
   border-radius: 5px; /* Slightly rounded corners */
-  height: 60px;
+  height: 30px;
   width: 500px;
   color: white; /* Text color */
   margin: 10px; /* Adds space around the button */
@@ -195,6 +199,8 @@ body {
   outline: none;
   justify-content: center;
   justify-self: center;
+  align-self: center;
   text-align: center;
   align-items: center;
+  text-decoration: none;
 }
