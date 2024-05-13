@@ -1,6 +1,15 @@
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import QuestionForm from './components/newQuestion.jsx';
 
 function App() {
-    return <div>Your app here</div>;
+  return (
+    <div>
+      <Routes>
+        <Route path='/questions/new' element={<QuestionForm />} />
+      </Routes>
+    </div>
+  );
 }
 
 export default App;
