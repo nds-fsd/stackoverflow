@@ -21,7 +21,7 @@ body {
   height: 20px;
   padding: 5px 10px;
   border-radius: 5px;
-  border: 1px solid rgb(183, 182, 182);
+  border: 1px solid rgb(240, 97, 7);
   background-color: transparent;
 }
 
@@ -33,7 +33,7 @@ body {
   right: 110px;
   font-size: 12px;
   padding: -5px 20px;
-  background-color: rgba(10, 86, 172, 0.776);
+  background-image: linear-gradient(to bottom right, #ff7f00, #ffb700);
   color: white;
   border-radius: 10px;
   margin-top: 4px;
@@ -50,7 +50,11 @@ body {
 
 h1 {
   font-size: 35px;
-  color: white;
+  font-weight: bold;
+  background-image: linear-gradient(to right, orange, yellow); /* Colores del degradado */
+  -webkit-background-clip: text; /* Para navegadores WebKit como Chrome y Safari */
+  background-clip: text; /* Define la región de recorte como el texto */
+  color: transparent; /* Hace que el texto sea transparente */
 }
 
 .form {
@@ -137,6 +141,6 @@ h1 {
   margin-top: 15px;
   border: 0;
   font-size: 16px;
-  background-color: rgba(10, 86, 172, 0.776);
+  background-image: linear-gradient(to bottom right, #ff7f00, #ffb700);
   color: aliceblue;
 }
