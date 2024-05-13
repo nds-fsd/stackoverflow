@@ -106,7 +106,7 @@ body {
 
 .LeftBarButton:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow for 3D effect */
-  background-image: linear-gradient(to right, #d68418, #d17122); /* Gradient from dark green to light green */
+  background-image: linear-gradient(to bottom right, #d68418, #d17122); /* Gradient from dark green to light green */
 }
 
 .LeftBarButton:focus {
@@ -175,6 +175,26 @@ body {
   cursor: pointer; /* Cursor changes to pointer to indicate it's clickable */
   transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for interactive feedback */
   outline: none;
+  text-align: center;
+  align-items: center;
+}
+
+.askNewQuestion {
+  padding: 10px 20px; /* Adjust padding to fit your design needs */
+  background-image: linear-gradient(to right, #bb5e11, #eb9f3c); /* Gradient from dark green to light green */
+  border: none; /* No border for a more modern look */
+  border-radius: 5px; /* Slightly rounded corners */
+  height: 60px;
+  width: 500px;
+  color: white; /* Text color */
+  margin: 10px; /* Adds space around the button */
+  font-size: 16px; /* Suitable font size for readability */
+  font-weight: bold; /* Bold text to make it stand out */
+  cursor: pointer; /* Cursor changes to pointer to indicate it's clickable */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for interactive feedback */
+  outline: none;
+  justify-content: center;
+  justify-self: center;
   text-align: center;
   align-items: center;
 }
