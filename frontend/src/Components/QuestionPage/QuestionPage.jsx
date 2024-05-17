@@ -1,5 +1,7 @@
 import React from 'react';
 import StackOverflowLogo from './ImagenesQP/StackOverflow.png';
+import styles from './QuestionPage.module.css';
+
 
 const questions = [
   {
@@ -51,51 +53,51 @@ const questions = [
 const QuestionPage = () => {
   return (
     <>
-      <div className='QuestionPageBody'>
-        <div className='QuestionPageNavbar'>
-          <input type='text' class='orangeSearchBar' placeholder='Search...' />
+      <div className={styles['QuestionPageBody']}>
+        <div className={styles['QuestionPageNavbar']}>
+          <input type='text' className={styles['OrangeSearchBar']} placeholder='Search...' />
         </div>
 
-        <div className='QuestionPageLeftbar'>
-          <img className='QuestionPageSOLogo' src={StackOverflowLogo} alt='Stack Overflow Logo' />
-          <a href='/' class='LeftBarButton'>
+        <div className={styles['QuestionPageLeftbar']}>
+          <img className={styles['QuestionPageSOLogo']} src={StackOverflowLogo} alt='Stack Overflow Logo' />
+          <a href='/' className={styles['LeftBarButton']}>
             Home
           </a>
 
-          <a href='/questions' class='LeftBarButton'>
+          <a href='/questions' className={styles['LeftBarButton']}>
             Questions
           </a>
 
-          <a href='/tags' class='LeftBarButton'>
+          <a href='/tags' className={styles['LeftBarButton']}>
             Tags
           </a>
 
-          <a href='/users' class='LeftBarButton'>
+          <a href='/users' className={styles['LeftBarButton']}>
             Users
           </a>
         </div>
 
-        <div className='QuestionPageRightbar'>
-          <div className='QuestionPageRightbarBubbles'>
+        <div className={styles['QuestionPageRightbar']}>
+          <div className={styles['QuestionPageRightbarBubbles']}>
             <h1>Top Questions</h1>
             <p>Best practices for data fetching in a Next.js application with Server-Side Rendering (SSR)?</p>
             <p>Async/Await Function Not Handling Errors Properly</p>
             <p>What is the best modern tech stack we can use to create a Stackoverflow clone?</p>
             <p>How can I get (query string) parameters from the URL in Next.js?</p>
             <h1>Popular Tags</h1>
-            <button className='TagsRightBar'>Mongo</button>
-            <button className='TagsRightBar'>Express</button>
-            <button className='TagsRightBar'>React</button>
-            <button className='TagsRightBar'>NodeJS</button>
+            <button className={styles['TagsRightBar']}>Mongo</button>
+            <button className={styles['TagsRightBar']}>Express</button>
+            <button className={styles['TagsRightBar']}>React</button>
+            <button className={styles['TagsRightBar']}>NodeJS</button>
           </div>
         </div>
 
-        <div className='QuestionPageQuestions'>
-          <a href='/questions/new' class='askNewQuestion'>
+        <div className={styles['QuestionPageQuestions']}>
+          <a href='/questions/new' className={styles['askNewQuestion']}>
             Ask Question
           </a>{' '}
           {questions.map((question) => (
-            <div className='questionBubble' key={question.id} style={{ marginBottom: '20px' }}>
+            <div className={styles['questionBubble']} key={question.id} style={{ marginBottom: '20px' }}>
               <h2>{question.title}</h2>
               <p>{question.description}</p>
               <ul>

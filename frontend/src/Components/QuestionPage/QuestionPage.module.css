@@ -1,0 +1,202 @@
+
+.QuestionPageBody {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); /* Four columns */
+    grid-template-rows: repeat(7, 1fr); /* Four rows */
+    height: 100vh;
+    align-items: stretch; /* Stretch to fill the cell */
+    justify-items: stretch; /* Stretch to fill the cell */
+    gap: 10px;
+    font-family: 'Exo', sans-serif; /* Fallback to sans-serif if Exo is not loaded */
+    background-color: #222020;
+    color: #222020;
+    overflow: auto;
+  }
+  
+  .QuestionPageNavbar {
+    grid-row: 1 / 2; /* Start at the first row and end before the second row */
+    grid-column: 2 / 7; /* Start at the first column and end after the sixth column */
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* Four columns */
+    grid-template-rows: repeat(1, 1fr); /* Four rows */
+    align-items: center; /* Center content vertically */
+    justify-content: center; /* Center content horizontally */
+    background-color: #222020; /* Different background color to distinguish navbar */
+    color: white;
+    padding: 10px;
+    place-items: center; /* Shorthand to align items both horizontally and vertically at the center */
+  }
+  
+  .QuestionPageLeftbar {
+    grid-row: 1 / 8; /* Start at the first row and end before the second row */
+    grid-column: 1 / 2; /* Start at the first column and end after the sixth column */
+    display: grid;
+    grid-template-columns: repeat(1, 1fr); /* Four columns */
+    grid-template-rows: repeat(7, 1fr); /* Four rows */
+    align-items: center;
+    justify-content: center; /* Center content horizontally */
+    background-color: #222020; /* Different background color to distinguish navbar */
+    color: white;
+    padding: 10px;
+    text-align: center; /* Ensures horizontal text alignment is centered */
+  }
+  
+  .QuestionPageRightbar {
+    grid-row: 2 / 8; /* Start at the first row and end before the second row */
+    grid-column: 6 / 7; /* Start at the first column and end after the sixth column */
+    display: grid;
+    grid-template-columns: repeat(1, 1fr); /* Four columns */
+    grid-template-rows: repeat(7, 1fr);
+    align-content: flex-start; /* Four rows */
+    background-color: #222020;
+    padding: 10px; /* Different background color to distinguish navbar */
+    color: white;
+    overflow-y: auto; /* Enables vertical scrolling when content exceeds max-height */
+  }
+  
+  .QuestionPageQuestions {
+    grid-row: 2 / 8; /* Start at the first row and end before the second row */
+    grid-column: 2 / 6; /* Start at the first column and end after the sixth column */
+    display: grid;
+    grid-template-columns: repeat(1, 1fr); /* Four columns */
+    grid-template-rows: repeat(7, 1fr); /* Four rows */
+    border-radius: 15px; /* Rounded corners */
+    align-items: center; /* Center content vertically */
+    justify-content: center; /* Center content horizontally */
+    background-color: #2e2a2a; /* Different background color to distinguish navbar */
+    color: white;
+    padding: 10px;
+    overflow-y: auto; /* Enables vertical scrolling when content exceeds max-height */
+    list-style-type: none;
+  }
+  
+  .QuestionPageSOLogo {
+    width: 80px; /* Set the width to 100 pixels */
+    height: auto; /* Maintain the aspect ratio */
+    align-items: center;
+    margin-left: 80px;
+  }
+  
+  .no-bullets {
+    list-style-type: none;
+    align-items: center;
+  }
+  
+  .LeftBarButton {
+    padding: 10px 20px; /* Adjust padding to fit your design needs */
+    background-image: linear-gradient(to right, #bb5e11, #eb9f3c); /* Gradient from dark green to light green */
+    border: none; /* No border for a more modern look */
+    border-radius: 5px; /* Slightly rounded corners */
+    height: 60px;
+    color: white; /* Text color */
+    margin: 10px; /* Adds space around the button */
+    font-size: 16px; /* Suitable font size for readability */
+    font-weight: bold; /* Bold text to make it stand out */
+    cursor: pointer; /* Cursor changes to pointer to indicate it's clickable */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for interactive feedback */
+    outline: none;
+    text-align: center;
+    align-items: center;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .LeftBarButton:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow for 3D effect */
+    background-image: linear-gradient(to bottom right, #d68418, #d17122); /* Gradient from dark green to light green */
+  }
+  
+  .LeftBarButton:focus {
+    box-shadow: 0 0 0 3px rgb(253, 110, 0); /* Focus state with a light green glow */
+  }
+  
+  .OrangeSearchBar {
+    display: grid;
+    grid-column: 2 / 5;
+    width: 100%; /* Full width of the container */
+    padding: 12px 20px; /* Ample padding for easy text entry */
+    margin: 8px 0; /* Margin for some spacing around */
+    box-sizing: border-box; /* Include padding and border in the width */
+    border: 2px solid #ff7f50; /* Orange border */
+    border-radius: 4px; /* Slightly rounded borders for a modern look */
+    background-color: white; /* White background */
+    color: #333; /* Dark color for the text for readability */
+    font-size: 16px; /* Adequate font size for clear visibility */
+  
+    /* Shadows for some depth - subtle but effective */
+    box-shadow: 0 2px 5px rgba(255, 127, 80, 0.4);
+  
+    /* Transition for the border and box-shadow on focus */
+    transition: border 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .orangeSearchBar:focus {
+    outline: none; /* Remove the default focus outline */
+    border-color: #d68418; /* Darker orange for focus */
+    box-shadow: 0 0 8px rgba(255, 69, 0, 0.5); /* Brighter and bigger shadow on focus */
+  }
+  
+  .questionBubble {
+    background-color: #151517; /* Light gray background */
+    border-radius: 15px; /* Rounded corners */
+    padding: 20px; /* Space inside the bubble */
+    margin: 10px; /* Space outside the bubble */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    width: 1030px; /* Fixed width, adjust as needed */
+    max-width: 100%; /* Ensures responsiveness */
+    box-sizing: border-box; /* Includes padding in width calculation */
+  }
+  
+  .QuestionPageRightbarBubbles {
+    background-color: #151517; /* Light gray background */
+    border-radius: 15px; /* Rounded corners */
+    padding: 20px; /* Space inside the bubble */
+    margin: 10px; /* Space outside the bubble */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    width: 210px; /* Fixed width, adjust as needed */
+    max-width: 100%; /* Ensures responsiveness */
+    box-sizing: border-box; /* Includes padding in width calculation */
+  }
+  
+  .TagsRightBar {
+    padding: 10px; /* Adjust padding to fit your design needs */
+    background-image: linear-gradient(to right, #bb5e11, #eb9f3c); /* Gradient from dark green to light green */
+    border: none; /* No border for a more modern look */
+    border-radius: 5px; /* Slightly rounded corners */
+    height: 60px;
+    width: 160px;
+    color: white; /* Text color */
+    margin: 10px; /* Adds space around the button */
+    font-size: 16px; /* Suitable font size for readability */
+    font-weight: bold; /* Bold text to make it stand out */
+    cursor: pointer; /* Cursor changes to pointer to indicate it's clickable */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for interactive feedback */
+    outline: none;
+    text-align: center;
+    align-items: center;
+  }
+  
+  .askNewQuestion {
+    padding: 10px 20px; /* Adjust padding to fit your design needs */
+    background-image: linear-gradient(to right, #bb5e11, #eb9f3c); /* Gradient from dark green to light green */
+    border: none; /* No border for a more modern look */
+    border-radius: 5px; /* Slightly rounded corners */
+    height: 30px;
+    width: 500px;
+    color: white; /* Text color */
+    margin: 10px; /* Adds space around the button */
+    font-size: 16px; /* Suitable font size for readability */
+    font-weight: bold; /* Bold text to make it stand out */
+    cursor: pointer; /* Cursor changes to pointer to indicate it's clickable */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for interactive feedback */
+    outline: none;
+    justify-content: center;
+    justify-self: center;
+    align-self: center;
+    text-align: center;
+    align-items: center;
+    text-decoration: none;
+  }
+  
