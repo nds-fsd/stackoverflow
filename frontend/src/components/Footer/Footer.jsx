@@ -6,54 +6,54 @@ const Footer = () => {
     <footer className={styles.footer}>
       <div className={styles.column}>
         <h3>STACK OVERFLOW</h3>
-        <a href='/Questions' className={styles.link}>
+        <a href='/questions' className={styles.link}>
           Questions
         </a>
-        <a href='/Help' className={styles.link}>
+        <a href='/help' className={styles.link}>
           Help
         </a>
       </div>
 
       <div className={styles.column}>
         <h3>PRODUCTS</h3>
-        <a href='/Teams' className={styles.link}>
+        <a href='/products/teams' className={styles.link}>
           Teams
         </a>
-        <a href='/Advertising' className={styles.link}>
+        <a href='/products/advertising' className={styles.link}>
           Advertising
         </a>
-        <a href='/Collectives' className={styles.link}>
+        <a href='/products/collectives' className={styles.link}>
           Collectives
         </a>
-        <a href='/Talent' className={styles.link}>
+        <a href='/products/talent' className={styles.link}>
           Talent
         </a>
       </div>
 
       <div className={styles.column}>
         <h3>COMPANY</h3>
-        <a href='/About' className={styles.link}>
+        <a href='/company/about' className={styles.link}>
           About
         </a>
-        <a href='/WorkHere' className={styles.link}>
+        <a href='/company/work-here' className={styles.link}>
           Work Here
         </a>
-        <a href='/Legal' className={styles.link}>
+        <a href='/legal' className={styles.link}>
           Legal
         </a>
-        <a href='/PrivacyPolicy' className={styles.link}>
+        <a href='/legal/privacy-policy' className={styles.link}>
           Privacy Policy
         </a>
-        <a href='/TermsofService' className={styles.link}>
+        <a href='/legal/terms-of-service' className={styles.link}>
           Terms of Service
         </a>
-        <a href='/ContactUs' className={styles.link}>
+        <a href='/contact' className={styles.link}>
           Contact Us
         </a>
-        <a href='/Settings' className={styles.link}>
+        <a href='/settings' className={styles.link}>
           Cookie Settings
         </a>
-        <a href='/Policy' className={styles.link}>
+        <a href='/legal/cookie-policy' className={styles.link}>
           Cookie Policy
         </a>
       </div>
