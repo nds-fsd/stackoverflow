@@ -48,7 +48,7 @@ body {
   margin-bottom: 4px;
 }
 
-h1 {
+.form h1 {
   font-size: 35px;
   font-weight: bold;
   background-image: linear-gradient(to right, orange, yellow); /* Colores del degradado */
