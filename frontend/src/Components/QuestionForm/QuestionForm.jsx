@@ -1,5 +1,5 @@
 import React from 'react';
-import Styles from './newQuestion.module.css';
+import Styles from './QuestionForm.module.css';
 
 const QuestionForm = () => {
   return (
