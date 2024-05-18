@@ -4,7 +4,7 @@ const { Schema, model } = require('mongoose');
 const questionSchema = new Schema({
   title: { type: String, required: true },
   body: { type: String, required: true },
-  tags: { type: [String], default: [] },
+  tags: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tags', default: [] }], //no es requerido que tenga tags?
   author: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   created_at: { type: Date, default: Date.now },
   updated_at: { type: Date },
