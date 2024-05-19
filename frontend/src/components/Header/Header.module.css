@@ -1,4 +1,3 @@
-
 .header {
   position: relative;
   display: flex;
@@ -6,8 +5,9 @@
   justify-content: space-between;
   padding: 10px 20px;
   background-color: #000000;
-  color: #7E3AED;
-  font-family: 'Exo', sans-serif; 
+  color: #7e3aed;
+  font-family: 'Exo', sans-serif;
+  z-index: 10;
 }
 
 .mobileMenu {
@@ -21,13 +21,11 @@
   padding: 20px 0;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   font-size: 1.6rem;
-  transition: transform 0.3s ease; 
-
-  
+  transition: transform 0.3s ease;
+  z-index: 100;
 }
 
 .mobileMenu.open {
-
   display: flex;
 }
 
@@ -45,7 +43,9 @@
   background-color: #ffffff;
   margin: 6px 5%;
   position: relative;
-  transition: background-color 0.3s, transform 0.3s; 
+  transition:
+    background-color 0.3s,
+    transform 0.3s;
 }
 
 .hamburger::before,
@@ -55,38 +55,35 @@
   width: 100%;
   height: 100%;
   background-color: #ffffff;
-  transition: transform 0.3s; 
+  transition: transform 0.3s;
 }
 
-
 .mobileMenu a {
-  color: #7E3AED;
+  color: #7e3aed;
   text-decoration: none;
   padding: 10px 20px;
   transition: background-color 0.3s;
 }
 
 .mobileMenu a:hover {
-  background-color: #7E3AED;
+  background-color: #7e3aed;
   color: #fff;
-  transform: translateX(5px); 
+  transform: translateX(5px);
 }
-
 
 @media (max-width: 768px) {
   .menuToggle {
     display: block;
   }
 
-.menuToggle:hover .hamburger {
-    background-color: #7E3AED;
+  .menuToggle:hover .hamburger {
+    background-color: #7e3aed;
   }
 }
 
-
 .searchBar {
   background-color: #000000;
-  border-color: #7E3AED;
+  border-color: #7e3aed;
   border-radius: 20px;
   padding: 12px 20px;
   width: 40%;
@@ -100,32 +97,30 @@
 }
 
 .loginBtn {
-
   background-color: #000000ae;
-  color: #7E3AED;
+  color: #7e3aed;
   border-radius: 15px;
-  border-color: #7E3AED;
+  border-color: #7e3aed;
   padding: 10px 20px;
   font-size: 18px;
   cursor: pointer;
 }
 .signInBtn {
-  background-color: #7E3AED;
+  background-color: #7e3aed;
   color: #ffffff;
   border-radius: 15px;
-  border-color: #7E3AED;
+  border-color: #7e3aed;
   padding: 10px 20px;
   font-size: 18px;
   cursor: pointer;
 }
 
-.loginBtn:hover
-{
-  background-color: #7E3AED;
+.loginBtn:hover {
+  background-color: #7e3aed;
   color: #ffffff;
 }
 
 .signInBtn:hover {
   background-color: #000000ae;
-  color: #7E3AED;
+  color: #7e3aed;
 }
