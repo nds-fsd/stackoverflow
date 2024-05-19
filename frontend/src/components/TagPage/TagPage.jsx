@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
+import TagItem from './TagItem';
 import styles from './TagPage.module.css';
 
 const tagData = [
@@ -92,14 +93,7 @@ const TagPage = () => {
       </div>
       <div className={styles.container}>
         {tagData.map((tag, index) => (
-          <div key={index} className={styles.tag}>
-            <h2>{tag.name}</h2>
-            <p>{tag.description}</p>
-            <div className={styles.metricsContainer}>
-              <div className={styles.tagMetrics}>{tag.totalQuestions.toLocaleString()} questions</div>
-              <div className={styles.tagMetrics}> {tag.weeklyQuestions} asked this year</div>
-            </div>
-          </div>
+          <TagItem key={index} tag={tag} />
         ))}
       </div>
       <Footer />
