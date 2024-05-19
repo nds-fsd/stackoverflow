@@ -1,5 +1,7 @@
 import React from 'react';
 import styles from './HeroSection.module.css';
+import community from './img/3.png';
+import knowledge from './img/4.png';
 
 const InfoBox = ({ children }) => {
   return <div className={styles['info-box']}>{children}</div>;
@@ -97,7 +99,7 @@ function HeroSection() {
 
         <ImageBox
           className={styles['box']}
-          src='https://cdn.sstatic.net/Img/home/illo-public.svg?v=14bd5a506009'
+          src={community}
           alt=''
           title='A public platform building the definitive collection of coding questions & answers'
           description='A community-based space to find and contribute answers to technical challenges, and one of the most popular websites in the world.'
@@ -105,7 +107,7 @@ function HeroSection() {
         />
         <ImageBox
           className={styles['box']}
-          src='https://cdn.sstatic.net/Img/home/illo-teams.svg?v=7e543f14fcc0'
+          src={knowledge}
           alt=''
           title='A private collaboration & knowledge sharing SaaS platform for companies'
           description='A web-based platform to increase productivity, decrease cycle times, accelerate time to market, and protect institutional knowledge.'
