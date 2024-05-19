@@ -7,18 +7,6 @@
   background-color: #222020;
 }
 
-.searchBar {
-  display: flex;
-  align-self: center;
-  margin-top: 20px;
-  width: 400px;
-  height: 20px;
-  padding: 5px 10px;
-  border-radius: 5px;
-  border: 1px solid rgb(240, 97, 7);
-  background-color: transparent;
-}
-
 .advice {
   width: 380px;
   height: 190px;

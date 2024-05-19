@@ -8,7 +8,6 @@ const QuestionForm = () => {
      <>
       <Header />
     <div className={Styles.container}>
-      <input className={Styles.searchBar} type='text' id='searchBar' placeholder='Search...'></input>
       <span className={Styles.advice}>
         <h3>Here are a few tips to write the perfect question!</h3>
         <ul>
