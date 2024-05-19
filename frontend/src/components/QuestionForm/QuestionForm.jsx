@@ -1,8 +1,12 @@
 import React from 'react';
 import Styles from './QuestionForm.module.css';
+import Header from "../Header/Header.jsx"
+import Footer from "../Footer/Footer.jsx"
 
 const QuestionForm = () => {
   return (
+     <>
+      <Header />
     <div className={Styles.container}>
       <input className={Styles.searchBar} type='text' id='searchBar' placeholder='Search...'></input>
       <span className={Styles.advice}>
@@ -35,6 +39,8 @@ const QuestionForm = () => {
         </button>
       </form>
     </div>
+    <Footer />
+    </>
   );
 };
 

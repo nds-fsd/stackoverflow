@@ -1,5 +1,5 @@
 .footer {
-  border-top: 0.1rem solid rgb(241, 148, 54);
+  border-top: 0.1rem solid #00c200;
   background-color: #222020;
   color: #fff;
   padding: 20px;
@@ -21,11 +21,19 @@
   margin-bottom: 5px;
 }
 
+.link:hover {
+  color: #00c200;
+}
+
 .socialLink {
   display: inline-block;
   margin-right: 10px;
   width: auto;
   color: white;
+}
+
+.socialLink:hover {
+  color: #00c200;
 }
 
 .icon {

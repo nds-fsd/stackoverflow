@@ -1,6 +1,8 @@
 import React from 'react';
 import StackOverflowLogo from './ImagenesQP/StackOverflow.png';
 import styles from './QuestionPage.module.css';
+import Header from "../Header/Header.jsx"
+import Footer from "../Footer/Footer.jsx"
 
 
 const questions = [
@@ -53,6 +55,7 @@ const questions = [
 const QuestionPage = () => {
   return (
     <>
+    <Header />
       <div className={styles['QuestionPageBody']}>
         <div className={styles['QuestionPageNavbar']}>
           <input type='text' className={styles['OrangeSearchBar']} placeholder='Search...' />
@@ -113,6 +116,7 @@ const QuestionPage = () => {
           ))}
         </div>
       </div>
+      <Footer />
     </>
   );
 };
