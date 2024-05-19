@@ -1,0 +1,94 @@
+.descriptionContainer {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #ccc;
+  font-family: 'Exo', sans-serif;
+}
+
+.descriptionTitle {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.descriptionText {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.searchContainer {
+  display: flex;
+  justify-content: flex-start;
+  padding: 20px;
+}
+
+.searchInput {
+  width: 100%;
+  max-width: 250px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-family: 'Exo', sans-serif;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  padding: 20px;
+  grid-gap: 10px;
+  background-color: #fff;
+  font-family: 'Exo', sans-serif;
+}
+
+.tag {
+  background-color: #ffffff;
+  border: 1px solid #d1d1d1;
+  padding: 10px;
+  text-align: left;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px #0000001a;
+}
+
+.tag h2 {
+  display: inline-block;
+  background-color: #ecf5fd;
+  color: #145ca2;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: normal;
+}
+
+.tag p {
+  font-size: 13px;
+  color: #4a4a4a;
+  margin: 5px 0;
+}
+
+.metricsContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: top;
+  padding: 8px 0; /* Vertical padding */
+  font-size: 12px;
+}
+
+/* total questions this year */
+.tagMetrics {
+  flex: 1;
+  text-align: right;
+}
+
+/* total questions */
+.tagMetrics:first-child {
+  flex: 2;
+  text-align: left;
+}
+
+@media (max-width: 600px) {
+  .tagMetrics {
+    flex-basis: 100%;
+    margin-right: 0; /* Remove right margin on small screens */
+  }
+}
