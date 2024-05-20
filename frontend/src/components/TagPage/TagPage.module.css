@@ -2,53 +2,21 @@
   padding: 50px;
   background-color: #000000;
   font-family: 'Exo', sans-serif;
-  color: #fff;
 }
 
 .descriptionTitle {
-  font-size: 24px;
-  color: #009200;
+  font-size: 35px;
   margin-bottom: 8px;
+  background: linear-gradient(to bottom right, #7e3aed, #bf67f2);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .descriptionText {
-  font-size: 13px;
+  font-size: 16px;
   color: #fff;
   margin-bottom: 20px;
-}
-
-.searchContainer {
-  display: flex;
-  padding-left: 50px;
-  align-items: center;
-  position: relative;
-  background-color: #000000;
-}
-
-.searchInput {
-  position: relative;
-  padding: 10px 10px 10px 35px;
-  width: 100%;
-  max-width: 250px;
-  padding: 10px 10px 10px 35px;
-  border: 1px solid #7e3aed;
-  background-color: #000000;
-  border-radius: 4px;
-  font-family: 'Exo', sans-serif;
-  color: #fff;
-}
-
-.searchInput::before {
-  content: ''; /* This is crucial for displaying the pseudo-element */
-  position: absolute;
-  left: 10px;
-  top: 50%;
-  background-image: url('/assets/icons/search.svg');
-  background-repeat: no-repeat;
-  background-position: 10px center;
-  background-size: 16px 16px;
-  background-size: cover;
-  pointer-events: none;
 }
 
 .container {
@@ -58,83 +26,4 @@
   grid-gap: 10px;
   background-color: #000000;
   font-family: 'Exo', sans-serif;
-}
-
-.tag {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto auto auto;
-  background-color: #222020;
-  border: 1px solid #d1d1d1;
-  padding: 10px;
-  text-align: left;
-  border-radius: 4px;
-  box-shadow: 0 1px 2px #fdf7ff;
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  gap: 20px;
-}
-
-.titleContainer {
-  grid-row: 1;
-}
-
-.tag h2 {
-  grid-row: 1;
-  display: inline-block;
-  background-color: #7e3aed;
-  color: #fff;
-  padding: 1px 4px;
-  border-radius: 4px;
-  font-size: 13px;
-  font-weight: normal;
-}
-
-.tag p {
-  grid-row: 2;
-  font-size: 13px;
-  background-color: #222020;
-  color: #fff;
-  margin: 5px 0;
-}
-
-.tagLink {
-  background-color: #7e3aed;
-  color: white;
-  text-decoration: none;
-  padding: 4px 8px;
-  border-radius: 4px;
-  cursor: pointer;
-  display: inline-block;
-}
-
-.metricsContainer {
-  grid-row: 3;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  padding: 5px 0;
-  font-size: 12px;
-  color: #9d88b3;
-}
-
-/* total questions this year */
-.tagMetrics {
-  flex: 1;
-  text-align: right;
-}
-
-/* total questions */
-.tagMetrics:first-child {
-  flex: 2;
-  text-align: left;
-  max-width: 40%;
-}
-
-@media (max-width: 600px) {
-  .tagMetrics {
-    flex-basis: 100%;
-    margin-right: 0; /* Remove right margin on small screens */
-  }
 }

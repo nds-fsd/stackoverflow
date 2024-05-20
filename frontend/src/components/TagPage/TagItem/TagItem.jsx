@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import styles from './TagPage.module.css';
+import styles from './TagItem.module.css';
 
 const TagItem = ({ tag }) => {
   return (
@@ -13,7 +13,7 @@ const TagItem = ({ tag }) => {
       <p>{tag.description}</p>
       <div className={styles.metricsContainer}>
         <span>{tag.totalQuestions.toLocaleString()} questions</span>
-        <span>{tag.weeklyQuestions} asked this year</span>
+        <span>{tag.yearlyQuestions} asked this year</span>
       </div>
     </div>
   );
