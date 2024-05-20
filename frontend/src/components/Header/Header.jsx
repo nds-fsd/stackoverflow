@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styles from './Header.module.css';
-import logo from './img/logo.png';
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -16,8 +15,7 @@ const Header = () => {
         <div className={styles.hamburger}></div>
       </div>
 
-      <img src={logo} alt='Logo' className={styles.logo} />
-
+      <img src='/assets/img/logo.png' alt='Logo' className={styles.logo} />
       <input type='text' placeholder='Search...' className={styles.searchBar} />
 
       <button className={`${styles.btn} ${styles.loginBtn}`}>Log in</button>
