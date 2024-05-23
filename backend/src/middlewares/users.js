@@ -13,7 +13,16 @@ const validateUserId = (req, res, next) => {
   next();
 };
 
+const isValidEmail = (req, res, next) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(req.body.email)) {
+    return res.status(400).json({ message: 'Invalid email format' });
+  }
+  next();
+};
+
 module.exports = {
   logRequest,
   validateUserId,
+  isValidEmail,
 };
