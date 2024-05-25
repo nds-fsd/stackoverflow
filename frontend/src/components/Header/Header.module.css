@@ -13,14 +13,14 @@
 .mobileMenu {
   display: none;
   flex-direction: column;
-  background-color: rgba(0, 0, 0, 0.9); /* o background-color: #000000 */
+  background-color: #000000e6;
   position: absolute;
   top: 100%;
   left: 0;
   width: 25%;
   padding: 20px 0;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  font-size: 1.6rem;
+  box-shadow: 0 2px 5px #00000033;
+  font-size: 1.25rem;
   transition: transform 0.3s ease;
   z-index: 100;
 }
@@ -31,6 +31,7 @@
 
 .logo {
   height: 4rem;
+  transform: translateX(-60px);
 }
 
 .menuToggle {
@@ -84,11 +85,12 @@
 .searchBar {
   background-color: #000000;
   border-color: #7e3aed;
-  border-radius: 20px;
+  border-radius: 4px;
   padding: 12px 20px;
   width: 40%;
   font-size: 1.2rem;
   color: #ffffff;
+  font-family: 'Exo', sans-serif;
 }
 
 .searchBar::placeholder {
@@ -102,8 +104,9 @@
   border-radius: 15px;
   border-color: #7e3aed;
   padding: 10px 20px;
-  font-size: 18px;
+  font-size: 1rem;
   cursor: pointer;
+  font-family: 'Exo', sans-serif;
 }
 .signInBtn {
   background-color: #7e3aed;
@@ -111,8 +114,9 @@
   border-radius: 15px;
   border-color: #7e3aed;
   padding: 10px 20px;
-  font-size: 18px;
+  font-size: 1rem;
   cursor: pointer;
+  font-family: 'Exo', sans-serif;
 }
 
 .loginBtn:hover {
