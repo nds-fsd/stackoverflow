@@ -3,15 +3,11 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-exports.register = async (req, res) => {
+const register = async (req, res) => {
   const { email, password, username } = req.body;
 
   if (!email || !password || !username) {
     return res.status(400).json({ message: 'Email, password and username are required' });
-  }
-
-  if (!isValidEmail(email)) {
-    return res.status(400).json({ message: 'The email format is not valid' });
   }
 
   if (password.length < 6) {
@@ -21,7 +17,7 @@ exports.register = async (req, res) => {
   try {
     const userExists = await User.findOne({ email });
     if (userExists) {
-      return res.status(400).json({ message: 'This email is already in use' });
+      return res.status(409).json({ message: 'This email is already in use' });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -35,12 +31,7 @@ exports.register = async (req, res) => {
   }
 };
 
-const isValidEmail = (email) => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
-};
-
-exports.login = async (req, res) => {
+const login = async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -50,12 +41,12 @@ exports.login = async (req, res) => {
   try {
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ message: 'User or password are incorrect' });
+      return res.status(400).json({ message: 'Email or password are incorrect' });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ message: 'User or password are incorrect' });
+      return res.status(401).json({ message: 'Email or password are incorrect' });
     }
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
@@ -64,4 +55,9 @@ exports.login = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: 'Error signing in' });
   }
+};
+
+module.exports = {
+  register,
+  login,
 };

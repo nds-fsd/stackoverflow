@@ -14,7 +14,7 @@ const validateUserId = (req, res, next) => {
 };
 
 const isValidEmail = (req, res, next) => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
   if (!emailRegex.test(req.body.email)) {
     return res.status(400).json({ message: 'Invalid email format' });
   }
