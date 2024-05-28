@@ -12,8 +12,8 @@ const TagItem = ({ tag }) => {
       </div>
       <p>{tag.description}</p>
       <div className={styles.metricsContainer}>
-        <span>{tag.totalQuestions.toLocaleString()} questions</span>
-        <span>{tag.yearlyQuestions} asked this year</span>
+        <span>{tag.questionCount?.toLocaleString()} questions</span>
+        <span>{tag.askedThisYear?.toLocaleString()} asked this year</span>
       </div>
     </div>
   );
