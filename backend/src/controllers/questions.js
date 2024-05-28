@@ -1,4 +1,5 @@
 const Question = require('../mongo/data/schemas/question');
+const Tag = require('../mongo/data/schemas/tags');
 
 const getQuestions = async (req, res) => {
   try {
@@ -26,11 +27,31 @@ const getQuestionById = async (req, res) => {
 
 const createQuestion = async (req, res) => {
   const { title, body, tags, author } = req.body;
-  const newQuestion = new Question({ title, body, tags, author });
 
-  console.log('Attempting to save new question:', newQuestion);
+  console.log('Request received to create question:', req.body); // Log request body
 
   try {
+    // Find or create tags
+    const tagIds = await Promise.all(
+      tags.map(async (tagName) => {
+        let tag = await Tag.findOne({ name: tagName });
+        if (!tag) {
+          tag = new Tag({ name: tagName });
+          await tag.save();
+        }
+        return tag._id;
+      }),
+    );
+
+    const newQuestion = new Question({
+      title,
+      body,
+      tags: tagIds,
+      author,
+    });
+
+    console.log('Attempting to save new question:', newQuestion);
+
     await newQuestion.save();
     console.log('Question saved successfully', newQuestion);
     res.status(201).json(newQuestion);
