@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const { Schema, model } = require('mongoose');
 
 const questionSchema = new Schema({
@@ -13,6 +12,16 @@ const questionSchema = new Schema({
   views: { type: Number, default: 0 },
 });
 
-const Question = model('Question', questionSchema);
+questionSchema.pre('save', function (next) {
+  this.updated_at = Date.now();
+  next();
+});
+
+questionSchema.pre('findOneAndUpdate', function (next) {
+  this.set({ updated_at: Date.now() });
+  next();
+});
+
+const Question = model('question', questionSchema);
 
 module.exports = Question;
