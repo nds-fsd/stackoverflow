@@ -1,7 +1,7 @@
 import React from 'react';
-import StackOverflowLogo from './ImagenesQP/StackOverflow.png';
 import styles from './QuestionPage.module.css';
-
+import Header from '../Header/Header.jsx';
+import Footer from '../Footer/Footer.jsx';
 
 const questions = [
   {
@@ -53,31 +53,13 @@ const questions = [
 const QuestionPage = () => {
   return (
     <>
+      <Header />
+
       <div className={styles['QuestionPageBody']}>
-        <div className={styles['QuestionPageNavbar']}>
-          <input type='text' className={styles['OrangeSearchBar']} placeholder='Search...' />
-        </div>
-
-        <div className={styles['QuestionPageLeftbar']}>
-          <img className={styles['QuestionPageSOLogo']} src={StackOverflowLogo} alt='Stack Overflow Logo' />
-          <a href='/' className={styles['LeftBarButton']}>
-            Home
-          </a>
-
-          <a href='/questions' className={styles['LeftBarButton']}>
-            Questions
-          </a>
-
-          <a href='/tags' className={styles['LeftBarButton']}>
-            Tags
-          </a>
-
-          <a href='/users' className={styles['LeftBarButton']}>
-            Users
-          </a>
-        </div>
-
         <div className={styles['QuestionPageRightbar']}>
+          <a href='/questions/new' className={styles['askNewQuestion']}>
+            Ask Question
+          </a>
           <div className={styles['QuestionPageRightbarBubbles']}>
             <h1>Top Questions</h1>
             <p>Best practices for data fetching in a Next.js application with Server-Side Rendering (SSR)?</p>
@@ -93,9 +75,7 @@ const QuestionPage = () => {
         </div>
 
         <div className={styles['QuestionPageQuestions']}>
-          <a href='/questions/new' className={styles['askNewQuestion']}>
-            Ask Question
-          </a>{' '}
+          {' '}
           {questions.map((question) => (
             <div className={styles['questionBubble']} key={question.id} style={{ marginBottom: '20px' }}>
               <h2>{question.title}</h2>
@@ -113,6 +93,7 @@ const QuestionPage = () => {
           ))}
         </div>
       </div>
+      <Footer />
     </>
   );
 };

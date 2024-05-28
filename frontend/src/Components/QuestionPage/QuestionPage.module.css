@@ -7,7 +7,7 @@
   justify-items: stretch; /* Stretch to fill the cell */
   gap: 10px;
   font-family: 'Exo', sans-serif; /* Fallback to sans-serif if Exo is not loaded */
-  background-color: #222020;
+  background-color: black;
   color: #222020;
   overflow: auto;
 }
@@ -27,34 +27,37 @@
 }
 
 .QuestionPageLeftbar {
+  display: grid;
   grid-row: 1 / 8; /* Start at the first row and end before the second row */
   grid-column: 1 / 2; /* Start at the first column and end after the sixth column */
-  display: grid;
   grid-template-columns: repeat(1, 1fr); /* Four columns */
   grid-template-rows: repeat(7, 1fr); /* Four rows */
-  align-items: center;
   justify-content: center; /* Center content horizontally */
-  background-color: #222020; /* Different background color to distinguish navbar */
+  background-color: black; /* Different background color to distinguish navbar */
   color: white;
   padding: 10px;
   text-align: center; /* Ensures horizontal text alignment is centered */
 }
 
 .QuestionPageRightbar {
-  grid-row: 2 / 8; /* Start at the first row and end before the second row */
-  grid-column: 6 / 7; /* Start at the first column and end after the sixth column */
+  grid-row: 1 / 8; /* Start at the first row and end before the eighth row */
+  grid-column: 6 / 7; /* Start at the sixth column and end before the seventh column */
   display: grid;
-  grid-template-columns: repeat(1, 1fr); /* Four columns */
-  grid-template-rows: repeat(7, 1fr);
-  align-content: flex-start; /* Four rows */
-  background-color: #222020;
-  padding: 10px; /* Different background color to distinguish navbar */
+  grid-template-columns: repeat(1, 1fr); /* One column */
+  grid-template-rows: repeat(7, 1fr); /* Seven rows */
+  align-content: flex-start;
+  background-color: black;
   color: white;
   overflow-y: auto; /* Enables vertical scrolling when content exceeds max-height */
+  width: 100%; /* Ensure full width of the parent container */
+  height: 100%; /* Ensure full height of the parent container */
+  padding: 10px; /* Space inside the component */
+  box-sizing: border-box; /* Includes padding and border in width and height calculation */
+  margin: 0; /* Ensure no additional margin affecting the size */
 }
 
 .QuestionPageQuestions {
-  grid-row: 2 / 8; /* Start at the first row and end before the second row */
+  grid-row: 1 / 8; /* Start at the first row and end before the second row */
   grid-column: 2 / 6; /* Start at the first column and end after the sixth column */
   display: grid;
   grid-template-columns: repeat(1, 1fr); /* Four columns */
@@ -62,7 +65,7 @@
   border-radius: 15px; /* Rounded corners */
   align-items: center; /* Center content vertically */
   justify-content: center; /* Center content horizontally */
-  background-color: #2e2a2a; /* Different background color to distinguish navbar */
+  background-color: black; /* Different background color to distinguish navbar */
   color: white;
   padding: 10px;
   overflow-y: auto; /* Enables vertical scrolling when content exceeds max-height */
@@ -82,7 +85,9 @@
 }
 
 .LeftBarButton {
-  padding: 10px 20px; /* Adjust padding to fit your design needs */
+  display: grid;
+  grid-row: 7 / 8; /* Start at the first row and end before the second row */
+  padding: 10px; /* Adjust padding to fit your design needs */
   background-image: linear-gradient(to right, #bb5e11, #eb9f3c); /* Gradient from dark green to light green */
   border: none; /* No border for a more modern look */
   border-radius: 5px; /* Slightly rounded corners */
@@ -96,6 +101,7 @@
     transform 0.3s ease,
     box-shadow 0.3s ease; /* Smooth transition for interactive feedback */
   outline: none;
+
   text-align: center;
   align-items: center;
   text-decoration: none;
@@ -147,29 +153,28 @@
   padding: 20px; /* Space inside the bubble */
   margin: 10px; /* Space outside the bubble */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  width: 1030px; /* Fixed width, adjust as needed */
-  max-width: 100%; /* Ensures responsiveness */
+  width: 100%; /* Full width of the parent */
+  max-width: 98%; /* Ensures responsiveness */
   box-sizing: border-box; /* Includes padding in width calculation */
 }
-
 .QuestionPageRightbarBubbles {
   background-color: #151517; /* Light gray background */
   border-radius: 15px; /* Rounded corners */
   padding: 20px; /* Space inside the bubble */
   margin: 10px; /* Space outside the bubble */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  width: 210px; /* Fixed width, adjust as needed */
+  width: 90%; /* Fixed width, adjust as needed */
   max-width: 100%; /* Ensures responsiveness */
   box-sizing: border-box; /* Includes padding in width calculation */
 }
 
 .TagsRightBar {
   padding: 10px; /* Adjust padding to fit your design needs */
-  background-image: linear-gradient(to right, #bb5e11, #eb9f3c); /* Gradient from dark green to light green */
+  background: linear-gradient(to bottom right, #7e3aed, #d0b3ff);
   border: none; /* No border for a more modern look */
   border-radius: 5px; /* Slightly rounded corners */
   height: 60px;
-  width: 160px;
+  width: 90%;
   color: white; /* Text color */
   margin: 10px; /* Adds space around the button */
   font-size: 16px; /* Suitable font size for readability */
@@ -184,25 +189,22 @@
 }
 
 .askNewQuestion {
-  padding: 10px 20px; /* Adjust padding to fit your design needs */
-  background-image: linear-gradient(to right, #bb5e11, #eb9f3c); /* Gradient from dark green to light green */
-  border: none; /* No border for a more modern look */
-  border-radius: 5px; /* Slightly rounded corners */
+  padding: 10px;
+  background: linear-gradient(to bottom right, #7e3aed, #d0b3ff);
+  border: none;
+  border-radius: 5px;
   height: 30px;
-  width: 500px;
-  color: white; /* Text color */
-  margin: 10px; /* Adds space around the button */
-  font-size: 16px; /* Suitable font size for readability */
-  font-weight: bold; /* Bold text to make it stand out */
-  cursor: pointer; /* Cursor changes to pointer to indicate it's clickable */
+  color: white;
+  margin: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
   transition:
     transform 0.3s ease,
-    box-shadow 0.3s ease; /* Smooth transition for interactive feedback */
+    box-shadow 0.3s ease;
+  width: 83%; /* Fixed width, adjust as needed */
+
   outline: none;
-  justify-content: center;
-  justify-self: center;
-  align-self: center;
   text-align: center;
-  align-items: center;
   text-decoration: none;
 }
