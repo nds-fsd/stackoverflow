@@ -1,5 +1,4 @@
 import React from 'react';
-import StackOverflowLogo from './ImagenesQP/StackOverflow.png';
 import styles from './QuestionPage.module.css';
 import Header from '../Header/Header.jsx';
 import Footer from '../Footer/Footer.jsx';

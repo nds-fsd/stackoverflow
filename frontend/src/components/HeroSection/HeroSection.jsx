@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './HeroSection.module.css';
-import community from './img/3.png';
-import knowledge from './img/4.png';
+import community from '/assets/img/hero3.png';
+import knowledge from '/assets/img/hero4.png';
 
 const InfoBox = ({ children }) => {
   return <div className={styles['info-box']}>{children}</div>;
