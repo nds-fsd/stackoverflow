@@ -21,7 +21,7 @@ const getQuestionById = async (req, res) => {
     res.json(question);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Error fetching questions', error });
+    res.status(500).json({ message: 'Error fetching question', error });
   }
 };
 
