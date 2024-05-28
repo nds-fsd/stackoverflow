@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import styles from './Header.module.css';
 
 const Header = () => {
@@ -7,6 +8,7 @@ const Header = () => {
   const handleMenuToggle = () => {
     setMenuOpen(!menuOpen);
   };
+
   return (
     <header className={styles.header}>
       <div className={styles.menuToggle} onClick={handleMenuToggle}>
@@ -15,7 +17,9 @@ const Header = () => {
         <div className={styles.hamburger}></div>
       </div>
 
-      <img src='/assets/img/logo.png' alt='Logo' className={styles.logo} />
+      <Link to='/'>
+        <img src='/assets/img/logo.png' alt='Logo' className={styles.logo} />
+      </Link>
       <input type='text' placeholder='Search...' className={styles.searchBar} />
 
       <button className={`${styles.btn} ${styles.loginBtn}`}>Log in</button>
