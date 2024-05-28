@@ -11,7 +11,7 @@ const QuestionPage = () => {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const response = await fetch('http://localhost:3001/questions');  // Asegúrate de que esta URL coincide con tu configuración del backend
+        const response = await fetch('http://localhost:3001/questions');  
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -69,8 +69,8 @@ const QuestionPage = () => {
                 ))}
               </ul>
               <p>Author: {question.author}</p>
-              <p>Published: {new Date(question.publishedDate).toLocaleDateString()}</p>
-              <p>Last Modified: {new Date(question.modifiedDate).toLocaleDateString()}</p>
+              <p>Published: {new Date(question.created_at).toLocaleDateString()}</p>
+              <p>Last Modified: {new Date(question.updated_at).toLocaleDateString()}</p>
               <p>Votes: {question.votes}</p>
             </div>
           ))}
@@ -82,3 +82,4 @@ const QuestionPage = () => {
 };
 
 export default QuestionPage;
+
