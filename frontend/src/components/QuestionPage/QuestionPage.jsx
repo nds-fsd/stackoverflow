@@ -1,56 +1,40 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './QuestionPage.module.css';
 import Header from '../Header/Header.jsx';
 import Footer from '../Footer/Footer.jsx';
 
-const questions = [
-  {
-    id: 1,
-    title: 'How do I center a div in CSS?',
-    description:
-      "I'm trying to center a div within a parent container in CSS. I've tried several approaches, but none seem to work. Can anyone suggest a method?",
-    tags: ['html', 'css', 'web-development'],
-    votes: 25,
-    author: 'John Doe',
-    publishedDate: '2023-01-05',
-    modifiedDate: '2023-01-10',
-  },
-  {
-    id: 2,
-    title: 'How can I merge two lists in Python?',
-    description:
-      "What's the best way to merge two lists in Python? I know I can use the + operator, but are there other more efficient methods?",
-    tags: ['python', 'list', 'merge'],
-    votes: 40,
-    author: 'Alice Johnson',
-    publishedDate: '2023-02-15',
-    modifiedDate: '2023-02-20',
-  },
-  {
-    id: 3,
-    title: 'Why is my React component re-rendering?',
-    description:
-      "I have a React component that keeps re-rendering every time I update the state, even if it's not related to the parts of the state that changed. Why does this happen?",
-    tags: ['react', 'javascript', 'web-development'],
-    votes: 15,
-    author: 'Emily Smith',
-    publishedDate: '2023-03-10',
-    modifiedDate: '2023-03-15',
-  },
-  {
-    id: 4,
-    title: "What is the difference between 'let' and 'var' in JavaScript?",
-    description:
-      "Can someone explain the difference between 'let' and 'var' in JavaScript? I'm a bit confused about when to use each.",
-    tags: ['javascript', 'variables', 'es6'],
-    votes: 30,
-    author: 'Mike Brown',
-    publishedDate: '2023-04-01',
-    modifiedDate: '2023-04-06',
-  },
-];
-
 const QuestionPage = () => {
+  const [questions, setQuestions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/questions');  // Asegúrate de que esta URL coincide con tu configuración del backend
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        setQuestions(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchQuestions();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
   return (
     <>
       <Header />
@@ -75,19 +59,18 @@ const QuestionPage = () => {
         </div>
 
         <div className={styles['QuestionPageQuestions']}>
-          {' '}
           {questions.map((question) => (
-            <div className={styles['questionBubble']} key={question.id} style={{ marginBottom: '20px' }}>
+            <div className={styles['questionBubble']} key={question._id} style={{ marginBottom: '20px' }}>
               <h2>{question.title}</h2>
-              <p>{question.description}</p>
+              <p>{question.body}</p>
               <ul>
                 {question.tags.map((tag) => (
                   <li key={tag}>{tag}</li>
                 ))}
               </ul>
               <p>Author: {question.author}</p>
-              <p>Published: {question.publishedDate}</p>
-              <p>Last Modified: {question.modifiedDate}</p>
+              <p>Published: {new Date(question.publishedDate).toLocaleDateString()}</p>
+              <p>Last Modified: {new Date(question.modifiedDate).toLocaleDateString()}</p>
               <p>Votes: {question.votes}</p>
             </div>
           ))}
