@@ -47,10 +47,6 @@ const UserPage = () => {
           <UserItem key={index} user={user} />
         ))}
       </div>
-      <div className={styles.tagsPlaceholder}>
-        <h2>Tags Placeholder</h2>
-        <p>Tags will be displayed here.</p>
-      </div>
       <Footer />
     </>
   );
