@@ -5,6 +5,7 @@ const app = express();
 const questionsRouter = require('./routers/questions');
 const authRouter = require('./routers/authenticator');
 const tagsRouter = require('./routers/tags');
+const usersRouter = require('./routers/users');
 
 require('dotenv').config();
 
@@ -19,6 +20,7 @@ app.use((req, res, next) => {
 app.use('/', questionsRouter);
 app.use('/', tagsRouter);
 app.use('/auth', authRouter);
+app.use('/', usersRouter);
 
 connectDB().then(() => console.log('Connected to database!'));
 
