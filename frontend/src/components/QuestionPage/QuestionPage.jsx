@@ -11,7 +11,7 @@ const QuestionPage = () => {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const response = await fetch('http://localhost:3001/questions');  
+        const response = await fetch('http://localhost:3001/questions');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -38,7 +38,6 @@ const QuestionPage = () => {
   return (
     <>
       <Header />
-
       <div className={styles['QuestionPageBody']}>
         <div className={styles['QuestionPageRightbar']}>
           <a href='/questions/new' className={styles['askNewQuestion']}>
@@ -59,21 +58,18 @@ const QuestionPage = () => {
         </div>
 
         <div className={styles['QuestionPageQuestions']}>
-          {questions.map((question) => (
-            <div className={styles['questionBubble']} key={question._id} style={{ marginBottom: '20px' }}>
-              <h2>{question.title}</h2>
-              <p>{question.body}</p>
-              <ul>
-                {question.tags.map((tag) => (
-                  <li key={tag}>{tag}</li>
-                ))}
-              </ul>
-              <p>Author: {question.author}</p>
-              <p>Published: {new Date(question.created_at).toLocaleDateString()}</p>
-              <p>Last Modified: {new Date(question.updated_at).toLocaleDateString()}</p>
-              <p>Votes: {question.votes}</p>
-            </div>
-          ))}
+          {questions &&
+            questions.map((question) => (
+              <div className={styles['questionBubble']} key={question._id} style={{ marginBottom: '20px' }}>
+                <h2>{question.title}</h2>
+                <p>{question.body}</p>
+                <ul>{question.tags && question.tags.map((tag) => <li key={tag}>{tag}</li>)}</ul>
+                <p>Author: {question.author}</p>
+                <p>Published: {new Date(question.created_at).toLocaleDateString()}</p>
+                <p>Last Modified: {new Date(question.updated_at).toLocaleDateString()}</p>
+                <p>Votes: {question.votes}</p>
+              </div>
+            ))}
         </div>
       </div>
       <Footer />
@@ -82,4 +78,3 @@ const QuestionPage = () => {
 };
 
 export default QuestionPage;
-
