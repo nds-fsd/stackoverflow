@@ -1,8 +1,6 @@
 const Tag = require('../mongo/data/schemas/tags');
 
 const getTags = async (req, res) => {
-  console.log('Request received to get tags:');
-
   try {
     const allTags = await Tag.find({});
     res.json(allTags);
