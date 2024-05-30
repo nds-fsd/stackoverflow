@@ -1,0 +1,130 @@
+.header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: #000000;
+  color: #7e3aed;
+  font-family: 'Exo', sans-serif;
+  z-index: 10;
+}
+
+.mobileMenu {
+  display: none;
+  flex-direction: column;
+  background-color: #000000e6;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 25%;
+  padding: 20px 0;
+  box-shadow: 0 2px 5px #00000033;
+  font-size: 1.25rem;
+  transition: transform 0.3s ease;
+  z-index: 100;
+}
+
+.mobileMenu.open {
+  display: flex;
+}
+
+.logo {
+  height: 3.5rem;
+  transform: translateX(-60px);
+}
+
+.menuToggle {
+  cursor: pointer;
+}
+
+.hamburger {
+  width: 30px;
+  height: 3px;
+  background-color: #ffffff;
+  margin: 6px 5%;
+  position: relative;
+  transition:
+    background-color 0.3s,
+    transform 0.3s;
+}
+
+.hamburger::before,
+.hamburger::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  transition: transform 0.3s;
+}
+
+.mobileMenu a {
+  color: #7e3aed;
+  text-decoration: none;
+  padding: 10px 20px;
+  transition: background-color 0.3s;
+}
+
+.mobileMenu a:hover {
+  background-color: #7e3aed;
+  color: #fff;
+  transform: translateX(5px);
+}
+
+@media (max-width: 768px) {
+  .menuToggle {
+    display: block;
+  }
+
+  .menuToggle:hover .hamburger {
+    background-color: #7e3aed;
+  }
+}
+
+.searchBar {
+  background-color: #000000;
+  border-color: #7e3aed;
+  border-radius: 4px;
+  padding: 12px 20px;
+  width: 40%;
+  font-size: 1.2rem;
+  color: #ffffff;
+  font-family: 'Exo', sans-serif;
+}
+
+.searchBar::placeholder {
+  color: #ffffff;
+  font-size: 1rem;
+}
+
+.loginBtn {
+  background-color: #000000ae;
+  color: #7e3aed;
+  border-radius: 15px;
+  border-color: #7e3aed;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-family: 'Exo', sans-serif;
+}
+.signInBtn {
+  background-color: #7e3aed;
+  color: #ffffff;
+  border-radius: 15px;
+  border-color: #7e3aed;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-family: 'Exo', sans-serif;
+}
+
+.loginBtn:hover {
+  background-color: #7e3aed;
+  color: #ffffff;
+}
+
+.signInBtn:hover {
+  background-color: #000000ae;
+  color: #7e3aed;
+}

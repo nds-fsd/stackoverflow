@@ -1,8 +1,8 @@
 {
   "name": "@monorepo/backend",
   "version": "0.0.0",
-  "description": "> TODO: description",
-  "author": "Jose Manuel Cano <jmcano94@gmail.com>",
+  "description": "Stackoverflow clone",
+  "author": "",
   "homepage": "",
   "license": "ISC",
   "scripts": {
