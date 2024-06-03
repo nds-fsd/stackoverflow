@@ -26,3 +26,15 @@ jobs:
         run: |
           docker build . --tag ghcr.io/nds-fsd/devvit:latest
           docker push ghcr.io/nds-fsd/devvit:latest
+
+      - name: Install and configure the Koyeb CLI
+        uses: koyeb-community/install-koyeb-cli@v2
+        with:
+                api_token: "${{ secrets.KOYEBTOKEN }}"
+                github_token: "${{ secrets.GITHUB_TOKEN }}"
+      
+      - name: Update image in koyeb
+        run: koyeb service update devvit/devvit --docker ghcr.io/nds-fsd/devvit:${{ github.sha }}
+      
+      - name: Redeploy service in koyeb
+        run: koyeb service redeploy devvit/devvit
