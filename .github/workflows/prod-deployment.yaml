@@ -24,5 +24,5 @@ jobs:
 
       - name: 'Build Backend Image'
         run: |
-          docker build . --tag ghcr.io/nds-fsd/stackoverflow:latest
-          docker push ghcr.io/nds-fsd/stackoverflow:latest
+          docker build . --tag ghcr.io/nds-fsd/devvit:latest
+          docker push ghcr.io/nds-fsd/devvit:latest
