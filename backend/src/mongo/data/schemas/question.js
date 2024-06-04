@@ -6,6 +6,7 @@ const questionSchema = new Schema({
   body: { type: String, required: true },
   tags: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tag', default: [] }], // Corrected to 'Tag'
   author: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
   created_at: { type: Date, default: Date.now },
   updated_at: { type: Date },
   deleted_at: { type: Date },

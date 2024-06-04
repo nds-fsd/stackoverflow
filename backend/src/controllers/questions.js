@@ -1,5 +1,5 @@
 const Question = require('../mongo/data/schemas/question');
-const Tag = require('../mongo/data/schemas/tags');
+const Tag = require('../mongo/data/schemas/tag');
 
 const getQuestions = async (req, res) => {
   try {
