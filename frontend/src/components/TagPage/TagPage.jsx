@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { api } from '../../_utils/api';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import TagItem from './TagItem/TagItem';
@@ -14,7 +14,9 @@ const TagPage = () => {
   useEffect(() => {
     const fetchTags = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/tags');
+        console.log(api);
+        const response = await api().get('/tags');
+
         setTags(response.data);
       } catch (error) {
         setError(error.message);
