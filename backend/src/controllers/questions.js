@@ -1,5 +1,6 @@
 const Question = require('../mongo/data/schemas/question');
 const Tag = require('../mongo/data/schemas/tags');
+const User = require('../mongo/data/schemas/user'); 
 
 const getQuestions = async (req, res) => {
   try {
@@ -7,20 +8,25 @@ const getQuestions = async (req, res) => {
     const allQuestions = await Question.find(queryStrings).where('deleted_at').equals(null);
     res.json(allQuestions);
   } catch (error) {
-    console.error(error);
+    console.error('Error fetching questions:', error);
     res.status(500).json({ message: 'Error fetching questions', error });
   }
 };
 
+
 const getQuestionById = async (req, res) => {
   try {
-    const question = await Question.findById(req.params.id);
+    const question = await Question.findById(req.params.id)
+      .populate('author', 'username'); 
+
     if (!question || question.deleted_at) {
       return res.status(404).json({ message: 'Question not found' });
     }
+
+    console.log('Question fetched successfully:', question);
     res.json(question);
   } catch (error) {
-    console.error(error);
+    console.error('Error fetching question:', error);
     res.status(500).json({ message: 'Error fetching question', error });
   }
 };
@@ -28,10 +34,9 @@ const getQuestionById = async (req, res) => {
 const createQuestion = async (req, res) => {
   const { title, body, tags, author } = req.body;
 
-  console.log('Request received to create question:', req.body); // Log request body
+  console.log('Request received to create question:', req.body);
 
   try {
-    // Find or create tags
     const tagIds = await Promise.all(
       tags.map(async (tagName) => {
         let tag = await Tag.findOne({ name: tagName });

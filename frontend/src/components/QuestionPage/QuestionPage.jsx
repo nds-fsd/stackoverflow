@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import styles from './QuestionPage.module.css';
 import Header from '../Header/Header.jsx';
 import Footer from '../Footer/Footer.jsx';
@@ -11,12 +12,8 @@ const QuestionPage = () => {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const response = await fetch('http://localhost:3001/questions');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setQuestions(data);
+        const response = await axios.get('http://localhost:3001/questions');
+        setQuestions(response.data);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -64,7 +61,7 @@ const QuestionPage = () => {
                 <h2>{question.title}</h2>
                 <p>{question.body}</p>
                 <ul>{question.tags && question.tags.map((tag) => <li key={tag}>{tag}</li>)}</ul>
-                <p>Author: {question.author}</p>
+                <p>Author: {question.author?.username}</p> {}
                 <p>Published: {new Date(question.created_at).toLocaleDateString()}</p>
                 <p>Last Modified: {new Date(question.updated_at).toLocaleDateString()}</p>
                 <p>Votes: {question.votes}</p>

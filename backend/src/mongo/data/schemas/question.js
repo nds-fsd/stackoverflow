@@ -4,7 +4,7 @@ const { Schema, model } = require('mongoose');
 const questionSchema = new Schema({
   title: { type: String, required: true },
   body: { type: String, required: true },
-  tags: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tag', default: [] }], // Corrected to 'Tag'
+  tags: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tag', default: [] }],
   author: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   created_at: { type: Date, default: Date.now },
   updated_at: { type: Date },
