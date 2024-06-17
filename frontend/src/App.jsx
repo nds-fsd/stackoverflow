@@ -6,6 +6,7 @@ import QuestionPage from './components/QuestionPage/QuestionPage';
 import QuestionForm from './components/QuestionForm/QuestionForm';
 import TagPage from './components/TagPage/TagPage';
 import UserPage from './components/UserPage/UserPage';
+import InsideQuestionPage from './components/InsideQuestionPage/InsideQuestionPage';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path='/questions/new' element={<QuestionForm />} />
         <Route path='/tags' element={<TagPage />} />
         <Route path='/users' element={<UserPage />} />
+        <Route path='/questions/:id' element={<InsideQuestionPage />} />
       </Routes>
     </div>
   );

@@ -1,24 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import styles from './QuestionPage.module.css';
+import styles from './InsideQuestionPage.module.css';
 import Header from '../Header/Header.jsx';
 import Footer from '../Footer/Footer.jsx';
-import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
-const QuestionPage = () => {
-  const navigate = useNavigate();
-  const [questions, setQuestions] = useState([]);
+const InsideQuestionPage = () => {
+  const { id } = useParams();
+  const [question, setQuestion] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    const fetchQuestions = async () => {
+    const fetchQuestion = async () => {
       try {
-        const response = await fetch('http://localhost:3001/questions');
+        const response = await fetch(`http://localhost:3001/questions/${id}`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        setQuestions(data);
+        setQuestion(data);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -26,13 +27,23 @@ const QuestionPage = () => {
       }
     };
 
-    fetchQuestions();
-  }, []);
+    fetchQuestion();
+  }, [id]);
 
-  const directToQuestion = (questionId) => {
-    console.log(questionId);
-    navigate('/questions/' + questionId);
-  };
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/users');
+        setUsers(response.data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUsers();
+  }, []);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -65,25 +76,20 @@ const QuestionPage = () => {
         </div>
 
         <div className={styles['QuestionPageQuestions']}>
-          {questions &&
-            questions.map((question) => (
-              <div
-                className={styles['questionBubble']}
-                key={question._id}
-                style={{ marginBottom: '20px' }}
-                onClick={() => {
-                  directToQuestion(question._id);
-                }}
-              >
-                <h2>{question.title}</h2>
-                <p>{question.body}</p>
-                <ul>{question.tags && question.tags.map((tag) => <li key={tag}>{tag}</li>)}</ul>
-                <p>Author: {question.author}</p>
-                <p>Published: {new Date(question.created_at).toLocaleDateString()}</p>
-                <p>Last Modified: {new Date(question.updated_at).toLocaleDateString()}</p>
-                <p>Votes: {question.votes}</p>
+          {question && (
+            <>
+              <div className={styles['questionBubble']}>
+                Asked by: {question.author} on {question.created_at}
+                <h1>{question.title}</h1>
+                <h3>{question.body}</h3>
               </div>
-            ))}
+
+              <div className={styles['questionBubble']}>
+                <input className={styles.commentInput} name='commentInput' placeholder='Add a comment' />
+                <h3>Comments</h3>
+              </div>
+            </>
+          )}
         </div>
       </div>
       <Footer />
@@ -91,4 +97,4 @@ const QuestionPage = () => {
   );
 };
 
-export default QuestionPage;
+export default InsideQuestionPage;
