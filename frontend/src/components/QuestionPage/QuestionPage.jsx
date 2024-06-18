@@ -12,8 +12,12 @@ const QuestionPage = () => {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/questions');
-        setQuestions(response.data);
+        const response = await fetch('http://localhost:3001/questions');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        setQuestions(data);
       } catch (error) {
         setError(error.message);
       } finally {
