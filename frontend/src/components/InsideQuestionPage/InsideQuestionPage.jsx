@@ -3,6 +3,8 @@ import styles from './InsideQuestionPage.module.css';
 import Header from '../Header/Header.jsx';
 import Footer from '../Footer/Footer.jsx';
 import { useParams } from 'react-router-dom';
+import profilePic from './profilePic.png';
+import photographer from './photographer.png';
 
 const InsideQuestionPage = () => {
   const { id } = useParams();
@@ -94,9 +96,41 @@ const InsideQuestionPage = () => {
               <div className={styles['questionBubble']}>
                 <input className={styles.commentInput} name='commentInput' placeholder='Add a comment' />
                 <h3>Comments</h3>
-                <div className={styles['questionBubblecomment']}>
-                  <h4>{users[1].username} • 4 hours ago</h4>
-                  <h5>I think you should do this</h5>
+                <div className={styles.questionBubblecomment}>
+                  <img src={profilePic} alt='Italian Trulli' className={styles.profilePic} />
+                  <div className={styles.commentContent}>
+                    <div className={styles.commentUsername}>
+                      {users[1] && users[1].username}
+                      <span className={styles.commentTime}> • 4 hours ago</span>
+                    </div>
+                    <div className={styles.commentText}>
+                      It sounds like you're encountering a challenging issue with the WebSocket connection when accessed
+                      via an external server address. Here are some detailed steps and considerations that might help
+                      you troubleshoot and resolve this problem: Server Configuration: First, ensure that your Comfy UI
+                      server is configured to accept connections from all IP addresses, not just localhost. Sometimes
+                      servers are set up to listen only to local connections by default, which can cause issues when
+                      trying to access them externally. Firewall and Network Security: Check the firewall settings on
+                      your server. Firewalls can block incoming connections on the port used by your WebSocket server.
+                      Additionally, if you are using cloud services like AWS, Azure, or Google Cloud Platform, make sure
+                      that the security groups or network ACLs are configured to allow traffic on the required port.
+                      Good luck, and I hope this helps resolve your problem! If you need further assistance, feel free
+                      to ask.
+                    </div>
+                  </div>
+                </div>
+
+                <div className={styles.questionBubblecomment}>
+                  <img src={photographer} alt='Italian Trulli' className={styles.profilePic} />
+                  <div className={styles.commentContent}>
+                    <div className={styles.commentUsername}>
+                      {users[2] && users[2].username}
+                      <span className={styles.commentTime}> • 23 minutes ago</span>
+                    </div>
+                    <div className={styles.commentText}>
+                      Why doesnt anyone try googling first, that's what its for, also, there chatGPT now, try going
+                      there first, this has been asnwered several times now, i see this every 2 days...
+                    </div>
+                  </div>
                 </div>
               </div>
             </>
@@ -107,5 +141,4 @@ const InsideQuestionPage = () => {
     </>
   );
 };
-
 export default InsideQuestionPage;

@@ -235,13 +235,36 @@
 .questionBubblecomment {
   background-color: #2b2b2b; /* Light gray background */
   border-radius: 15px; /* Rounded corners */
-  padding-top: 0.5px;
-  padding-left: 15px;
-  padding-bottom: 15px;
-  padding-right: 1px;
-  margin: 2px; /* Space outside the bubble */
+  padding: 15px; /* Space inside the bubble */
+  margin: 10px 0; /* Space outside the bubble */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
   width: 100%; /* Full width of the parent */
   max-width: 98%; /* Ensures responsiveness */
   box-sizing: border-box; /* Includes padding in width calculation */
+  display: flex; /* Enables flexbox */
+  align-items: flex-start; /* Align items to the start vertically */
+}
+
+.profilePic {
+  width: 40px;
+  height: auto; /* Maintains the aspect ratio */
+  margin-right: 10px; /* Space between image and text */
+}
+
+.commentContent {
+  display: flex;
+  flex-direction: column; /* Stack username and comment vertically */
+}
+
+.commentUsername {
+  font-weight: bold;
+}
+
+.commentTime {
+  font-size: 0.9em;
+  color: #bbb;
+}
+
+.commentText {
+  margin-top: 5px;
 }
