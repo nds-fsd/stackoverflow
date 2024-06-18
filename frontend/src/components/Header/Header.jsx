@@ -1,12 +1,24 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Header.module.css';
+import AuthModal from '../AuthModal/AuthModal';
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [modalShow, setModalShow] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
 
   const handleMenuToggle = () => {
     setMenuOpen(!menuOpen);
+  };
+
+  const handleModalShow = (login) => {
+    setIsLogin(login);
+    setModalShow(true);
+  };
+
+  const handleModalClose = () => {
+    setModalShow(false);
   };
 
   return (
@@ -22,8 +34,14 @@ const Header = () => {
       </Link>
       <input type='text' placeholder='Search...' className={styles.searchBar} />
 
-      <button className={`${styles.btn} ${styles.loginBtn}`}>Log in</button>
-      <button className={`${styles.btn} ${styles.signInBtn}`}>Sign in</button>
+      <button className={`${styles.btn} ${styles.loginBtn}`} onClick={() => handleModalShow(true)}>
+        Login
+      </button>
+      <button className={`${styles.btn} ${styles.signInBtn}`} onClick={() => handleModalShow(false)}>
+        Sign in
+      </button>
+
+      <AuthModal show={modalShow} handleClose={handleModalClose} isLogin={isLogin} />
 
       <div className={`${styles.mobileMenu} ${menuOpen ? styles.open : ''}`}>
         <a href='/'>
