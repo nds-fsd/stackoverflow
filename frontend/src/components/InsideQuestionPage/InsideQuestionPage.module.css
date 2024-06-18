@@ -231,3 +231,17 @@
 .commentInput:focus {
   border-color: #2b2b2b;
 }
+
+.questionBubblecomment {
+  background-color: #2b2b2b; /* Light gray background */
+  border-radius: 15px; /* Rounded corners */
+  padding-top: 0.5px;
+  padding-left: 15px;
+  padding-bottom: 15px;
+  padding-right: 1px;
+  margin: 2px; /* Space outside the bubble */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  width: 100%; /* Full width of the parent */
+  max-width: 98%; /* Ensures responsiveness */
+  box-sizing: border-box; /* Includes padding in width calculation */
+}

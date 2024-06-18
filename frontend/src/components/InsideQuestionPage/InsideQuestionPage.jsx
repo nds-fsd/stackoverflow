@@ -34,7 +34,11 @@ const InsideQuestionPage = () => {
     const fetchUsers = async () => {
       try {
         const response = await fetch('http://localhost:3001/users');
-        setUsers(response.data);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        setUsers(data); // Correctly set the parsed JSON data
       } catch (error) {
         setError(error.message);
       } finally {
@@ -52,6 +56,8 @@ const InsideQuestionPage = () => {
   if (error) {
     return <div>Error: {error}</div>;
   }
+
+  console.log(users); // This should now correctly log the users array
 
   return (
     <>
@@ -82,11 +88,16 @@ const InsideQuestionPage = () => {
                 Asked by: {question.author} on {question.created_at}
                 <h1>{question.title}</h1>
                 <h3>{question.body}</h3>
+                <h5>Tags: {question.tags}</h5>
               </div>
 
               <div className={styles['questionBubble']}>
                 <input className={styles.commentInput} name='commentInput' placeholder='Add a comment' />
                 <h3>Comments</h3>
+                <div className={styles['questionBubblecomment']}>
+                  <h4>{users[1].username} • 4 hours ago</h4>
+                  <h5>I think you should do this</h5>
+                </div>
               </div>
             </>
           )}
