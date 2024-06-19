@@ -5,7 +5,9 @@ const questionSchema = new Schema({
   title: { type: String, required: true },
   body: { type: String, required: true },
   tags: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tag', default: [] }], // Corrected to 'Tag'
-  author: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+
+  author: { type: String, required: true }, // Change to simple string
+  comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
   created_at: { type: Date, default: Date.now },
   updated_at: { type: Date },
   deleted_at: { type: Date },
@@ -23,6 +25,6 @@ questionSchema.pre('findOneAndUpdate', function (next) {
   next();
 });
 
-const Question = model('question', questionSchema);
+const Question = model('Question', questionSchema);
 
 module.exports = Question;
