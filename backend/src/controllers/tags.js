@@ -1,4 +1,4 @@
-const Tag = require('../mongo/data/schemas/tags');
+const Tag = require('../mongo/data/schemas/tag');
 
 const getTags = async (req, res) => {
   try {
