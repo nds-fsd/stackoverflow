@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Question = require('../mongo/data/schemas/question');
-const Tag = require('../mongo/data/schemas/tags');
+const Tag = require('../mongo/data/schemas/tag');
 
 const createQuestion = async (req, res) => {
   const { title, body, tags, authorId } = req.body;

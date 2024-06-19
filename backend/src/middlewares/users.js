@@ -1,10 +1,5 @@
 const mongoose = require('mongoose');
 
-const logRequest = (req, res, next) => {
-  console.log(`${new Date().toISOString()} - Received ${req.method} request for ${req.originalUrl}`);
-  next();
-};
-
 const validateUserId = (req, res, next) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -22,7 +17,6 @@ const validateEmail = (req, res, next) => {
 };
 
 module.exports = {
-  logRequest,
   validateUserId,
   validateEmail: validateEmail,
 };
