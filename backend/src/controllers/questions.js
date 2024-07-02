@@ -1,25 +1,26 @@
 const mongoose = require('mongoose');
 const Question = require('../mongo/data/schemas/question');
 const Tag = require('../mongo/data/schemas/tag');
+const User = require('../mongo/data/schemas/user');
 
 const createQuestion = async (req, res) => {
   const { title, body, tags, authorId } = req.body;
 
-  console.log('Received request body:', req.body); // Log the entire request body
+  console.log('Received request body:', req.body);
 
   try {
-    // Use authorId as a simple string
-    const author = authorId;
+    // Find the user based on authorId
+    const author = await User.findById(authorId);
 
-    console.log('Author ID:', author); // Log author ID
+    if (!author) {
+      return res.status(404).json({ message: 'Author not found' });
+    }
 
-    // Validate tags are provided as an array
     if (!Array.isArray(tags)) {
       console.error('Tags must be an array');
       return res.status(400).json({ message: 'Tags must be an array' });
     }
 
-    // Find or create tags
     const tagIds = await Promise.all(
       tags.map(async (tagName) => {
         let tag = await Tag.findOne({ name: tagName });
@@ -31,13 +32,16 @@ const createQuestion = async (req, res) => {
       }),
     );
 
-    console.log('Tag IDs:', tagIds); // Log tag IDs
+    console.log('Tag IDs:', tagIds);
 
     const newQuestion = new Question({
       title,
       body,
       tags: tagIds,
-      author,
+      author: {
+        _id: author._id,
+        username: author.username,
+      },
     });
 
     console.log('Attempting to save new question:', newQuestion);
@@ -54,7 +58,9 @@ const createQuestion = async (req, res) => {
 const getQuestions = async (req, res) => {
   try {
     const queryStrings = req.query || {};
-    const allQuestions = await Question.find(queryStrings).where('deleted_at').equals(null);
+    const allQuestions = await Question.find(queryStrings)
+      .where('deleted_at').equals(null)
+      .populate('author', 'username'); // Aquí se especifica que solo se desea el campo 'username' del autor
     res.json(allQuestions);
   } catch (error) {
     console.error(error);
@@ -64,7 +70,8 @@ const getQuestions = async (req, res) => {
 
 const getQuestionById = async (req, res) => {
   try {
-    const question = await Question.findById(req.params.id);
+    const question = await Question.findById(req.params.id)
+      .populate('author', 'username'); // También aquí se asegura de poblar el autor con 'username'
     if (!question || question.deleted_at) {
       return res.status(404).json({ message: 'Question not found' });
     }
@@ -77,7 +84,10 @@ const getQuestionById = async (req, res) => {
 
 const editQuestion = async (req, res) => {
   try {
-    const updatedQuestion = await Question.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const updatedQuestion = await Question.findByIdAndUpdate(req.params.id, req.body, { new: true }).populate(
+      'author',
+      'username',
+    ); // Populate the author field with username
     if (!updatedQuestion) {
       return res.status(404).json({ message: 'Question not found' });
     }
