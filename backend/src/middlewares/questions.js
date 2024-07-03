@@ -1,6 +1,6 @@
 const validateQuestion = async (req, res, next) => {
   console.log('Request Type:', req.method);
-  const { title, body, author } = req.body;
+  const { title, body, authorId } = req.body;
 
   if (!title || title.trim().length === 0) {
     return res.status(400).send({ message: 'Title is required' });
@@ -10,8 +10,9 @@ const validateQuestion = async (req, res, next) => {
     return res.status(400).send({ message: 'Body is required' });
   }
 
-  if (!author || !author.match(/^[0-9a-fA-F]{24}$/)) {
-    return res.status(400).send({ message: 'Author must have a valid ObjectId' });
+  // Temporarily skip ObjectId validation for author
+  if (!authorId || authorId.trim().length === 0) {
+    return res.status(400).send({ message: 'Author is required' });
   }
 
   /* User verification - skip for now as users schema not yet defined

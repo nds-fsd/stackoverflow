@@ -6,6 +6,7 @@ const questionsRouter = require('./routers/questions');
 const authRouter = require('./routers/authenticator');
 const tagsRouter = require('./routers/tags');
 const usersRouter = require('./routers/users');
+const commentsRouter = require('./routers/comments');
 
 require('dotenv').config();
 
@@ -21,6 +22,7 @@ app.use('/', questionsRouter);
 app.use('/', tagsRouter);
 app.use('/auth', authRouter);
 app.use('/', usersRouter);
+app.use('/', commentsRouter);
 
 connectDB().then(() => console.log('Connected to database!'));
 

@@ -3,8 +3,10 @@ import styles from './QuestionPage.module.css';
 import Header from '../Header/Header.jsx';
 import Footer from '../Footer/Footer.jsx';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const QuestionPage = () => {
+  const navigate = useNavigate();
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -23,6 +25,11 @@ const QuestionPage = () => {
 
     fetchQuestions();
   }, []);
+
+  const directToQuestion = (questionId) => {
+    console.log(questionId);
+    navigate('/questions/' + questionId);
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -57,7 +64,14 @@ const QuestionPage = () => {
         <div className={styles['QuestionPageQuestions']}>
           {questions &&
             questions.map((question) => (
-              <div className={styles['questionBubble']} key={question._id} style={{ marginBottom: '20px' }}>
+              <div
+                className={styles['questionBubble']}
+                key={question._id}
+                style={{ marginBottom: '20px' }}
+                onClick={() => {
+                  directToQuestion(question._id);
+                }}
+              >
                 <h2>{question.title}</h2>
                 <p>{question.body}</p>
                 <ul>{question.tags && question.tags.map((tag) => <li key={tag}>{tag}</li>)}</ul>

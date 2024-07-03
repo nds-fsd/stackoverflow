@@ -1,6 +1,6 @@
 .user {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: auto 1fr;
   grid-template-rows: auto auto;
   gap: 10px;
   align-items: center;
@@ -15,7 +15,6 @@
 .imageContainer {
   grid-row: span 2;
   margin-right: 25px;
-  margin-left: 15px;
 }
 
 .profilePicture {
@@ -27,7 +26,7 @@
 .userInfo {
   display: flex;
   flex-direction: column;
-  margin-right: 25px;
+  align-items: flex-start;
 }
 
 .userLink {
@@ -53,5 +52,5 @@
   color: #fff;
   text-align: center;
   margin: 10px;
-  max-width: 80%;
+  max-width: 60%;
 }
