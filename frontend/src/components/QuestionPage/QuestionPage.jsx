@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './QuestionPage.module.css';
 import Header from '../Header/Header.jsx';
 import Footer from '../Footer/Footer.jsx';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const QuestionPage = () => {
@@ -13,12 +14,8 @@ const QuestionPage = () => {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const response = await fetch('http://localhost:3001/questions');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setQuestions(data);
+        const response = await axios.get('http://localhost:3001/questions');
+        setQuestions(response.data);
       } catch (error) {
         setError(error.message);
       } finally {
