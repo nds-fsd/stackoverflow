@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import styles from './InsideQuestionPage.module.css';
 import Header from '../Header/Header.jsx';
 import Footer from '../Footer/Footer.jsx';
 import profilePic from './profilePic.png';
-import photographer from './photographer.png';
+import { getUserToken } from '../../_utils/localStorage.utils'; // Corrected path
 
 const InsideQuestionPage = () => {
   const { id } = useParams();
@@ -12,51 +12,143 @@ const InsideQuestionPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [users, setUsers] = useState([]);
-  const [likeCount, setLikeCount] = useState(0);
-  const [liked, setLiked] = useState(false);
+  const [comments, setComments] = useState([]);
+  const [content, setContent] = useState('');
+  const [likeCounts, setLikeCounts] = useState({});
+  const [likedComments, setLikedComments] = useState({});
+  const textareaRef = useRef(null);
 
-  const toggleDisplay = () => {
-    setLikeCount((prevCount) => (prevCount === 0 ? 1 : 0));
-    setLiked((prevLiked) => !prevLiked);
+  const toggleLike = async (commentId) => {
+    const token = getUserToken();
+    const hardcodedUserId = '663d36e540d2aa2e407ce4ba'; // Replace with an actual user ID
+
+    try {
+      const response = await fetch('http://localhost:3001/likes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ commentId, userId: hardcodedUserId }),
+      });
+
+      if (response.ok) {
+        fetchLikeCount(commentId); // Refresh like count after submission
+        setLikedComments((prevLikedComments) => ({
+          ...prevLikedComments,
+          [commentId]: !prevLikedComments[commentId],
+        }));
+      } else {
+        console.error('Failed to post like');
+      }
+    } catch (err) {
+      console.error('Error:', err);
+    }
+  };
+
+  const fetchLikeCount = async (commentId) => {
+    try {
+      const response = await fetch(`http://localhost:3001/likes/${commentId}`);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      setLikeCounts((prevCounts) => ({ ...prevCounts, [commentId]: data.likeCount }));
+    } catch (error) {
+      console.error('Error fetching like count:', error);
+    }
+  };
+
+  const fetchQuestion = async () => {
+    try {
+      const response = await fetch(`http://localhost:3001/questions/${id}`);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      setQuestion(data);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch('http://localhost:3001/users');
+      if (!response.ok) {
+        throw new Error('Network response was not ok (fetchUsers)');
+      }
+      const data = await response.json();
+      setUsers(data);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchComments = async () => {
+    try {
+      const response = await fetch(`http://localhost:3001/comments/${id}`);
+      if (!response.ok) {
+        throw new Error('Network response was not ok (fetchComments)');
+      }
+      const data = await response.json();
+      setComments(data);
+
+      // Fetch like counts for all comments
+      data.forEach((comment) => {
+        fetchLikeCount(comment._id);
+        setLikedComments((prevLikedComments) => ({
+          ...prevLikedComments,
+          [comment._id]: false,
+        }));
+      });
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
   useEffect(() => {
-    const fetchQuestion = async () => {
-      try {
-        const response = await fetch(`http://localhost:3001/questions/${id}`);
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setQuestion(data);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchQuestion();
+    fetchUsers();
+    fetchComments();
   }, [id]);
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await fetch('http://localhost:3001/users');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setUsers(data);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const token = getUserToken();
+    const hardcodedUserId = '663d36fa40d2aa2e407ce4bc'; // Replace with an actual user ID
 
-    fetchUsers();
-  }, []);
+    try {
+      const response = await fetch('http://localhost:3001/comments', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ questionId: id, userId: hardcodedUserId, content }),
+      });
+
+      if (response.ok) {
+        setContent('');
+        fetchComments(); // Refresh comments after submission
+      } else {
+        console.error('Failed to post comment');
+      }
+    } catch (err) {
+      console.error('Error:', err);
+    }
+  };
+
+  const handleInput = () => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -99,58 +191,43 @@ const InsideQuestionPage = () => {
               </div>
 
               <div className={styles.questionBubble}>
-                <input className={styles.commentInput} name='commentInput' placeholder='Add a comment' />
+                <form onSubmit={handleSubmit} className={styles.commentForm}>
+                  <textarea
+                    className={styles.commentInput}
+                    name='commentInput'
+                    placeholder='Add a comment'
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                    onInput={handleInput}
+                    ref={textareaRef}
+                    required
+                  />
+                  <button type='submit' className={styles.submitButton}>
+                    Submit Comment
+                  </button>
+                </form>
                 <h3>Comments</h3>
-                <div className={styles.questionBubblecomment}>
-                  <img src={profilePic} alt='Profile' className={styles.profilePic} />
-                  <div className={styles.commentContent}>
-                    <div className={styles.commentUsername}>
-                      {users[1] && users[1].username}
-                      <span className={styles.commentTime}> • 4 hours ago</span>
-                    </div>
-                    <div className={styles.commentText}>
-                      It sounds like you're encountering a challenging issue with the WebSocket connection when accessed
-                      via an external server address. Here are some detailed steps and considerations that might help
-                      you troubleshoot and resolve this problem: Server Configuration: First, ensure that your Comfy UI
-                      server is configured to accept connections from all IP addresses, not just localhost. Sometimes
-                      servers are set up to listen only to local connections by default, which can cause issues when
-                      trying to access them externally. Firewall and Network Security: Check the firewall settings on
-                      your server. Firewalls can block incoming connections on the port used by your WebSocket server.
-                      Additionally, if you are using cloud services like AWS, Azure, or Google Cloud Platform, make sure
-                      that the security groups or network ACLs are configured to allow traffic on the required port.
-                      Good luck, and I hope this helps resolve your problem! If you need further assistance, feel free
-                      to ask.
-                      <div className={styles.heartBg}>
-                        <div
-                          className={`${styles.heartIcon} ${liked ? styles.liked : ''}`}
-                          onClick={toggleDisplay}
-                        ></div>
-                        <div className={styles.likesAmount}>{likeCount}</div>
+                {comments.map((comment) => (
+                  <div key={comment._id} className={styles.questionBubblecomment}>
+                    <img src={profilePic} alt='Profile' className={styles.profilePic} />
+                    <div className={styles.commentContent}>
+                      <div className={styles.commentUsername}>
+                        {comment.userId.username}
+                        <span className={styles.commentTime}> • {new Date(comment.createdAt).toLocaleString()}</span>
+                      </div>
+                      <div className={styles.commentText}>
+                        {comment.content}
+                        <div className={styles.heartBg}>
+                          <div
+                            className={`${styles.heartIcon} ${likedComments[comment._id] ? styles.liked : ''}`}
+                            onClick={() => toggleLike(comment._id)}
+                          ></div>
+                          <div className={styles.likesAmount}>{likeCounts[comment._id] || 0}</div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-
-                <div className={styles.questionBubblecomment}>
-                  <img src={photographer} alt='Profile' className={styles.profilePic} />
-                  <div className={styles.commentContent}>
-                    <div className={styles.commentUsername}>
-                      {users[2] && users[2].username}
-                      <span className={styles.commentTime}> • 23 minutes ago</span>
-                    </div>
-                    <div className={styles.commentText}>
-                      Why doesn't anyone try googling first, that's what it's for, also, there's chatGPT now, try going
-                      there first, this has been answered several times now, I see this every 2 days...
-                      <div className={styles.heartBg}>
-                        <div
-                          className={`${styles.heartIcon} ${liked ? styles.liked : ''}`}
-                          onClick={toggleDisplay}
-                        ></div>
-                        <div className={styles.likesAmount}>{likeCount}</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                ))}
               </div>
             </>
           )}

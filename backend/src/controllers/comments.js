@@ -9,7 +9,7 @@ const createComment = async (req, res) => {
     return res.status(400).json({ message: 'Invalid questionId or userId' });
   }
 
-  console.log('Received request body:', req.body); // Log the entire request body
+  console.log('Received request body:', req.body);
 
   try {
     const newComment = new Comment({
@@ -28,7 +28,7 @@ const createComment = async (req, res) => {
 
     res.status(201).json(newComment);
   } catch (error) {
-    console.error('Error saving comment:', error); // Detailed error logging
+    console.error('Error saving comment:', error);
     res.status(500).json({ message: 'Error creating comment', error: error.message });
   }
 };
