@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Like = require('../mongo/data/schemas/like');
-const Comment = require('../mongo/data/schemas/comment');
 
 const createLike = async (req, res) => {
   const { userId, commentId } = req.body;
@@ -25,6 +24,26 @@ const createLike = async (req, res) => {
   }
 };
 
+const deleteLike = async (req, res) => {
+  const { userId, commentId } = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(userId) || !mongoose.Types.ObjectId.isValid(commentId)) {
+    return res.status(400).json({ message: 'Invalid userId or commentId' });
+  }
+
+  try {
+    const existingLike = await Like.findOneAndDelete({ userId, commentId });
+    if (!existingLike) {
+      return res.status(404).json({ message: 'Like not found' });
+    }
+
+    res.status(200).json({ message: 'Like deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting like:', error);
+    res.status(500).json({ message: 'Error deleting like', error: error.message });
+  }
+};
+
 const getLikeCountByCommentId = async (req, res) => {
   const { commentId } = req.params;
 
@@ -41,7 +60,25 @@ const getLikeCountByCommentId = async (req, res) => {
   }
 };
 
+const getLikesByUserId = async (req, res) => {
+  const { userId } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    return res.status(400).json({ message: 'Invalid userId' });
+  }
+
+  try {
+    const likes = await Like.find({ userId }).select('commentId');
+    res.json(likes);
+  } catch (error) {
+    console.error('Error fetching likes:', error);
+    res.status(500).json({ message: 'Error fetching likes', error });
+  }
+};
+
 module.exports = {
   createLike,
+  deleteLike,
   getLikeCountByCommentId,
+  getLikesByUserId,
 };

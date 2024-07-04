@@ -4,7 +4,8 @@ import styles from './InsideQuestionPage.module.css';
 import Header from '../Header/Header.jsx';
 import Footer from '../Footer/Footer.jsx';
 import profilePic from './profilePic.png';
-import { getUserToken } from '../../_utils/localStorage.utils'; // Corrected path
+import deleteIcon from './deleteIcon.png'; // Import the delete icon
+import { getUserToken, getUserSession } from '../../_utils/localStorage.utils'; // Corrected path
 
 const InsideQuestionPage = () => {
   const { id } = useParams();
@@ -18,13 +19,16 @@ const InsideQuestionPage = () => {
   const [likedComments, setLikedComments] = useState({});
   const textareaRef = useRef(null);
 
+  const hardcodedUserId = '663d36e540d2aa2e407ce4ba'; // Replace with an actual user ID
+  const userSession = getUserSession(); // Get the logged-in user session
+
   const toggleLike = async (commentId) => {
     const token = getUserToken();
-    const hardcodedUserId = '663d36e540d2aa2e407ce4ba'; // Replace with an actual user ID
 
     try {
+      const method = likedComments[commentId] ? 'DELETE' : 'POST';
       const response = await fetch('http://localhost:3001/likes', {
-        method: 'POST',
+        method,
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
@@ -39,7 +43,7 @@ const InsideQuestionPage = () => {
           [commentId]: !prevLikedComments[commentId],
         }));
       } else {
-        console.error('Failed to post like');
+        console.error('Failed to toggle like');
       }
     } catch (err) {
       console.error('Error:', err);
@@ -56,6 +60,31 @@ const InsideQuestionPage = () => {
       setLikeCounts((prevCounts) => ({ ...prevCounts, [commentId]: data.likeCount }));
     } catch (error) {
       console.error('Error fetching like count:', error);
+    }
+  };
+
+  const fetchUserLikes = async () => {
+    const token = getUserToken();
+
+    try {
+      const response = await fetch(`http://localhost:3001/user-likes/${hardcodedUserId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      const likedCommentIds = data.map((like) => like.commentId);
+      setLikedComments(
+        likedCommentIds.reduce((acc, commentId) => {
+          acc[commentId] = true;
+          return acc;
+        }, {}),
+      );
+    } catch (error) {
+      console.error('Error fetching user likes:', error);
     }
   };
 
@@ -99,13 +128,7 @@ const InsideQuestionPage = () => {
       setComments(data);
 
       // Fetch like counts for all comments
-      data.forEach((comment) => {
-        fetchLikeCount(comment._id);
-        setLikedComments((prevLikedComments) => ({
-          ...prevLikedComments,
-          [comment._id]: false,
-        }));
-      });
+      data.forEach((comment) => fetchLikeCount(comment._id));
     } catch (error) {
       setError(error.message);
     }
@@ -115,12 +138,12 @@ const InsideQuestionPage = () => {
     fetchQuestion();
     fetchUsers();
     fetchComments();
+    fetchUserLikes(); // Fetch user likes
   }, [id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = getUserToken();
-    const hardcodedUserId = '663d36fa40d2aa2e407ce4bc'; // Replace with an actual user ID
 
     try {
       const response = await fetch('http://localhost:3001/comments', {
@@ -147,6 +170,28 @@ const InsideQuestionPage = () => {
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+  };
+
+  const handleDelete = async (commentId) => {
+    const token = getUserToken();
+
+    try {
+      const response = await fetch(`http://localhost:3001/comments/${commentId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        fetchComments(); // Refresh comments after deletion
+      } else {
+        console.error('Failed to delete comment');
+      }
+    } catch (err) {
+      console.error('Error:', err);
     }
   };
 
@@ -210,6 +255,14 @@ const InsideQuestionPage = () => {
                 {comments.map((comment) => (
                   <div key={comment._id} className={styles.questionBubblecomment}>
                     <img src={profilePic} alt='Profile' className={styles.profilePic} />
+                    {comment.userId._id === hardcodedUserId && ( // Check if the comment belongs to the logged-in user
+                      <img
+                        src={deleteIcon}
+                        alt='Delete'
+                        className={styles.deleteIcon}
+                        onClick={() => handleDelete(comment._id)}
+                      />
+                    )}
                     <div className={styles.commentContent}>
                       <div className={styles.commentUsername}>
                         {comment.userId.username}
