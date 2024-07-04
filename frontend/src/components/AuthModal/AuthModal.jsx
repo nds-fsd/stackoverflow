@@ -1,32 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
+import axios from 'axios';
 import styles from './AuthModal.module.css';
+import { setUserSession } from '../../_utils/localStorage.utils.js';
 
 const AuthModal = ({ show, handleClose, isLogin }) => {
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const email = e.target.email.value;
-    const password = e.target.password.value;
-    let requestBody = {
+  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const userData = {
       email,
+      username,
       password,
     };
 
     try {
-      const response = await fetch(
-        isLogin ? 'http://localhost:3001/auth/login' : 'http://localhost:3001/auth/register',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(requestBody),
-        },
-      );
+      const url = isLogin ? 'http://localhost:3001/auth/login' : 'http://localhost:3001/auth/register';
+      const response = await axios.post(url, userData);
+      setEmail('');
+      setUsername('');
+      setPassword('');
 
-      if (response.ok) {
-        const data = await response.json();
-        console.log(isLogin ? 'Login successful:' : 'Signed in successfully:', data);
+      if (response.status === 200 || response.status === 201) {
+        console.log(isLogin ? 'Login successful:' : 'Signed in successfully:', response.data);
+
+        // Guardar la sesión del usuario en localStorage
+        const sessionData = {
+          token: response.data.token,
+          user: response.data.user, // Ajustar según la estructura de la respuesta del backend
+        };
+        setUserSession(sessionData);
+
         handleClose();
       } else {
         throw new Error('Network response was not ok.');
@@ -46,19 +54,37 @@ const AuthModal = ({ show, handleClose, isLogin }) => {
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId='formBasicEmail'>
             <Form.Label>Email</Form.Label>
-            <Form.Control type='email' name='email' placeholder='Enter your email' required />
+            <Form.Control
+              type='email'
+              name='email'
+              placeholder='Enter your email'
+              required
+              onChange={(event) => setEmail(event.target.value)}
+            />
           </Form.Group>
 
           {!isLogin && (
             <Form.Group controlId='formBasicUserName'>
               <Form.Label>Username</Form.Label>
-              <Form.Control type='text' name='username' placeholder='Enter your username' required />
+              <Form.Control
+                type='text'
+                name='username'
+                placeholder='Enter your username'
+                required
+                onChange={(event) => setUsername(event.target.value)}
+              />
             </Form.Group>
           )}
 
           <Form.Group controlId='formBasicPassword'>
             <Form.Label>Password</Form.Label>
-            <Form.Control type='password' name='password' placeholder='Enter your password' required />
+            <Form.Control
+              type='password'
+              name='password'
+              placeholder='Enter your password'
+              required
+              onChange={(event) => setPassword(event.target.value)}
+            />
           </Form.Group>
 
           <Button variant='primary' type='submit'>
