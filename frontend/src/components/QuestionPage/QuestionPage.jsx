@@ -27,7 +27,6 @@ const QuestionPage = () => {
   }, []);
 
   const directToQuestion = (questionId) => {
-    console.log(questionId);
     navigate('/questions/' + questionId);
   };
 
@@ -75,9 +74,9 @@ const QuestionPage = () => {
                 <h2>{question.title}</h2>
                 <p>{question.body}</p>
                 <ul>{question.tags && question.tags.map((tag) => <li key={tag}>{tag}</li>)}</ul>
-                <p>Author: {question.author}</p>
-                <p>Published: {new Date(question.created_at).toLocaleDateString()}</p>
-                <p>Last Modified: {new Date(question.updated_at).toLocaleDateString()}</p>
+                <p>Author: {question.author ? question.author.username : 'Unknown'}</p>{' '}
+                {/* Safely accessing username */}
+                <p>Published: {question.created_at && new Date(question.created_at).toLocaleDateString()}</p>
                 <p>Votes: {question.votes}</p>
               </div>
             ))}
