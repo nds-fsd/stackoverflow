@@ -45,6 +45,20 @@ const createQuestion = async (req, res) => {
   }
 };
 
+const getQuestions = async (req, res) => {
+  try {
+    const queryStrings = req.query || {};
+    const allQuestions = await Question.find(queryStrings)
+      .where('deleted_at')
+      .equals(null)
+      .populate('author', 'username'); // Populate the author field with the username
+    res.json(allQuestions);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error fetching questions', error });
+  }
+};
+
 const getQuestionById = async (req, res) => {
   try {
     const question = await Question.findById(req.params.id).populate('author', 'username'); // Populate the author field with the username
@@ -84,7 +98,7 @@ const deleteQuestion = async (req, res) => {
     res.status(204).send();
   } catch (error) {
     console.error('Error deleting question', error);
-    res.status500.json({ message: 'Error deleting question' });
+    res.status(500).json({ message: 'Error deleting question' });
   }
 };
 
