@@ -1,53 +1,54 @@
+const mongoose = require('mongoose');
 const Comment = require('../mongo/data/schemas/comment');
+const Question = require('../mongo/data/schemas/question');
 
 const createComment = async (req, res) => {
-  const { user, text, question } = req.body;
+  const { questionId, userId, content } = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(questionId) || !mongoose.Types.ObjectId.isValid(userId)) {
+    return res.status(400).json({ message: 'Invalid questionId or userId' });
+  }
+
+  console.log('Received request body:', req.body); // Log the entire request body
 
   try {
     const newComment = new Comment({
-      user,
-      text,
-      question,
+      questionId,
+      userId,
+      content,
     });
+
+    console.log('Attempting to save new comment:', newComment);
 
     await newComment.save();
     console.log('Comment saved successfully', newComment);
+
+    // Optionally, update the question to include this comment
+    await Question.findByIdAndUpdate(questionId, { $push: { comments: newComment._id } });
+
     res.status(201).json(newComment);
   } catch (error) {
-    console.error('Error saving comment', error);
-    res.status(500).json({ message: 'Error creating comment', error });
+    console.error('Error saving comment:', error); // Detailed error logging
+    res.status(500).json({ message: 'Error creating comment', error: error.message });
   }
 };
 
-const editComment = async (req, res) => {
-  try {
-    const updatedComment = await Comment.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!updatedComment) {
-      return res.status(404).json({ message: 'Comment not found' });
-    }
-    console.log(updatedComment);
-    res.json(updatedComment);
-  } catch (error) {
-    console.error('Error updating comment', error);
-    res.status(500).json({ message: 'Error updating comment' });
-  }
-};
+const getCommentsByQuestionId = async (req, res) => {
+  const { questionId } = req.params;
 
-const deleteComment = async (req, res) => {
   try {
-    const deletedComment = await Comment.findByIdAndDelete(req.params.id);
-    if (!deletedComment) {
-      return res.status(404).json({ message: 'Comment not found' });
+    const comments = await Comment.find({ questionId }).populate('userId', 'username');
+    if (!comments) {
+      return res.status(404).json({ message: 'No comments found' });
     }
-    res.status(204).send();
+    res.json(comments);
   } catch (error) {
-    console.error('Error deleting comment', error);
-    res.status(500).json({ message: 'Error deleting comment' });
+    console.error('Error fetching comments:', error);
+    res.status(500).json({ message: 'Error fetching comments', error });
   }
 };
 
 module.exports = {
   createComment,
-  editComment,
-  deleteComment,
+  getCommentsByQuestionId,
 };
