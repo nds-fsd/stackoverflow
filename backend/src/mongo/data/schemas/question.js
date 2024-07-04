@@ -4,9 +4,8 @@ const { Schema, model } = require('mongoose');
 const questionSchema = new Schema({
   title: { type: String, required: true },
   body: { type: String, required: true },
-  tags: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tag', default: [] }], // Corrected to 'Tag'
-
-  author: { type: String, required: true }, // Change to simple string
+  tags: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tag', default: [] }],
+  author: { type: mongoose.Schema.Types.ObjectId, ref: 'user', required: true }, // Change to reference the User model
   comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
   created_at: { type: Date, default: Date.now },
   updated_at: { type: Date },

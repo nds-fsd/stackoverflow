@@ -19,7 +19,7 @@ const InsideQuestionPage = () => {
   const [likedComments, setLikedComments] = useState({});
   const textareaRef = useRef(null);
 
-  const hardcodedUserId = '663d36e540d2aa2e407ce4ba'; // Replace with an actual user ID
+  const hardcodedUserId = '663d370a40d2aa2e407ce4c0'; // Replace with an actual user ID
   const userSession = getUserSession(); // Get the logged-in user session
 
   const toggleLike = async (commentId) => {
@@ -158,6 +158,11 @@ const InsideQuestionPage = () => {
       if (response.ok) {
         setContent('');
         fetchComments(); // Refresh comments after submission
+
+        // Reset the height of the textarea to its initial state
+        if (textareaRef.current) {
+          textareaRef.current.style.height = 'auto';
+        }
       } else {
         console.error('Failed to post comment');
       }
@@ -229,7 +234,8 @@ const InsideQuestionPage = () => {
           {question && (
             <>
               <div className={styles.questionBubble}>
-                Asked by: {question.author} on {new Date(question.created_at).toLocaleDateString()}
+                Asked by: {question.author ? question.author.username : 'Unknown'} on{' '}
+                {new Date(question.created_at).toLocaleDateString()}
                 <h1>{question.title}</h1>
                 <h3>{question.body}</h3>
                 <h5>Tags: {question.tags ? question.tags.join(', ') : 'No tags available'}</h5>
