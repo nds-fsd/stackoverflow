@@ -1,11 +1,11 @@
-const handlebars = require("handlebars");
-const fs  = require("fs");
-const path = require("path");
-const nodemailer = require("nodemailer");
+const handlebars = require('handlebars');
+const fs = require('fs');
+const path = require('path');
+const nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport({
-  service: "Gmail",
-  host: "smtp.gmail.com",
+  service: 'Gmail',
+  host: 'smtp.gmail.com',
   port: 465,
   secure: true,
   auth: {
@@ -15,15 +15,15 @@ const transporter = nodemailer.createTransport({
 });
 
 const readHbsTemplate = (templateName) => {
-  const templatePath = path.join(__dirname, `../email-templates/${welcome}.hbs`);
-  const templateString = fs.readFileSync(templatePath, "utf-8")
+  const templatePath = path.join(__dirname, `../email-templates/welcome.hbs`);
+  const templateString = fs.readFileSync(templatePath, 'utf-8');
   return handlebars.compile(templateString);
-}
+};
 
-const sendWelcomeEmail = async (email, name) => {
-  const welcomeTemplate = readHbsTemplate("welcome");
-  return sendEmail(email, `Welcome to Devvit ${name}!`, welcomeTemplate({ name }));
-}
+const sendWelcomeEmail = async (email, username) => {
+  const welcomeTemplate = readHbsTemplate('welcome');
+  return sendEmail(email, `Welcome to Devvit ${username}!`, welcomeTemplate({ username }));
+};
 
 const sendEmail = async (email, subject, template) => {
   const mailOptions = {
@@ -35,14 +35,13 @@ const sendEmail = async (email, subject, template) => {
 
   return transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      console.error("Error sending email: ", error);
+      console.error('Error sending email: ', error);
     } else {
-      console.log("Email sent: ", info.response);
+      console.log('Email sent: ', info.response);
     }
   });
-
-}
+};
 
 module.exports = {
   sendWelcomeEmail,
-}
+};
