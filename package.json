@@ -3,7 +3,8 @@
   "private": true,
   "workspaces": [
     "backend",
-    "frontend"
+    "frontend",
+    "emails"
   ],
   "scripts": {
     "start:frontend": "dotenv -- turbo run dev --scope='frontend'",
@@ -21,7 +22,9 @@
     "bcryptjs": "^2.4.3",
     "bootstrap": "^5.3.3",
     "express": "^4.19.2",
+    "handlebars": "^4.7.8",
     "jsonwebtoken": "^9.0.2",
+    "nodemailer": "^6.9.14",
     "react-bootstrap": "^2.10.2",
     "react-router-dom": "^6.23.1"
   }

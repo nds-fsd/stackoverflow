@@ -12,6 +12,16 @@ const createComment = async (req, res) => {
 
     await newComment.save();
     console.log('Comment saved successfully', newComment);
+
+    const questionData = await Question.findById(question).populate('user'); // Assuming the question has a 'user' field referring to its owner
+    if (questionData) {
+      const ownerEmail = questionData.user.email;
+      const ownerUsername = questionData.user.username;
+      const commenterName = user.username;
+
+      await sendCommentNotificationEmail(ownerEmail, ownerUsername, commenterName);
+    }
+
     res.status(201).json(newComment);
   } catch (error) {
     console.error('Error saving comment', error);
