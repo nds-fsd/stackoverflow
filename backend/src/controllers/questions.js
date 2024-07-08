@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Question = require('../mongo/data/schemas/question');
 const Tag = require('../mongo/data/schemas/tag');
-const user = require('../mongo/data/schemas/user'); // Ensure User model is imported
+const User = require('../mongo/data/schemas/user');
 
 const createQuestion = async (req, res) => {
   const { title, body, tags, authorId } = req.body;
@@ -9,7 +9,13 @@ const createQuestion = async (req, res) => {
   console.log('Received request body:', req.body);
 
   try {
-    const author = mongoose.Types.ObjectId(authorId);
+
+    // Find the user based on authorId
+    const author = await User.findById(authorId);
+
+    if (!author) {
+      return res.status(404).json({ message: 'Author not found' });
+    }
 
     if (!Array.isArray(tags)) {
       console.error('Tags must be an array');
@@ -27,11 +33,17 @@ const createQuestion = async (req, res) => {
       }),
     );
 
+    console.log('Tag IDs:', tagIds);
+
+
     const newQuestion = new Question({
       title,
       body,
       tags: tagIds,
-      author,
+      author: {
+        _id: author._id,
+        username: author.username,
+      },
     });
 
     await newQuestion.save();
@@ -52,6 +64,7 @@ const getQuestions = async (req, res) => {
       .where('deleted_at')
       .equals(null)
       .populate('author', 'username'); // Populate the author field with the username
+
     res.json(allQuestions);
   } catch (error) {
     console.error(error);
@@ -61,7 +74,9 @@ const getQuestions = async (req, res) => {
 
 const getQuestionById = async (req, res) => {
   try {
-    const question = await Question.findById(req.params.id).populate('author', 'username'); // Populate the author field with the username
+
+    const question = await Question.findById(req.params.id)
+      .populate('author', 'username'); // También aquí se asegura de poblar el autor con 'username'
     if (!question || question.deleted_at) {
       return res.status(404).json({ message: 'Question not found' });
     }
@@ -78,6 +93,7 @@ const editQuestion = async (req, res) => {
       'author',
       'username',
     ); // Populate the author field with the username
+
     if (!updatedQuestion) {
       return res.status(404).json({ message: 'Question not found' });
     }

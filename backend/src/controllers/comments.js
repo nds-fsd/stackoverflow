@@ -25,6 +25,15 @@ const createComment = async (req, res) => {
 
     // Optionally, update the question to include this comment
     await Question.findByIdAndUpdate(questionId, { $push: { comments: newComment._id } });
+    const questionData = await Question.findById(question).populate('user'); // Assuming the question has a 'user' field referring to its owner
+    if (questionData) {
+      const ownerEmail = questionData.user.email;
+      const ownerUsername = questionData.user.username;
+      const commenterName = user.username;
+
+      await sendCommentNotificationEmail(ownerEmail, ownerUsername, commenterName);
+    }
+
 
     res.status(201).json(newComment);
   } catch (error) {

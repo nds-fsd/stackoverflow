@@ -17,6 +17,7 @@ const userSchema = new Schema({
   deleted_at: { type: Date },
 });
 
-const user = model('user', userSchema);
+
+const User = model('User', userSchema);
 
 module.exports = user;
