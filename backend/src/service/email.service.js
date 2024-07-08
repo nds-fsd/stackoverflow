@@ -25,6 +25,17 @@ const sendWelcomeEmail = async (email, username) => {
   return sendEmail(email, `Welcome to Devvit ${username}!`, welcomeTemplate({ username }));
 };
 
+const readHbsTemplateComment = (templateName) => {
+  const templatePath = path.join(__dirname, `../email-templates/commentemail.hbs`);
+  const templateString = fs.readFileSync(templatePath, 'utf-8');
+  return handlebars.compile(templateString);
+};
+
+const sendCommentNotificationEmail = async (email, username, commenterName) => {
+  const commentTemplate = readHbsTemplate('commentemail');
+  return sendEmail(email, 'New comment on your question, ${username}', commentTemplate({ username, commenterName }));
+};
+
 const sendEmail = async (email, subject, template) => {
   const mailOptions = {
     from: process.env.EMAIL_ADDRESS,
@@ -44,4 +55,5 @@ const sendEmail = async (email, subject, template) => {
 
 module.exports = {
   sendWelcomeEmail,
+  sendCommentNotificationEmail,
 };
