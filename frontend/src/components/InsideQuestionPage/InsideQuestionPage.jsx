@@ -19,7 +19,7 @@ const InsideQuestionPage = () => {
   const [likedComments, setLikedComments] = useState({});
   const textareaRef = useRef(null);
 
-  const hardcodedUserId = '663d370a40d2aa2e407ce4c0'; // Replace with an actual user ID
+  const hardcodedUserId = '6688408003482d4cf7660b82'; // Replace with an actual user ID
   const userSession = getUserSession(); // Get the logged-in user session
 
   const toggleLike = async (commentId) => {

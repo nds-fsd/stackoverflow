@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Comment = require('../mongo/data/schemas/comment');
 const Question = require('../mongo/data/schemas/question');
+const { sendCommentNotificationEmail } = require('../service/email.service');
 
 const createComment = async (req, res) => {
   const { questionId, userId, content } = req.body;
@@ -25,15 +26,14 @@ const createComment = async (req, res) => {
 
     // Optionally, update the question to include this comment
     await Question.findByIdAndUpdate(questionId, { $push: { comments: newComment._id } });
-    const questionData = await Question.findById(question).populate('user'); // Assuming the question has a 'user' field referring to its owner
+    const questionData = await Question.findById(questionId).populate('author'); // Assuming the question has a 'user' field referring to its owner
     if (questionData) {
-      const ownerEmail = questionData.user.email;
-      const ownerUsername = questionData.user.username;
-      const commenterName = user.username;
+      const ownerEmail = questionData.author.email;
+      const ownerUsername = questionData.author.username;
+      const commenterName = newComment.userId.username;
 
       await sendCommentNotificationEmail(ownerEmail, ownerUsername, commenterName);
     }
-
 
     res.status(201).json(newComment);
   } catch (error) {

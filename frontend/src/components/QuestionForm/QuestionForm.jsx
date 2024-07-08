@@ -18,7 +18,7 @@ const QuestionForm = () => {
       title,
       body,
       tags: tags.split(',').map((tag) => tag.trim()),
-      authorId: '663d370a40d2aa2e407ce4c0', // Hardcoded author ID for testing
+      authorId: '6688408003482d4cf7660b82', // Hardcoded author ID for testing
     };
 
     try {
