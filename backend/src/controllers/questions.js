@@ -9,6 +9,7 @@ const createQuestion = async (req, res) => {
   console.log('Received request body:', req.body);
 
   try {
+
     // Find the user based on authorId
     const author = await User.findById(authorId);
 
@@ -34,6 +35,7 @@ const createQuestion = async (req, res) => {
 
     console.log('Tag IDs:', tagIds);
 
+
     const newQuestion = new Question({
       title,
       body,
@@ -44,14 +46,14 @@ const createQuestion = async (req, res) => {
       },
     });
 
-    console.log('Attempting to save new question:', newQuestion);
-
     await newQuestion.save();
-    console.log('Question saved successfully', newQuestion);
-    res.status(201).json(newQuestion);
+
+    const populatedQuestion = await Question.findById(newQuestion._id).populate('author', 'username');
+
+    res.status(201).json(populatedQuestion);
   } catch (error) {
     console.error('Error saving question:', error);
-    res.status(500).json({ message: 'Error creating question' });
+    res.status(500).json({ message: 'Error creating question', error: error.message });
   }
 };
 
@@ -59,8 +61,10 @@ const getQuestions = async (req, res) => {
   try {
     const queryStrings = req.query || {};
     const allQuestions = await Question.find(queryStrings)
-      .where('deleted_at').equals(null)
-      .populate('author', 'username'); // Aquí se especifica que solo se desea el campo 'username' del autor
+      .where('deleted_at')
+      .equals(null)
+      .populate('author', 'username'); // Populate the author field with the username
+
     res.json(allQuestions);
   } catch (error) {
     console.error(error);
@@ -70,6 +74,7 @@ const getQuestions = async (req, res) => {
 
 const getQuestionById = async (req, res) => {
   try {
+
     const question = await Question.findById(req.params.id)
       .populate('author', 'username'); // También aquí se asegura de poblar el autor con 'username'
     if (!question || question.deleted_at) {
@@ -87,7 +92,8 @@ const editQuestion = async (req, res) => {
     const updatedQuestion = await Question.findByIdAndUpdate(req.params.id, req.body, { new: true }).populate(
       'author',
       'username',
-    ); // Populate the author field with username
+    ); // Populate the author field with the username
+
     if (!updatedQuestion) {
       return res.status(404).json({ message: 'Question not found' });
     }

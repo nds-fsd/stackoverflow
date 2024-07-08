@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { Schema, model } = require('mongoose');
+const { Schema, model } = mongoose;
 
 const userSchema = new Schema({
   email: {
@@ -17,6 +17,7 @@ const userSchema = new Schema({
   deleted_at: { type: Date },
 });
 
+
 const User = model('User', userSchema);
 
-module.exports = User;
+module.exports = user;
