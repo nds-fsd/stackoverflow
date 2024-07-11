@@ -56,16 +56,30 @@ const createQuestion = async (req, res) => {
     res.status(500).json({ message: 'Error creating question', error: error.message });
   }
 };
-
 const getQuestions = async (req, res) => {
   try {
-    const queryStrings = req.query || {};
-    const allQuestions = await Question.find(queryStrings)
+    const { page = 1, limit = 5, sortBy = 'popular' } = req.query;
+
+    let sortCriteria;
+    if (sortBy === 'new') {
+      sortCriteria = { created_at: -1 };
+    } else if (sortBy === 'popular') {
+      sortCriteria = { likes: -1 };
+    } else {
+      sortCriteria = {};
+    }
+
+    const questions = await Question.find()
       .where('deleted_at')
       .equals(null)
-      .populate('author', 'username'); // Populate the author field with the username
+      .populate('author', 'username')
+      .sort(sortCriteria)
+      .skip((page - 1) * limit)
+      .limit(parseInt(limit));
 
-    res.json(allQuestions);
+    const totalQuestions = await Question.countDocuments().where('deleted_at').equals(null);
+
+    res.json({ questions, totalQuestions });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error fetching questions', error });

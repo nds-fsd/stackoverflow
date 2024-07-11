@@ -16,18 +16,24 @@ const QuestionPage = () => {
   const [likedQuestions, setLikedQuestions] = useState({});
   const [questionLikeCounts, setQuestionLikeCounts] = useState({});
   const [sortOption, setSortOption] = useState('popular'); // State to manage sorting option
+  const [page, setPage] = useState(1); // Page state for pagination
+  const [totalQuestions, setTotalQuestions] = useState(0); // Total number of questions
 
   const hardcodedUserId = '6688408003482d4cf7660b82'; // Mocked user ID
 
-  const fetchQuestionsAndTags = async () => {
-    setLoading(true);
+  const fetchQuestionsAndTags = async (reset = false) => {
     try {
+      if (reset) {
+        setQuestions([]);
+        setLoading(true);
+      }
       const [questionsResponse, tagsResponse] = await Promise.all([
-        axios.get('http://localhost:3001/questions'),
+        axios.get(`http://localhost:3001/questions?page=${page}&limit=5&sortBy=${sortOption}`),
         axios.get('http://localhost:3001/tags'),
       ]);
 
-      const questionsData = questionsResponse.data;
+      const questionsData = questionsResponse.data.questions;
+      const totalQuestionsCount = questionsResponse.data.totalQuestions;
 
       const likedQuestionsMap = {};
       const questionLikeCountsMap = {};
@@ -37,10 +43,17 @@ const QuestionPage = () => {
         questionLikeCountsMap[question._id] = question.likes.length;
       });
 
-      setQuestions(questionsData);
+      setQuestions((prevQuestions) => {
+        const combinedQuestions = reset ? questionsData : [...prevQuestions, ...questionsData];
+        const uniqueQuestions = combinedQuestions.reduce((unique, item) => {
+          return unique.some((question) => question._id === item._id) ? unique : [...unique, item];
+        }, []);
+        return uniqueQuestions;
+      });
       setTags(tagsResponse.data);
-      setLikedQuestions(likedQuestionsMap);
-      setQuestionLikeCounts(questionLikeCountsMap);
+      setLikedQuestions((prevLikedQuestions) => ({ ...prevLikedQuestions, ...likedQuestionsMap }));
+      setQuestionLikeCounts((prevCounts) => ({ ...prevCounts, ...questionLikeCountsMap }));
+      setTotalQuestions(totalQuestionsCount);
     } catch (error) {
       setError(error.message);
     } finally {
@@ -49,20 +62,13 @@ const QuestionPage = () => {
   };
 
   useEffect(() => {
-    fetchQuestionsAndTags();
-  }, []);
+    setPage(1);
+    fetchQuestionsAndTags(true);
+  }, [sortOption]);
 
   useEffect(() => {
-    const sortedQuestions = [...questions].sort((a, b) => {
-      if (sortOption === 'popular') {
-        return questionLikeCounts[b._id] - questionLikeCounts[a._id];
-      } else if (sortOption === 'new') {
-        return new Date(b.created_at) - new Date(a.created_at);
-      }
-      return 0;
-    });
-    setQuestions(sortedQuestions);
-  }, [sortOption, questionLikeCounts]);
+    fetchQuestionsAndTags();
+  }, [page]);
 
   const toggleQuestionLike = async (questionId) => {
     const method = likedQuestions[questionId] ? 'unlike' : 'like';
@@ -117,10 +123,14 @@ const QuestionPage = () => {
 
   const handleSortChange = (e) => {
     setSortOption(e.target.value);
-    fetchQuestionsAndTags();
+    setPage(1);
   };
 
-  if (loading) {
+  const loadMoreQuestions = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
+
+  if (loading && page === 1) {
     return <div>Loading...</div>;
   }
 
@@ -167,7 +177,7 @@ const QuestionPage = () => {
             <div
               className={styles.questionBubble}
               key={question._id}
-              style={{ marginBottom: '20px' }}
+              style={{ marginBottom: '20px', position: 'relative' }}
               onClick={() => {
                 directToQuestion(question._id);
               }}
@@ -200,6 +210,11 @@ const QuestionPage = () => {
               </div>
             </div>
           ))}
+          {questions.length < totalQuestions && (
+            <button className={styles.loadMoreButton} onClick={loadMoreQuestions}>
+              Load More
+            </button>
+          )}
         </div>
       </div>
       <Footer />
