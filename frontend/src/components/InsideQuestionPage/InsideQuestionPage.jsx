@@ -18,10 +18,38 @@ const InsideQuestionPage = () => {
   const [content, setContent] = useState('');
   const [likeCounts, setLikeCounts] = useState({});
   const [likedComments, setLikedComments] = useState({});
+  const [questionLikeCount, setQuestionLikeCount] = useState(0);
+  const [likedQuestion, setLikedQuestion] = useState(false);
   const textareaRef = useRef(null);
 
   const hardcodedUserId = '6688408003482d4cf7660b82'; // Replace with an actual user ID
   const userSession = getUserSession(); // Get the logged-in user session
+
+  const toggleQuestionLike = async () => {
+    const token = getUserToken();
+
+    try {
+      const method = likedQuestion ? 'unlike' : 'like';
+      const response = await fetch(`http://localhost:3001/questions/${id}/${method}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ userId: hardcodedUserId }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setQuestionLikeCount(data.likeCount); // Update the like count
+        setLikedQuestion(!likedQuestion); // Toggle the liked state
+      } else {
+        console.error('Failed to toggle like');
+      }
+    } catch (err) {
+      console.error('Error:', err);
+    }
+  };
 
   const toggleLike = async (commentId) => {
     const token = getUserToken();
@@ -97,6 +125,8 @@ const InsideQuestionPage = () => {
       }
       const data = await response.json();
       setQuestion(data);
+      setQuestionLikeCount(data.likes.length); // Set the like count
+      setLikedQuestion(data.likes.includes(hardcodedUserId)); // Set the liked state
     } catch (error) {
       setError(error.message);
     } finally {
@@ -264,6 +294,13 @@ const InsideQuestionPage = () => {
                     ? question.tags.map((tagId) => tagIdToNameMap[tagId] || tagId).join(', ')
                     : 'No tags available'}
                 </h5>
+                <div className={styles.heartBg}>
+                  <div
+                    className={`${styles.heartIcon} ${likedQuestion ? styles.liked : ''}`}
+                    onClick={toggleQuestionLike}
+                  ></div>
+                  <div className={styles.likesAmount}>{questionLikeCount}</div>
+                </div>
               </div>
 
               <div className={styles.questionBubble}>

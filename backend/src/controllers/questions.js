@@ -1,3 +1,5 @@
+// controllers/questions.js
+
 const mongoose = require('mongoose');
 const Question = require('../mongo/data/schemas/question');
 const Tag = require('../mongo/data/schemas/tag');
@@ -9,7 +11,6 @@ const createQuestion = async (req, res) => {
   console.log('Received request body:', req.body);
 
   try {
-
     // Find the user based on authorId
     const author = await User.findById(authorId);
 
@@ -34,7 +35,6 @@ const createQuestion = async (req, res) => {
     );
 
     console.log('Tag IDs:', tagIds);
-
 
     const newQuestion = new Question({
       title,
@@ -74,9 +74,7 @@ const getQuestions = async (req, res) => {
 
 const getQuestionById = async (req, res) => {
   try {
-
-    const question = await Question.findById(req.params.id)
-      .populate('author', 'username'); // También aquí se asegura de poblar el autor con 'username'
+    const question = await Question.findById(req.params.id).populate('author', 'username'); // Populate the author field with 'username'
     if (!question || question.deleted_at) {
       return res.status(404).json({ message: 'Question not found' });
     }
@@ -118,10 +116,44 @@ const deleteQuestion = async (req, res) => {
   }
 };
 
+const likeQuestion = async (req, res) => {
+  const { id } = req.params;
+  const { userId } = req.body;
+
+  try {
+    const question = await Question.findByIdAndUpdate(
+      id,
+      { $addToSet: { likes: userId } }, // Add the userId to the likes array
+      { new: true },
+    );
+    res.status(200).json({ likeCount: question.likes.length });
+  } catch (error) {
+    res.status(500).json({ message: 'Error liking question', error });
+  }
+};
+
+const unlikeQuestion = async (req, res) => {
+  const { id } = req.params;
+  const { userId } = req.body;
+
+  try {
+    const question = await Question.findByIdAndUpdate(
+      id,
+      { $pull: { likes: userId } }, // Remove the userId from the likes array
+      { new: true },
+    );
+    res.status(200).json({ likeCount: question.likes.length });
+  } catch (error) {
+    res.status(500).json({ message: 'Error unliking question', error });
+  }
+};
+
 module.exports = {
   getQuestions,
   getQuestionById,
   createQuestion,
   editQuestion,
   deleteQuestion,
+  likeQuestion,
+  unlikeQuestion,
 };

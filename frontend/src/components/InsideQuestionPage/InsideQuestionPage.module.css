@@ -365,3 +365,12 @@
   height: 20px;
   cursor: pointer;
 }
+
+/* Specific styles for moving comment likes and like amount to the left */
+.commentBubblecomment .heartBg {
+  left: -80px; /* Adjust this value to move the heartBg to the left */
+}
+
+.commentBubblecomment .likesAmount {
+  padding-left: 153px; /* Adjust this value to move the likesAmount to the left */
+}
