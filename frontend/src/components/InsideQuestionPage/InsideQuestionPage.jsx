@@ -13,6 +13,7 @@ const InsideQuestionPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [users, setUsers] = useState([]);
+  const [tags, setTags] = useState([]);
   const [comments, setComments] = useState([]);
   const [content, setContent] = useState('');
   const [likeCounts, setLikeCounts] = useState({});
@@ -103,6 +104,19 @@ const InsideQuestionPage = () => {
     }
   };
 
+  const fetchTags = async () => {
+    try {
+      const response = await fetch('http://localhost:3001/tags');
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      setTags(data);
+    } catch (error) {
+      console.error('Error fetching tags:', error);
+    }
+  };
+
   const fetchUsers = async () => {
     try {
       const response = await fetch('http://localhost:3001/users');
@@ -136,6 +150,7 @@ const InsideQuestionPage = () => {
 
   useEffect(() => {
     fetchQuestion();
+    fetchTags();
     fetchUsers();
     fetchComments();
     fetchUserLikes(); // Fetch user likes
@@ -208,6 +223,11 @@ const InsideQuestionPage = () => {
     return <div>Error: {error}</div>;
   }
 
+  const tagIdToNameMap = tags.reduce((map, tag) => {
+    map[tag._id] = tag.name;
+    return map;
+  }, {});
+
   return (
     <>
       <Header />
@@ -238,7 +258,12 @@ const InsideQuestionPage = () => {
                 {new Date(question.created_at).toLocaleDateString()}
                 <h1>{question.title}</h1>
                 <h3>{question.body}</h3>
-                <h5>Tags: {question.tags ? question.tags.join(', ') : 'No tags available'}</h5>
+                <h5>
+                  Tags:{' '}
+                  {question.tags
+                    ? question.tags.map((tagId) => tagIdToNameMap[tagId] || tagId).join(', ')
+                    : 'No tags available'}
+                </h5>
               </div>
 
               <div className={styles.questionBubble}>

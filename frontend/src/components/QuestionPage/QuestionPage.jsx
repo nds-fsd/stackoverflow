@@ -10,15 +10,21 @@ import { getUserToken, getUserSession } from '../../_utils/localStorage.utils'; 
 const QuestionPage = () => {
   const navigate = useNavigate();
   const [questions, setQuestions] = useState([]);
+  const [tags, setTags] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const userSession = { _id: '663d370a40d2aa2e407ce4c0' }; // Mocking userSession for testing
+
   useEffect(() => {
-    const fetchQuestions = async () => {
+    const fetchQuestionsAndTags = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/questions');
-        setQuestions(response.data);
+        const [questionsResponse, tagsResponse] = await Promise.all([
+          axios.get('http://localhost:3001/questions'),
+          axios.get('http://localhost:3001/tags'),
+        ]);
+        setQuestions(questionsResponse.data);
+        setTags(tagsResponse.data);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -26,7 +32,7 @@ const QuestionPage = () => {
       }
     };
 
-    fetchQuestions();
+    fetchQuestionsAndTags();
   }, []);
 
   const directToQuestion = (questionId) => {
@@ -60,6 +66,11 @@ const QuestionPage = () => {
   if (error) {
     return <div>Error: {error}</div>;
   }
+
+  const tagIdToNameMap = tags.reduce((map, tag) => {
+    map[tag._id] = tag.name;
+    return map;
+  }, {});
 
   return (
     <>
@@ -107,8 +118,9 @@ const QuestionPage = () => {
                 )}
                 <h2>{question.title}</h2>
                 <p>{question.body}</p>
-                <ul>{question.tags && question.tags.map((tag) => <li key={tag}>{tag}</li>)}</ul>
-
+                <ul>
+                  {question.tags && question.tags.map((tagId) => <li key={tagId}>{tagIdToNameMap[tagId] || tagId}</li>)}
+                </ul>
                 <p>Author: {question.author ? question.author.username : 'Unknown'}</p>{' '}
                 {/* Safely accessing username */}
                 <p>Published: {question.created_at && new Date(question.created_at).toLocaleDateString()}</p>
