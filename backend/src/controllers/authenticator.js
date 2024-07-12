@@ -1,6 +1,8 @@
+require('dotenv').config();
 const User = require('../mongo/data/schemas/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+
 const { sendWelcomeEmail } = require('../service/email.service');
 require('dotenv').config();
 
@@ -26,9 +28,11 @@ const register = async (req, res) => {
     const newUser = new User({ email, password: hashedPassword, username });
     await newUser.save();
 
-    await sendWelcomeEmail(email, username);
+    const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, { expiresIn: '12h' });
 
-    res.status(201).json({ message: 'User registered successfully' });
+    res.status(201).json({ token, user: { _id: newUser._id, email: newUser.email, username: newUser.username } });
+
+    await sendWelcomeEmail(email, username);
   } catch (error) {
     console.error('Error registering user:', error);
     res.status(500).json({ message: 'Error registering user' });
@@ -55,7 +59,7 @@ const login = async (req, res) => {
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-    res.json({ token });
+    res.json({ token, user: { _id: user._id, email: user.email, username: user.username } });
   } catch (error) {
     res.status(500).json({ message: 'Error signing in' });
   }

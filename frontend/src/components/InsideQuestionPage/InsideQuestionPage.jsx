@@ -5,7 +5,7 @@ import Header from '../Header/Header.jsx';
 import Footer from '../Footer/Footer.jsx';
 import profilePic from './profilePic.png';
 import deleteIcon from './deleteIcon.png'; // Import the delete icon
-import { getUserToken, getUserSession } from '../../_utils/localStorage.utils'; // Corrected path
+import { getUserIdFromToken } from '../../_utils/localStorage.utils'; // Corrected path
 
 const InsideQuestionPage = () => {
   const { id } = useParams();
@@ -22,21 +22,23 @@ const InsideQuestionPage = () => {
   const [likedQuestion, setLikedQuestion] = useState(false);
   const textareaRef = useRef(null);
 
-  const hardcodedUserId = '6688408003482d4cf7660b82'; // Replace with an actual user ID
-  const userSession = getUserSession(); // Get the logged-in user session
+  const userId = getUserIdFromToken(); // Get the actual user ID from the token
+  console.log('USERID: ' + userId);
+
+  // Logging userId for debugging
+  useEffect(() => {
+    console.log('User ID from getUserIdFromToken function:', userId);
+  }, [userId]);
 
   const toggleQuestionLike = async () => {
-    const token = getUserToken();
-
     try {
       const method = likedQuestion ? 'unlike' : 'like';
       const response = await fetch(`http://localhost:3001/questions/${id}/${method}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ userId: hardcodedUserId }),
+        body: JSON.stringify({ userId }),
       });
 
       if (response.ok) {
@@ -52,17 +54,14 @@ const InsideQuestionPage = () => {
   };
 
   const toggleLike = async (commentId) => {
-    const token = getUserToken();
-
     try {
       const method = likedComments[commentId] ? 'DELETE' : 'POST';
       const response = await fetch('http://localhost:3001/likes', {
         method,
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ commentId, userId: hardcodedUserId }),
+        body: JSON.stringify({ commentId, userId }),
       });
 
       if (response.ok) {
@@ -93,14 +92,8 @@ const InsideQuestionPage = () => {
   };
 
   const fetchUserLikes = async () => {
-    const token = getUserToken();
-
     try {
-      const response = await fetch(`http://localhost:3001/user-likes/${hardcodedUserId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(`http://localhost:3001/user-likes/${userId}`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -126,7 +119,7 @@ const InsideQuestionPage = () => {
       const data = await response.json();
       setQuestion(data);
       setQuestionLikeCount(data.likes.length); // Set the like count
-      setLikedQuestion(data.likes.includes(hardcodedUserId)); // Set the liked state
+      setLikedQuestion(data.likes.includes(userId)); // Set the liked state
     } catch (error) {
       setError(error.message);
     } finally {
@@ -188,16 +181,14 @@ const InsideQuestionPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = getUserToken();
 
     try {
       const response = await fetch('http://localhost:3001/comments', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ questionId: id, userId: hardcodedUserId, content }),
+        body: JSON.stringify({ questionId: id, userId, content }),
       });
 
       if (response.ok) {
@@ -224,14 +215,11 @@ const InsideQuestionPage = () => {
   };
 
   const handleDelete = async (commentId) => {
-    const token = getUserToken();
-
     try {
       const response = await fetch(`http://localhost:3001/comments/${commentId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -323,7 +311,7 @@ const InsideQuestionPage = () => {
                 {comments.map((comment) => (
                   <div key={comment._id} className={styles.questionBubblecomment}>
                     <img src={profilePic} alt='Profile' className={styles.profilePic} />
-                    {comment.userId._id === hardcodedUserId && ( // Check if the comment belongs to the logged-in user
+                    {comment.userId._id === userId && ( // Check if the comment belongs to the logged-in user
                       <img
                         src={deleteIcon}
                         alt='Delete'
