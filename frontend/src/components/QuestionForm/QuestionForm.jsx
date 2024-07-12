@@ -18,7 +18,7 @@ const QuestionForm = () => {
       title,
       body,
       tags: tags.split(',').map((tag) => tag.trim()),
-      authorId: '60d0fe4f5311236168a109ca', // Hardcoded author ID for testing
+      authorId: '6688408003482d4cf7660b82', // Hardcoded author ID for testing
     };
 
     try {
@@ -29,7 +29,7 @@ const QuestionForm = () => {
       setBody('');
       setTags('');
       // Navigate to the new question's page
-      navigate(`/question/${response.data._id}`);
+      navigate(`/questions/${response.data._id}`); // Ensure the path matches your route definition
     } catch (error) {
       if (error.response) {
         console.error('Server responded with a status code:', error.response.status);

@@ -1,4 +1,7 @@
+const mongoose = require('mongoose');
 const Comment = require('../mongo/data/schemas/comment');
+const Question = require('../mongo/data/schemas/question');
+const { sendCommentNotificationEmail } = require('../service/email.service');
 
 const createComment = async (req, res) => {
   const { questionId, userId, content } = req.body;
@@ -51,22 +54,6 @@ const getCommentsByQuestionId = async (req, res) => {
   } catch (error) {
     console.error('Error fetching comments:', error);
     res.status(500).json({ message: 'Error fetching comments', error });
-  }
-};
-
-const editComment = async (req, res) => {
-  try {
-    const updatedComment = await Comment.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!updatedComment) {
-      return res.status(404).json({ message: 'Comment not found' });
-    }
-    console.log(updatedComment);
-    res.json(updatedComment);
-  } catch (error) {
-    console.error('Error updating comment', error);
-    res.status(500).json({ message: 'Error updating comment' });
-  }
-};
 
 const deleteComment = async (req, res) => {
   const { commentId } = req.params;
@@ -93,7 +80,7 @@ const deleteComment = async (req, res) => {
 
 module.exports = {
   createComment,
-  editComment,
+  getCommentsByQuestionId,
   deleteComment,
   getCommentsByQuestionId,
 };

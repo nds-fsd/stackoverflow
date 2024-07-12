@@ -13,11 +13,12 @@ const UserPage = () => {
 
   useEffect(() => {
     const fetchUsers = async () => {
+      setLoading(true);
       try {
         const response = await axios.get('http://localhost:3001/users');
         setUsers(response.data);
       } catch (error) {
-        setError(error.message);
+        setError(error.response ? error.response.data : 'An unknown error occurred');
       } finally {
         setLoading(false);
       }
@@ -43,8 +44,8 @@ const UserPage = () => {
       </div>
       <UserFilterSearchBar placeholder='Filter by username' />
       <div className={styles.container}>
-        {users.map((user, index) => (
-          <UserItem key={index} user={user} />
+        {users.map((user) => (
+          <UserItem key={user._id} user={user} />
         ))}
       </div>
       <Footer />

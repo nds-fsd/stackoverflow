@@ -3,8 +3,6 @@ const { createComment, editComment, deleteComment, getCommentsByQuestionId } = r
 const validateCommentInput = require('../middlewares/comments');
 const { jwtMiddleware } = require('../middlewares/jwt');
 
-const router = express.Router();
-
 router.use(jwtMiddleware);
 
 router.post('/comments', validateCommentInput, createComment);
