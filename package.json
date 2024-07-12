@@ -17,5 +17,7 @@
     "react-devtools": "^5.3.0",
     "turbo": "^1.13.3"
   },
-  "dependencies": {}
+  "dependencies": {
+    "handlebars": "^4.7.8"
+  }
 }
