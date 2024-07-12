@@ -96,7 +96,7 @@ const Header = () => {
         Login
       </button>
       <button className={`${styles.btn} ${styles.signInBtn}`} onClick={() => handleModalShow(false)}>
-        Sign in
+        Sign up
       </button>
 
       <AuthModal show={modalShow} handleClose={handleModalClose} isLogin={isLogin} />
