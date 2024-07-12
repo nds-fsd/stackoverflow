@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import deleteIcon from './deleteIcon.png'; // Ensure the correct import path
 import heartIcon from './heart.png'; // Ensure the correct import path
+import { getUserIdFromToken } from '../../_utils/localStorage.utils'; // Corrected path to your local storage utilities
 
 const QuestionPage = () => {
   const navigate = useNavigate();
@@ -19,7 +20,8 @@ const QuestionPage = () => {
   const [page, setPage] = useState(1); // Page state for pagination
   const [totalQuestions, setTotalQuestions] = useState(0); // Total number of questions
 
-  const hardcodedUserId = '6688408003482d4cf7660b82'; // Mocked user ID
+  const userId = getUserIdFromToken(); // Get the actual user ID from the token
+  console.log('USERID: ' + userId); // Logging user ID for debugging
 
   const fetchQuestionsAndTags = async (reset = false) => {
     try {
@@ -39,7 +41,7 @@ const QuestionPage = () => {
       const questionLikeCountsMap = {};
 
       questionsData.forEach((question) => {
-        likedQuestionsMap[question._id] = question.likes.includes(hardcodedUserId);
+        likedQuestionsMap[question._id] = question.likes.includes(userId);
         questionLikeCountsMap[question._id] = question.likes.length;
       });
 
@@ -79,7 +81,7 @@ const QuestionPage = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ userId: hardcodedUserId }),
+        body: JSON.stringify({ userId }),
       });
 
       if (response.ok) {
@@ -182,14 +184,15 @@ const QuestionPage = () => {
                 directToQuestion(question._id);
               }}
             >
-              {question.author && question.author._id === hardcodedUserId && (
-                <img
-                  src={deleteIcon}
-                  alt='Delete'
-                  className={styles.deleteIcon}
-                  onClick={(e) => handleDelete(question._id, e)}
-                />
-              )}
+              {question.author &&
+                question.author._id === userId && ( // Use the actual user ID from the session
+                  <img
+                    src={deleteIcon}
+                    alt='Delete'
+                    className={styles.deleteIcon}
+                    onClick={(e) => handleDelete(question._id, e)}
+                  />
+                )}
               <h2>{question.title}</h2>
               <p>{question.body}</p>
               <ul>

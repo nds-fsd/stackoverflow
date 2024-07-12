@@ -32,6 +32,7 @@ const AuthModal = ({ show, handleClose, isLogin }) => {
           user: response.data.user,
         };
         setUserSession(sessionData);
+        console.log('Storing session data:', sessionData); // Log for debugging
         setError(null); // Clear error message on successful login/registration
         handleClose();
       } else {
