@@ -1,6 +1,8 @@
+require('dotenv').config();
 const User = require('../mongo/data/schemas/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+
 const { sendWelcomeEmail } = require('../service/email.service');
 require('dotenv').config();
 
@@ -26,9 +28,14 @@ const register = async (req, res) => {
     const newUser = new User({ email, password: hashedPassword, username });
     await newUser.save();
 
+    const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, { expiresIn: '12h' });
+
+    res.status(201).json({ token, user: { email: newUser.email, username: newUser.username } });
+
     await sendWelcomeEmail(email, username);
 
     res.status(201).json({ message: 'User registered successfully' });
+
   } catch (error) {
     console.error('Error registering user:', error);
     res.status(500).json({ message: 'Error registering user' });
