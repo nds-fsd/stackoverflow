@@ -1,5 +1,5 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 
 import HomePage from './components/HomePage/HomePage';
 import QuestionPage from './components/QuestionPage/QuestionPage';
@@ -7,8 +7,21 @@ import QuestionForm from './components/QuestionForm/QuestionForm';
 import TagPage from './components/TagPage/TagPage';
 import UserPage from './components/UserPage/UserPage';
 import InsideQuestionPage from './components/InsideQuestionPage/InsideQuestionPage';
+import { getUserToken } from './_utils/localStorage.utils';
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = getUserToken();
+    if (token) {
+      setIsAuthenticated(true);
+    } else {
+      navigate('/');
+    }
+  }, [navigate]);
+
   return (
     <div>
       <Routes>

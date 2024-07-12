@@ -25,12 +25,25 @@ export const getUserToken = () => {
 export const getUserSession = () => {
   const session = getStorageObject('user-session');
   if (session) {
+    console.log('User session from within localStorage utils file:', session); // Logging session
     return session.user;
   }
   return null;
 };
 
+export const getUserIdFromToken = () => {
+  const token = getUserToken();
+  if (token) {
+    const payload = token.split('.')[1];
+    const decodedPayload = JSON.parse(atob(payload));
+    console.log('Decoded token:', decodedPayload); // Logging decoded token
+    return decodedPayload.id; // Assuming the user ID is stored in the 'id' field
+  }
+  return null;
+};
+
 export const setUserSession = (sessionData) => {
+  console.log('Storing session data:', sessionData); // Logging for debugging
   setStorageObject('user-session', sessionData);
 };
 
