@@ -1,7 +1,9 @@
+/* Existing styles */
+
 .QuestionPageBody {
   display: grid;
-  grid-template-columns: repeat(6, 1fr); /* Four columns */
-  grid-template-rows: repeat(7, 1fr); /* Four rows */
+  grid-template-columns: repeat(6, 1fr); /* Six columns */
+  grid-template-rows: repeat(7, 1fr); /* Seven rows */
   height: 100vh;
   align-items: stretch; /* Stretch to fill the cell */
   justify-items: stretch; /* Stretch to fill the cell */
@@ -14,10 +16,10 @@
 
 .QuestionPageNavbar {
   grid-row: 1 / 2; /* Start at the first row and end before the second row */
-  grid-column: 2 / 7; /* Start at the first column and end after the sixth column */
+  grid-column: 2 / 7; /* Start at the second column and end after the sixth column */
   display: grid;
-  grid-template-columns: repeat(7, 1fr); /* Four columns */
-  grid-template-rows: repeat(1, 1fr); /* Four rows */
+  grid-template-columns: repeat(7, 1fr); /* Seven columns */
+  grid-template-rows: repeat(1, 1fr); /* One row */
   align-items: center; /* Center content vertically */
   justify-content: center; /* Center content horizontally */
   background-color: #222020; /* Different background color to distinguish navbar */
@@ -28,12 +30,12 @@
 
 .QuestionPageLeftbar {
   display: grid;
-  grid-row: 1 / 8; /* Start at the first row and end before the second row */
-  grid-column: 1 / 2; /* Start at the first column and end after the sixth column */
-  grid-template-columns: repeat(1, 1fr); /* Four columns */
-  grid-template-rows: repeat(7, 1fr); /* Four rows */
+  grid-row: 1 / 8; /* Start at the first row and end before the eighth row */
+  grid-column: 1 / 2; /* Start at the first column and end after the second column */
+  grid-template-columns: repeat(1, 1fr); /* One column */
+  grid-template-rows: repeat(7, 1fr); /* Seven rows */
   justify-content: center; /* Center content horizontally */
-  background-color: black; /* Different background color to distinguish navbar */
+  background-color: black; /* Different background color to distinguish left bar */
   color: white;
   padding: 10px;
   text-align: center; /* Ensures horizontal text alignment is centered */
@@ -57,15 +59,15 @@
 }
 
 .QuestionPageQuestions {
-  grid-row: 1 / 8; /* Start at the first row and end before the second row */
-  grid-column: 2 / 6; /* Start at the first column and end after the sixth column */
+  grid-row: 1 / 8; /* Start at the first row and end before the eighth row */
+  grid-column: 2 / 6; /* Start at the second column and end before the sixth column */
   display: grid;
-  grid-template-columns: repeat(1, 1fr); /* Four columns */
-  grid-template-rows: repeat(7, 1fr); /* Four rows */
+  grid-template-columns: repeat(1, 1fr); /* One column */
+  grid-template-rows: repeat(7, 1fr); /* Seven rows */
   border-radius: 15px; /* Rounded corners */
   align-items: center; /* Center content vertically */
   justify-content: center; /* Center content horizontally */
-  background-color: black; /* Different background color to distinguish navbar */
+  background-color: black; /* Different background color to distinguish question area */
   color: white;
   padding: 10px;
   overflow-y: auto; /* Enables vertical scrolling when content exceeds max-height */
@@ -73,7 +75,7 @@
 }
 
 .QuestionPageSOLogo {
-  width: 80px; /* Set the width to 100 pixels */
+  width: 80px; /* Set the width to 80 pixels */
   height: auto; /* Maintain the aspect ratio */
   align-items: center;
   margin-left: 80px;
@@ -86,9 +88,9 @@
 
 .LeftBarButton {
   display: grid;
-  grid-row: 7 / 8; /* Start at the first row and end before the second row */
+  grid-row: 7 / 8; /* Start at the seventh row and end before the eighth row */
   padding: 10px; /* Adjust padding to fit your design needs */
-  background-image: linear-gradient(to right, #bb5e11, #eb9f3c); /* Gradient from dark green to light green */
+  background-image: linear-gradient(to right, #bb5e11, #eb9f3c); /* Gradient from dark orange to light orange */
   border: none; /* No border for a more modern look */
   border-radius: 5px; /* Slightly rounded corners */
   height: 60px;
@@ -112,11 +114,11 @@
 
 .LeftBarButton:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow for 3D effect */
-  background-image: linear-gradient(to bottom right, #d68418, #d17122); /* Gradient from dark green to light green */
+  background-image: linear-gradient(to bottom right, #d68418, #d17122); /* Gradient from dark orange to light orange */
 }
 
 .LeftBarButton:focus {
-  box-shadow: 0 0 0 3px rgb(253, 110, 0); /* Focus state with a light green glow */
+  box-shadow: 0 0 0 3px rgb(253, 110, 0); /* Focus state with a light orange glow */
 }
 
 .OrangeSearchBar {
@@ -148,7 +150,7 @@
 }
 
 .questionBubble {
-  background-color: #151517; /* Light gray background */
+  background-color: #151517; /* Dark background */
   border-radius: 15px; /* Rounded corners */
   padding: 20px; /* Space inside the bubble */
   margin: 10px; /* Space outside the bubble */
@@ -157,8 +159,9 @@
   max-width: 98%; /* Ensures responsiveness */
   box-sizing: border-box; /* Includes padding in width calculation */
 }
+
 .QuestionPageRightbarBubbles {
-  background-color: #151517; /* Light gray background */
+  background-color: #151517; /* Dark background */
   border-radius: 15px; /* Rounded corners */
   padding: 20px; /* Space inside the bubble */
   margin: 10px; /* Space outside the bubble */
@@ -170,7 +173,7 @@
 
 .TagsRightBar {
   padding: 10px; /* Adjust padding to fit your design needs */
-  background: linear-gradient(to bottom right, #7e3aed, #d0b3ff);
+  background: linear-gradient(to bottom right, #7e3aed, #d0b3ff); /* Gradient background */
   border: none; /* No border for a more modern look */
   border-radius: 5px; /* Slightly rounded corners */
   height: 60px;
@@ -193,7 +196,8 @@
   background: linear-gradient(to bottom right, #7e3aed, #d0b3ff);
   border: none;
   border-radius: 5px;
-  height: 30px;
+  height: 50px;
+  width: 100%;
   color: white;
   margin: 10px;
   font-size: 16px;
@@ -207,4 +211,210 @@
   outline: none;
   text-align: center;
   text-decoration: none;
+}
+
+/* Comment Input */
+.commentInput {
+  width: 100%;
+  min-height: 50px; /* Set a minimum height */
+  padding: 10px;
+  margin: 0;
+  box-sizing: border-box;
+  background-color: #2b2b2b;
+  color: #f5f5f5;
+  border: 2px solid #2b2b2b;
+  border-radius: 10px;
+  font-size: 16px;
+  resize: vertical; /* Allow vertical resizing */
+  outline: none; /* removes the default focus outline */
+  overflow: auto;
+}
+
+.commentInput::placeholder {
+  color: #f5f5f5;
+}
+
+.commentInput:focus {
+  border-color: #2b2b2b;
+}
+
+/* Comment Bubble */
+/* Comment Bubble */
+.questionBubblecomment {
+  background-color: #2b2b2b; /* Dark background */
+  border-radius: 15px; /* Rounded corners */
+  padding: 15px; /* Space inside the bubble */
+  margin: 10px 0; /* Space outside the bubble */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  width: 100%; /* Full width of the parent */
+  max-width: 98%; /* Ensures responsiveness */
+  box-sizing: border-box; /* Includes padding in width calculation */
+  display: flex; /* Enables flexbox */
+  align-items: flex-start; /* Align items to the start vertically */
+  position: relative; /* Necessary for absolute positioning of delete icon */
+}
+
+.profilePic {
+  width: 40px;
+  height: auto; /* Maintains the aspect ratio */
+  margin-right: 10px; /* Space between image and text */
+}
+
+.commentContent {
+  display: flex;
+  flex-direction: column; /* Stack username and comment vertically */
+}
+
+.commentUsername {
+  font-weight: bold;
+}
+
+.commentTime {
+  font-size: 0.9em;
+  color: #bbb;
+}
+
+/* Comment Text */
+.commentText {
+  margin-top: 5px;
+  word-wrap: break-word; /* Ensures long words break to the next line */
+  white-space: pre-wrap; /* Preserves whitespace and ensures wrapping */
+}
+
+/* Other styles remain unchanged */
+
+.heartIcon {
+  height: 100px;
+  width: 100px;
+  background: url('heart.png'); /* Update the path to the correct image */
+  background-position: left;
+  cursor: pointer;
+  position: absolute;
+}
+
+.heartBg {
+  background: rgba(255, 192, 200, 0);
+  border-radius: 50%;
+  height: 60px;
+  width: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 100ms ease;
+  position: relative; /* Ensure it is positioned relative to the container */
+}
+
+.heartBg:hover {
+  background: rgba(255, 192, 200, 0.7);
+}
+
+.likesAmount {
+  font-size: 20px;
+  font-family: 'Roboto', sans-serif;
+  color: #888;
+  font-weight: 900;
+  margin-left: 6px;
+  padding-left: 73px;
+}
+
+.heartIcon.liked {
+  animation: like-anim 0.7s steps(28) forwards;
+}
+
+@keyframes like-anim {
+  to {
+    background-position: right;
+  }
+}
+
+.likesAmount.liked {
+  color: red;
+}
+
+.submitButton {
+  padding: 10px;
+  background: linear-gradient(to bottom right, #7e3aed, #d0b3ff);
+  border: none;
+  border-radius: 5px;
+  height: 60px;
+  color: white;
+  margin: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  width: 20%; /* Make it full width within the form */
+  outline: none;
+  text-align: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.submitButton:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.submitButton:focus {
+  box-shadow: 0 0 0 3px rgb(253, 110, 0);
+}
+
+.deleteIcon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+/* Add these new styles for the dropdown */
+.sortDropdown {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  color: white;
+}
+
+.sortDropdown label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.sortDropdown select {
+  padding: 5px 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 2px solid #7e3aed;
+  background-color: #2b2b2b;
+  color: white;
+  cursor: pointer;
+  transition:
+    border 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.sortDropdown select:focus {
+  outline: none;
+  border-color: #d0b3ff;
+  box-shadow: 0 0 8px rgba(126, 58, 237, 0.5);
+}
+
+.loadMoreButton {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 16px;
+  margin: 20px auto;
+  display: block;
+  transition: background-color 0.3s ease;
+}
+
+.loadMoreButton:hover {
+  background-color: #0056b3;
 }
