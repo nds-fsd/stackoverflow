@@ -54,8 +54,6 @@ const getCommentsByQuestionId = async (req, res) => {
   } catch (error) {
     console.error('Error fetching comments:', error);
     res.status(500).json({ message: 'Error fetching comments', error });
-  }
-};
 
 const deleteComment = async (req, res) => {
   const { commentId } = req.params;
@@ -84,4 +82,5 @@ module.exports = {
   createComment,
   getCommentsByQuestionId,
   deleteComment,
+  getCommentsByQuestionId,
 };
