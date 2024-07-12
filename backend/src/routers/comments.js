@@ -1,8 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const commentController = require('../controllers/comments.js');
+const { createComment, deleteComment, getCommentsByQuestionId } = require('../controllers/comments');
+const validateCommentInput = require('../middlewares/comments');
+const { jwtMiddleware } = require('../middlewares/jwt');
 
-router.post('/comments', commentController.createComment);
-router.get('/comments/:questionId', commentController.getCommentsByQuestionId);
-router.delete('/comments/:commentId', commentController.deleteComment); // Add this line
+router.use(jwtMiddleware);
+
+router.post('/comments', validateCommentInput, createComment);
+router.get('/comments/:questionId', getCommentsByQuestionId);
+router.delete('/comments/:commentId', deleteComment);
+
 module.exports = router;
