@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import styles from './TagFilterSearchBar.module.css';
+import styles from './FilterSearchBar.module.css';
 
-const TagFilterSearchBar = ({ placeholder, data, onFilter }) => {
+const FilterSearchBar = ({ placeholder, onFilter }) => {
   const [wordEntered, setWordEntered] = useState('');
 
   const handleFilter = (event) => {
@@ -32,4 +32,4 @@ const TagFilterSearchBar = ({ placeholder, data, onFilter }) => {
   );
 };
 
-export default TagFilterSearchBar;
+export default FilterSearchBar;

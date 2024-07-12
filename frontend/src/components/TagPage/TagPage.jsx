@@ -3,7 +3,7 @@ import axios from 'axios';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import TagItem from './TagItem/TagItem';
-import TagFilterSearchBar from './TagFilterSeachBar/TagFilterSearchBar';
+import FilterSearchBar from '../FilterSeachBar/FilterSearchBar';
 import styles from './TagPage.module.css';
 
 const TagPage = () => {
@@ -54,7 +54,7 @@ const TagPage = () => {
           Using the right tags makes it easier for others to find and answer your question.
         </p>
       </div>
-      <TagFilterSearchBar placeholder='Filter by tag name' data={tags} onFilter={handleFilter} />
+      <FilterSearchBar placeholder='Filter by tag name' data={tags} onFilter={handleFilter} />
       <div className={styles.container}>
         {filteredTags.map((tag, index) => (
           <TagItem key={index} tag={tag} />
