@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import axios from 'axios';
 import styles from './AuthModal.module.css';
-import { setUserSession } from '../../_utils/localStorage.utils.js';
+import { setUserSession } from '../../_utils/localStorage.utils';
 
-const AuthModal = ({ show, handleClose, isLogin }) => {
+const AuthModal = ({ show, handleClose, isLogin, onAuthSuccess }) => {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -33,6 +33,7 @@ const AuthModal = ({ show, handleClose, isLogin }) => {
         };
         setUserSession(sessionData);
         setError(null); // Clear error message on successful login/registration
+        onAuthSuccess(); // Update authentication status
         handleClose();
       } else {
         throw new Error('Network response was not ok.');
