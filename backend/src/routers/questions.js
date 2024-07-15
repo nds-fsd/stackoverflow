@@ -18,7 +18,7 @@ router.get('/questions/:id', getQuestionById);
 router.post('/questions', jwtMiddleware, validateQuestion, createQuestion);
 router.put('/questions/:id', validateQuestion, editQuestion);
 router.delete('/questions/:id', deleteQuestion);
-router.post('/questions/:id/like', likeQuestion); // Add route for liking
-router.post('/questions/:id/unlike', unlikeQuestion); // Add route for unliking
+router.post('/questions/:id/like', likeQuestion);
+router.post('/questions/:id/unlike', unlikeQuestion);
 
 module.exports = router;
