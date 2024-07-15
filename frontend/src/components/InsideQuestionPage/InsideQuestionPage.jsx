@@ -4,9 +4,9 @@ import styles from './InsideQuestionPage.module.css';
 import Header from '../Header/Header.jsx';
 import Footer from '../Footer/Footer.jsx';
 import profilePic from './profilePic.png';
-import deleteIcon from './deleteIcon.png'; // Import the delete icon
-import { getUserIdFromToken } from '../../_utils/localStorage.utils'; // Corrected path
-import axios from 'axios';
+import deleteIcon from './deleteIcon.png';
+import { getUserIdFromToken } from '../../_utils/localStorage.utils';
+import { api } from '../../_utils/api.js';
 
 const InsideQuestionPage = () => {
   const { id } = useParams();
@@ -25,10 +25,9 @@ const InsideQuestionPage = () => {
   const [topQuestions, setTopQuestions] = useState([]);
   const textareaRef = useRef(null);
 
-  const userId = getUserIdFromToken(); // Get the actual user ID from the token
+  const userId = getUserIdFromToken();
   console.log('USERID: ' + userId);
 
-  // Logging userId for debugging
   useEffect(() => {
     console.log('User ID from getUserIdFromToken function:', userId);
   }, [userId]);
@@ -36,21 +35,10 @@ const InsideQuestionPage = () => {
   const toggleQuestionLike = async () => {
     try {
       const method = likedQuestion ? 'unlike' : 'like';
-      const response = await fetch(`http://localhost:3001/questions/${id}/${method}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ userId }),
-      });
+      const response = await api().post(`/questions/${id}/${method}`, { userId });
 
-      if (response.ok) {
-        const data = await response.json();
-        setQuestionLikeCount(data.likeCount); // Update the like count
-        setLikedQuestion(!likedQuestion); // Toggle the liked state
-      } else {
-        console.error('Failed to toggle like');
-      }
+      setQuestionLikeCount(response.data.likeCount);
+      setLikedQuestion(!likedQuestion);
     } catch (err) {
       console.error('Error:', err);
     }
@@ -59,23 +47,17 @@ const InsideQuestionPage = () => {
   const toggleLike = async (commentId) => {
     try {
       const method = likedComments[commentId] ? 'DELETE' : 'POST';
-      const response = await fetch('http://localhost:3001/likes', {
+      const response = await api().request({
+        url: '/likes',
         method,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ commentId, userId }),
+        data: { commentId, userId },
       });
 
-      if (response.ok) {
-        fetchLikeCount(commentId); // Refresh like count after submission
-        setLikedComments((prevLikedComments) => ({
-          ...prevLikedComments,
-          [commentId]: !prevLikedComments[commentId],
-        }));
-      } else {
-        console.error('Failed to toggle like');
-      }
+      fetchLikeCount(commentId);
+      setLikedComments((prevLikedComments) => ({
+        ...prevLikedComments,
+        [commentId]: !prevLikedComments[commentId],
+      }));
     } catch (err) {
       console.error('Error:', err);
     }
@@ -83,12 +65,8 @@ const InsideQuestionPage = () => {
 
   const fetchLikeCount = async (commentId) => {
     try {
-      const response = await fetch(`http://localhost:3001/likes/${commentId}`);
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const data = await response.json();
-      setLikeCounts((prevCounts) => ({ ...prevCounts, [commentId]: data.likeCount }));
+      const response = await api().get(`/likes/${commentId}`);
+      setLikeCounts((prevCounts) => ({ ...prevCounts, [commentId]: response.data.likeCount }));
     } catch (error) {
       console.error('Error fetching like count:', error);
     }
@@ -96,12 +74,8 @@ const InsideQuestionPage = () => {
 
   const fetchUserLikes = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/user-likes/${userId}`);
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const data = await response.json();
-      const likedCommentIds = data.map((like) => like.commentId);
+      const response = await api().get(`/user-likes/${userId}`);
+      const likedCommentIds = response.data.map((like) => like.commentId);
       setLikedComments(
         likedCommentIds.reduce((acc, commentId) => {
           acc[commentId] = true;
@@ -115,14 +89,10 @@ const InsideQuestionPage = () => {
 
   const fetchQuestion = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/questions/${id}`);
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const data = await response.json();
-      setQuestion(data);
-      setQuestionLikeCount(data.likes.length); // Set the like count
-      setLikedQuestion(data.likes.includes(userId)); // Set the liked state
+      const response = await api().get(`/questions/${id}`);
+      setQuestion(response.data);
+      setQuestionLikeCount(response.data.likes.length);
+      setLikedQuestion(response.data.likes.includes(userId));
     } catch (error) {
       setError(error.message);
     } finally {
@@ -132,12 +102,8 @@ const InsideQuestionPage = () => {
 
   const fetchTags = async () => {
     try {
-      const response = await fetch('http://localhost:3001/tags');
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const data = await response.json();
-      setTags(data);
+      const response = await api().get('/tags');
+      setTags(response.data);
     } catch (error) {
       console.error('Error fetching tags:', error);
     }
@@ -145,12 +111,8 @@ const InsideQuestionPage = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch('http://localhost:3001/users');
-      if (!response.ok) {
-        throw new Error('Network response was not ok (fetchUsers)');
-      }
-      const data = await response.json();
-      setUsers(data);
+      const response = await api().get('/users');
+      setUsers(response.data);
     } catch (error) {
       setError(error.message);
     } finally {
@@ -160,15 +122,9 @@ const InsideQuestionPage = () => {
 
   const fetchComments = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/comments/${id}`);
-      if (!response.ok) {
-        throw new Error('Network response was not ok (fetchComments)');
-      }
-      const data = await response.json();
-      setComments(data);
-
-      // Fetch like counts for all comments
-      data.forEach((comment) => fetchLikeCount(comment._id));
+      const response = await api().get(`/comments/${id}`);
+      setComments(response.data);
+      response.data.forEach((comment) => fetchLikeCount(comment._id));
     } catch (error) {
       setError(error.message);
     }
@@ -176,9 +132,8 @@ const InsideQuestionPage = () => {
 
   const fetchTopQuestions = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/questions?limit=5&sortBy=popular');
-      const topQuestionsData = response.data.questions;
-      setTopQuestions(topQuestionsData);
+      const response = await api().get('/questions?limit=5&sortBy=popular');
+      setTopQuestions(response.data.questions);
     } catch (error) {
       console.error('Error fetching top questions:', error);
     }
@@ -189,32 +144,20 @@ const InsideQuestionPage = () => {
     fetchTags();
     fetchUsers();
     fetchComments();
-    fetchUserLikes(); // Fetch user likes
-    fetchTopQuestions(); // Fetch top questions
+    fetchUserLikes();
+    fetchTopQuestions();
   }, [id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:3001/comments', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ questionId: id, userId, content }),
-      });
+      const response = await api().post('/comments', { questionId: id, userId, content });
+      setContent('');
+      fetchComments();
 
-      if (response.ok) {
-        setContent('');
-        fetchComments(); // Refresh comments after submission
-
-        // Reset the height of the textarea to its initial state
-        if (textareaRef.current) {
-          textareaRef.current.style.height = 'auto';
-        }
-      } else {
-        console.error('Failed to post comment');
+      if (textareaRef.current) {
+        textareaRef.current.style.height = 'auto';
       }
     } catch (err) {
       console.error('Error:', err);
@@ -230,18 +173,8 @@ const InsideQuestionPage = () => {
 
   const handleDelete = async (commentId) => {
     try {
-      const response = await fetch(`http://localhost:3001/comments/${commentId}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (response.ok) {
-        fetchComments(); // Refresh comments after deletion
-      } else {
-        console.error('Failed to delete comment');
-      }
+      const response = await api().delete(`/comments/${commentId}`);
+      fetchComments();
     } catch (err) {
       console.error('Error:', err);
     }
@@ -335,7 +268,7 @@ const InsideQuestionPage = () => {
                 {comments.map((comment) => (
                   <div key={comment._id} className={styles.questionBubblecomment}>
                     <img src={profilePic} alt='Profile' className={styles.profilePic} />
-                    {comment.userId._id === userId && ( // Check if the comment belongs to the logged-in user
+                    {comment.userId._id === userId && (
                       <img
                         src={deleteIcon}
                         alt='Delete'

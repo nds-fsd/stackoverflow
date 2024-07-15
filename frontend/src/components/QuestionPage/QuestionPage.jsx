@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import styles from './QuestionPage.module.css';
 import Header from '../Header/Header.jsx';
 import Footer from '../Footer/Footer.jsx';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import deleteIcon from './deleteIcon.png'; // Ensure the correct import path
 import heartIcon from './heart.png'; // Ensure the correct import path
 import profilePic from './profilePic.png'; // Import the profile picture
 import { getUserIdFromToken } from '../../_utils/localStorage.utils'; // Corrected path to your local storage utilities
+import { api } from '../../_utils/api.js';
 
 const QuestionPage = () => {
   const navigate = useNavigate();
@@ -32,8 +32,8 @@ const QuestionPage = () => {
         setLoading(true);
       }
       const [questionsResponse, tagsResponse] = await Promise.all([
-        axios.get(`http://localhost:3001/questions?page=${page}&limit=5&sortBy=${sortOption}`),
-        axios.get('http://localhost:3001/tags'),
+        api().get(`/questions?page=${page}&limit=5&sortBy=${sortOption}`),
+        api().get('/tags'),
       ]);
 
       const questionsData = questionsResponse.data.questions;
@@ -78,7 +78,7 @@ const QuestionPage = () => {
 
   const fetchTopQuestions = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/questions?limit=5&sortBy=popular');
+      const response = await api().get('/questions?limit=5&sortBy=popular');
       const topQuestionsData = response.data.questions;
 
       setTopQuestions(topQuestionsData);
@@ -100,28 +100,17 @@ const QuestionPage = () => {
     const method = likedQuestions[questionId] ? 'unlike' : 'like';
 
     try {
-      const response = await fetch(`http://localhost:3001/questions/${questionId}/${method}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ userId }),
-      });
+      const response = await api().post(`/questions/${questionId}/${method}`, { userId });
 
-      if (response.ok) {
-        const data = await response.json();
-        setQuestionLikeCounts((prevCounts) => ({
-          ...prevCounts,
-          [questionId]: data.likeCount,
-        }));
-        setLikedQuestions((prevLikedQuestions) => ({
-          ...prevLikedQuestions,
-          [questionId]: !prevLikedQuestions[questionId],
-        }));
-        fetchTopQuestions(); // Refresh top questions
-      } else {
-        console.error('Failed to toggle like');
-      }
+      setQuestionLikeCounts((prevCounts) => ({
+        ...prevCounts,
+        [questionId]: response.data.likeCount,
+      }));
+      setLikedQuestions((prevLikedQuestions) => ({
+        ...prevLikedQuestions,
+        [questionId]: !prevLikedQuestions[questionId],
+      }));
+      fetchTopQuestions(); // Refresh top questions
     } catch (err) {
       console.error('Error:', err);
     }
@@ -134,9 +123,7 @@ const QuestionPage = () => {
   const handleDelete = async (questionId, e) => {
     e.stopPropagation(); // Prevent navigating to the question page
     try {
-      const response = await axios.delete(`http://localhost:3001/questions/${questionId}`, {
-        headers: {},
-      });
+      const response = await api().delete(`/questions/${questionId}`);
 
       if (response.status === 204) {
         setQuestions(questions.filter((question) => question._id !== questionId));
