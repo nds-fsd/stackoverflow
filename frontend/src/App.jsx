@@ -13,15 +13,6 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const token = getUserToken();
-    if (token) {
-      setIsAuthenticated(true);
-    } else {
-      navigate('/');
-    }
-  }, [navigate]);
-
   return (
     <div>
       <Routes>

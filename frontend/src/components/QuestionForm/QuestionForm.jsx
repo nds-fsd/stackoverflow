@@ -26,7 +26,7 @@ const QuestionForm = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:3001/questions', questionData);
+      const response = await api().post('/questions', questionData);
       console.log('Question created successfully:', response.data);
       // Clear form
       setTitle('');
