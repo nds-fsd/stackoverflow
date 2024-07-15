@@ -1,14 +1,16 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import styles from './InsideQuestionPage.module.css';
 import Header from '../Header/Header.jsx';
 import Footer from '../Footer/Footer.jsx';
 import profilePic from './profilePic.png';
 import deleteIcon from './deleteIcon.png'; // Import the delete icon
 import { getUserIdFromToken } from '../../_utils/localStorage.utils'; // Corrected path
+import axios from 'axios';
 
 const InsideQuestionPage = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [question, setQuestion] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -20,6 +22,7 @@ const InsideQuestionPage = () => {
   const [likedComments, setLikedComments] = useState({});
   const [questionLikeCount, setQuestionLikeCount] = useState(0);
   const [likedQuestion, setLikedQuestion] = useState(false);
+  const [topQuestions, setTopQuestions] = useState([]);
   const textareaRef = useRef(null);
 
   const userId = getUserIdFromToken(); // Get the actual user ID from the token
@@ -171,12 +174,23 @@ const InsideQuestionPage = () => {
     }
   };
 
+  const fetchTopQuestions = async () => {
+    try {
+      const response = await axios.get('http://localhost:3001/questions?limit=5&sortBy=popular');
+      const topQuestionsData = response.data.questions;
+      setTopQuestions(topQuestionsData);
+    } catch (error) {
+      console.error('Error fetching top questions:', error);
+    }
+  };
+
   useEffect(() => {
     fetchQuestion();
     fetchTags();
     fetchUsers();
     fetchComments();
     fetchUserLikes(); // Fetch user likes
+    fetchTopQuestions(); // Fetch top questions
   }, [id]);
 
   const handleSubmit = async (e) => {
@@ -233,6 +247,10 @@ const InsideQuestionPage = () => {
     }
   };
 
+  const directToQuestion = (questionId) => {
+    navigate('/questions/' + questionId);
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -256,10 +274,11 @@ const InsideQuestionPage = () => {
           </a>
           <div className={styles.QuestionPageRightbarBubbles}>
             <h1>Top Questions</h1>
-            <p>Best practices for data fetching in a Next.js application with Server-Side Rendering (SSR)?</p>
-            <p>Async/Await Function Not Handling Errors Properly</p>
-            <p>What is the best modern tech stack we can use to create a Stackoverflow clone?</p>
-            <p>How can I get (query string) parameters from the URL in Next.js?</p>
+            {topQuestions.map((question) => (
+              <p key={question._id} onClick={() => directToQuestion(question._id)} style={{ cursor: 'pointer' }}>
+                {question.title}
+              </p>
+            ))}
             <h1>Popular Tags</h1>
             <button className={styles.TagsRightBar}>Mongo</button>
             <button className={styles.TagsRightBar}>Express</button>
