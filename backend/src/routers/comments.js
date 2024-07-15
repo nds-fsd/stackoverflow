@@ -4,10 +4,8 @@ const { createComment, deleteComment, getCommentsByQuestionId } = require('../co
 const validateCommentInput = require('../middlewares/comments');
 const { jwtMiddleware } = require('../middlewares/jwt');
 
-router.use(jwtMiddleware);
-
-router.post('/comments', validateCommentInput, createComment);
+router.post('/comments', jwtMiddleware, validateCommentInput, createComment);
 router.get('/comments/:questionId', getCommentsByQuestionId);
-router.delete('/comments/:commentId', deleteComment);
+router.delete('/comments/:commentId', jwtMiddleware, deleteComment);
 
 module.exports = router;

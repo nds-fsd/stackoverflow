@@ -9,12 +9,13 @@ const {
   unlikeQuestion,
 } = require('../controllers/questions');
 const validateQuestion = require('../middlewares/questions');
+const { jwtMiddleware } = require('../middlewares/jwt');
 
 const router = express.Router();
 
 router.get('/questions', getQuestions);
 router.get('/questions/:id', getQuestionById);
-router.post('/questions', validateQuestion, createQuestion);
+router.post('/questions', jwtMiddleware, validateQuestion, createQuestion);
 router.put('/questions/:id', validateQuestion, editQuestion);
 router.delete('/questions/:id', deleteQuestion);
 router.post('/questions/:id/like', likeQuestion); // Add route for liking
