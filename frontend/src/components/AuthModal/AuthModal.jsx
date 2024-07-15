@@ -8,49 +8,48 @@ const AuthModal = ({ show, handleClose, isLogin }) => {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     const userData = {
       email,
-      username,
       password,
     };
+
+    if (!isLogin) {
+      userData.username = username;
+    }
 
     try {
       const url = isLogin ? 'http://localhost:3001/auth/login' : 'http://localhost:3001/auth/register';
       const response = await axios.post(url, userData);
-      setEmail('');
-      setUsername('');
-      setPassword('');
 
       if (response.status === 200 || response.status === 201) {
-        console.log(isLogin ? 'Login successful:' : 'Signed in successfully:', response.data);
-
-        // Guardar la sesión del usuario en localStorage
         const sessionData = {
           token: response.data.token,
-          user: response.data.user, // Ajustar según la estructura de la respuesta del backend
+          user: response.data.user,
         };
         setUserSession(sessionData);
-
+        console.log('Storing session data:', sessionData); // Log for debugging
+        setError(null); // Clear error message on successful login/registration
         handleClose();
       } else {
         throw new Error('Network response was not ok.');
       }
     } catch (error) {
-      console.error('Error:', error);
-      alert('Error. Please try again.');
+      setError(error.response?.data?.message || 'Error. Please try again.');
     }
   };
 
   return (
     <Modal show={show} onHide={handleClose} className={styles.popup}>
       <Modal.Header closeButton>
-        <Modal.Title>{isLogin ? 'Login' : 'Sign In'}</Modal.Title>
+        <Modal.Title>{isLogin ? 'Login' : 'Sign up'}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId='formBasicEmail'>
             <Form.Label>Email</Form.Label>
@@ -88,7 +87,7 @@ const AuthModal = ({ show, handleClose, isLogin }) => {
           </Form.Group>
 
           <Button variant='primary' type='submit'>
-            {isLogin ? 'Login' : 'Sign in'}
+            {isLogin ? 'Login' : 'Sign up'}
           </Button>
         </Form>
       </Modal.Body>

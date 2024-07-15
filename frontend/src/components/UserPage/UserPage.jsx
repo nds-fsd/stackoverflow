@@ -3,20 +3,21 @@ import axios from 'axios';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import UserItem from './UserItem/UserItem';
-import UserFilterSearchBar from './UserFilterSearchBar/UserFilterSearchBar';
+import FilterSearchBar from '../FilterSeachBar/FilterSearchBar';
 import styles from './UserPage.module.css';
 
 const UserPage = () => {
   const [users, setUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchUsers = async () => {
-      setLoading(true);
       try {
         const response = await axios.get('http://localhost:3001/users');
         setUsers(response.data);
+        setFilteredUsers(response.data); // Initially show all users
       } catch (error) {
         setError(error.response ? error.response.data : 'An unknown error occurred');
       } finally {
@@ -26,6 +27,13 @@ const UserPage = () => {
 
     fetchUsers();
   }, []);
+
+  const handleFilter = (searchWord) => {
+    const newFilter = users.filter((user) => {
+      return user.username.toLowerCase().includes(searchWord.toLowerCase());
+    });
+    setFilteredUsers(newFilter);
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -42,9 +50,9 @@ const UserPage = () => {
         <h1 className={styles.descriptionTitle}>Users</h1>
         <p className={styles.descriptionText}>Explore user profiles and their contributions.</p>
       </div>
-      <UserFilterSearchBar placeholder='Filter by username' />
+      <FilterSearchBar placeholder='Filter by username' onFilter={handleFilter} />
       <div className={styles.container}>
-        {users.map((user) => (
+        {filteredUsers.map((user) => (
           <UserItem key={user._id} user={user} />
         ))}
       </div>

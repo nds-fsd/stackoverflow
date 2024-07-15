@@ -3,11 +3,12 @@ import axios from 'axios';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import TagItem from './TagItem/TagItem';
-import TagFilterSearchBar from './TagFilterSeachBar/TagFilterSearchBar';
+import FilterSearchBar from '../FilterSeachBar/FilterSearchBar';
 import styles from './TagPage.module.css';
 
 const TagPage = () => {
   const [tags, setTags] = useState([]);
+  const [filteredTags, setFilteredTags] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -16,6 +17,7 @@ const TagPage = () => {
       try {
         const response = await axios.get('http://localhost:3001/tags');
         setTags(response.data);
+        setFilteredTags(response.data); // Initially show all tags
       } catch (error) {
         setError(error.message);
       } finally {
@@ -25,6 +27,13 @@ const TagPage = () => {
 
     fetchTags();
   }, []);
+
+  const handleFilter = (searchWord) => {
+    const newFilter = tags.filter((tag) => {
+      return tag.name.toLowerCase().includes(searchWord.toLowerCase());
+    });
+    setFilteredTags(newFilter);
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -45,9 +54,9 @@ const TagPage = () => {
           Using the right tags makes it easier for others to find and answer your question.
         </p>
       </div>
-      <TagFilterSearchBar placeholder='Filter by tag name' />
+      <FilterSearchBar placeholder='Filter by tag name' data={tags} onFilter={handleFilter} />
       <div className={styles.container}>
-        {tags.map((tag, index) => (
+        {filteredTags.map((tag, index) => (
           <TagItem key={index} tag={tag} />
         ))}
       </div>

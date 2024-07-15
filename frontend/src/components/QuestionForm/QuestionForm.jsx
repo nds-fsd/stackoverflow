@@ -4,12 +4,16 @@ import Styles from './QuestionForm.module.css';
 import Header from '../Header/Header.jsx';
 import Footer from '../Footer/Footer.jsx';
 import axios from 'axios';
+import { getUserIdFromToken } from '../../_utils/localStorage.utils'; // Corrected path to your local storage utilities
 
 const QuestionForm = () => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [tags, setTags] = useState('');
   const navigate = useNavigate(); // Initialize useNavigate
+
+  const userId = getUserIdFromToken(); // Get the actual user ID from the token
+  console.log('USERID: ' + userId); // Logging user ID for debugging
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -18,7 +22,7 @@ const QuestionForm = () => {
       title,
       body,
       tags: tags.split(',').map((tag) => tag.trim()),
-      authorId: '6688408003482d4cf7660b82', // Hardcoded author ID for testing
+      authorId: userId, // Use the actual user ID from the token
     };
 
     try {
