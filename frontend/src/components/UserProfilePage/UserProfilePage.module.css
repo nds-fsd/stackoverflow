@@ -122,6 +122,11 @@
   line-height: 1;
 }
 
+.noQuestionsText {
+  color: #b0b0b0;
+  font-size: 14px;
+}
+
 .questionLink {
   color: #b0b0b0;
   text-decoration: none;

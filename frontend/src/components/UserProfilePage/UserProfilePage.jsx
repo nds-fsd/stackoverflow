@@ -102,7 +102,7 @@ const UserProfilePage = () => {
             <div className={styles.summaryItem}>
               <p>Questions: </p>
               {questions.length === 0 ? (
-                <p>No questions asked.</p>
+                <p className={styles.noQuestionsText}>No questions asked.</p>
               ) : (
                 <ul className={styles.questionsList}>
                   {questions.map((question) => (
