@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import deleteIcon from './deleteIcon.png'; // Ensure the correct import path
 import heartIcon from './heart.png'; // Ensure the correct import path
+import profilePic from './profilePic.png'; // Import the profile picture
 import { getUserIdFromToken } from '../../_utils/localStorage.utils'; // Corrected path to your local storage utilities
 
 const QuestionPage = () => {
@@ -193,12 +194,16 @@ const QuestionPage = () => {
                     onClick={(e) => handleDelete(question._id, e)}
                   />
                 )}
+              <div className={styles.questionAuthor}>
+                <img src={profilePic} alt='Profile' className={styles.profilePic} />
+                <span>Author: {question.author ? question.author.username : 'Unknown'}</span>
+              </div>
+              <br></br>
               <h2>{question.title}</h2>
               <p>{question.body}</p>
               <ul>
                 {question.tags && question.tags.map((tagId) => <li key={tagId}>{tagIdToNameMap[tagId] || tagId}</li>)}
               </ul>
-              <p>Author: {question.author ? question.author.username : 'Unknown'}</p>
               <p>Published: {question.created_at && new Date(question.created_at).toLocaleDateString()}</p>
               <div className={styles.heartBg}>
                 <div

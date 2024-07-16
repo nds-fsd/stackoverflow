@@ -272,8 +272,13 @@ const InsideQuestionPage = () => {
           {question && (
             <>
               <div className={styles.questionBubble}>
-                Asked by: {question.author ? question.author.username : 'Unknown'} on{' '}
-                {new Date(question.created_at).toLocaleDateString()}
+                <div className={styles.questionAuthor}>
+                  <img src={profilePic} alt='Profile' className={styles.profilePic} />
+                  <span>
+                    Asked by: {question.author ? question.author.username : 'Unknown'} on{' '}
+                    {new Date(question.created_at).toLocaleDateString()}
+                  </span>
+                </div>
                 <h1>{question.title}</h1>
                 <h3>{question.body}</h3>
                 <h5>
