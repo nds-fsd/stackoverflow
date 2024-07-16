@@ -128,3 +128,19 @@
   background-color: #000000ae;
   color: #7e3aed;
 }
+
+.logoutBtn {
+  background-color: #7e3aed;
+  color: #ffffff;
+  border-radius: 15px;
+  border-color: #7e3aed;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-family: 'Exo', sans-serif;
+}
+
+.logoutBtn:hover {
+  background-color: #000000ae;
+  color: #7e3aed;
+}
