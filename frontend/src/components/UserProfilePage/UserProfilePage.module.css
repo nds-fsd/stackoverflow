@@ -66,15 +66,39 @@
   vertical-align: middle;
 }
 
-.userProfileQuestions {
+.userProfileSummary {
   width: 100%;
   max-width: 800px;
+  text-align: left;
+  color: #ffffff;
+  margin-top: 50px;
+  margin-bottom: 30px;
 }
 
-.userProfileQuestions h2 {
+.userProfileSummary h2 {
+  font-size: 26px;
   margin-bottom: 20px;
-  font-size: 24px;
+}
+
+.summaryGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  font-size: 18px;
+  color: #7e3aed;
+}
+
+.summaryItem {
+  text-align: left;
+}
+
+.userProfileQuestions {
+  text-align: left;
+}
+
+.userProfileQuestions h3 {
   color: #ffffff;
+  font-size: 18px;
 }
 
 .userProfileQuestions ul {
@@ -84,13 +108,44 @@
 
 .userProfileQuestions li {
   margin: 10px 0;
+  position: relative;
+  padding-left: 25px;
 }
 
-.userProfileQuestions a {
+.userProfileQuestions li::before {
+  content: '•';
   color: #7e3aed;
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.questionLink {
+  color: #b0b0b0;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.questionLink:hover {
+  color: #ffffff;
   text-decoration: underline;
 }
 
-.userProfileQuestions a:hover {
-  text-decoration: underline;
+.questionsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.commentsCount,
+.likesCount {
+  color: #b0b0b0;
+  font-size: 16px;
+}
+
+.commentsLabel,
+.likesLabel {
+  color: #7e3aed;
 }
