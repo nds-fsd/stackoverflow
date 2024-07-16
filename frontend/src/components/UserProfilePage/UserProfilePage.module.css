@@ -1,0 +1,96 @@
+.userProfileContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #000000;
+  padding: 50px;
+  font-family: 'Exo', sans-serif;
+}
+
+.userProfileHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.profilePicture {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+}
+
+.username {
+  font-size: 35px;
+  margin-bottom: 8px;
+  color: #ffffff;
+}
+
+.userProfileDetails {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  max-width: 800px;
+  margin-bottom: 30px;
+}
+
+.userProfileSection {
+  text-align: center;
+  color: #fff;
+}
+
+.userProfileSection h2 {
+  margin-bottom: 8px;
+  font-size: 20px;
+  color: #ffffff;
+}
+
+.userProfileSection .detail {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: #b0b0b0;
+}
+
+.userProfileSection .detail img {
+  margin-right: 5px;
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+}
+
+.userProfileSection .detail p {
+  margin: 0;
+  vertical-align: middle;
+}
+
+.userProfileQuestions {
+  width: 100%;
+  max-width: 800px;
+}
+
+.userProfileQuestions h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #ffffff;
+}
+
+.userProfileQuestions ul {
+  list-style: none;
+  padding: 0;
+}
+
+.userProfileQuestions li {
+  margin: 10px 0;
+}
+
+.userProfileQuestions a {
+  color: #7e3aed;
+  text-decoration: underline;
+}
+
+.userProfileQuestions a:hover {
+  text-decoration: underline;
+}

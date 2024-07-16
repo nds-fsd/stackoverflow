@@ -1,5 +1,3 @@
-// controllers/questions.js
-
 const mongoose = require('mongoose');
 const Question = require('../mongo/data/schemas/question');
 const Tag = require('../mongo/data/schemas/tag');
@@ -11,7 +9,6 @@ const createQuestion = async (req, res) => {
   console.log('Received request body:', req.body);
 
   try {
-    // Find the user based on authorId
     const author = await User.findById(authorId);
 
     if (!author) {
@@ -56,9 +53,10 @@ const createQuestion = async (req, res) => {
     res.status(500).json({ message: 'Error creating question', error: error.message });
   }
 };
+
 const getQuestions = async (req, res) => {
   try {
-    const { page = 1, limit = 5, sortBy = 'popular' } = req.query;
+    const { page = 1, limit = 5, sortBy = 'popular', authorUsername } = req.query;
 
     let sortCriteria;
     if (sortBy === 'new') {
@@ -69,15 +67,25 @@ const getQuestions = async (req, res) => {
       sortCriteria = {};
     }
 
-    const questions = await Question.find()
-      .where('deleted_at')
-      .equals(null)
+    let filter = { deleted_at: null }; // Only include non-deleted questions
+
+    // If authorUsername is provided, find the user and filter questions by author ID
+    if (authorUsername) {
+      const user = await User.findOne({ username: authorUsername });
+      if (user) {
+        filter.author = user._id;
+      } else {
+        return res.json({ questions: [], totalQuestions: 0 }); // No questions if user not found
+      }
+    }
+
+    const questions = await Question.find(filter)
       .populate('author', 'username')
       .sort(sortCriteria)
       .skip((page - 1) * limit)
       .limit(parseInt(limit));
 
-    const totalQuestions = await Question.countDocuments().where('deleted_at').equals(null);
+    const totalQuestions = await Question.countDocuments(filter);
 
     res.json({ questions, totalQuestions });
   } catch (error) {
@@ -88,7 +96,7 @@ const getQuestions = async (req, res) => {
 
 const getQuestionById = async (req, res) => {
   try {
-    const question = await Question.findById(req.params.id).populate('author', 'username'); // Populate the author field with 'username'
+    const question = await Question.findById(req.params.id).populate('author', 'username');
     if (!question || question.deleted_at) {
       return res.status(404).json({ message: 'Question not found' });
     }
@@ -104,7 +112,7 @@ const editQuestion = async (req, res) => {
     const updatedQuestion = await Question.findByIdAndUpdate(req.params.id, req.body, { new: true }).populate(
       'author',
       'username',
-    ); // Populate the author field with the username
+    );
 
     if (!updatedQuestion) {
       return res.status(404).json({ message: 'Question not found' });

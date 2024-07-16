@@ -7,9 +7,8 @@ const authRouter = require('./routers/authenticator');
 const tagsRouter = require('./routers/tags');
 const usersRouter = require('./routers/users');
 const commentsRouter = require('./routers/comments');
-const likesRouter = require('./routers/like'); // Add this line
+const likesRouter = require('./routers/like');
 
-// Import the User model to register it with Mongoose
 require('./mongo/data/schemas/user');
 
 require('dotenv').config();
@@ -27,7 +26,7 @@ app.use('/', tagsRouter);
 app.use('/auth', authRouter);
 app.use('/', usersRouter);
 app.use('/', commentsRouter);
-app.use('/', likesRouter); // Add this line
+app.use('/', likesRouter);
 
 connectDB().then(() => console.log('Connected to database!'));
 
