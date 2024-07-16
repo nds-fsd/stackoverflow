@@ -12,6 +12,7 @@ import { getUserIdFromToken } from '../../_utils/localStorage.utils'; // Correct
 const QuestionPage = () => {
   const navigate = useNavigate();
   const [questions, setQuestions] = useState([]);
+  const [topQuestions, setTopQuestions] = useState([]);
   const [tags, setTags] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -46,8 +47,17 @@ const QuestionPage = () => {
         questionLikeCountsMap[question._id] = question.likes.length;
       });
 
+      const sortedQuestions = [...questionsData].sort((a, b) => {
+        if (sortOption === 'popular') {
+          return (b.likes?.length || 0) - (a.likes?.length || 0);
+        } else if (sortOption === 'new') {
+          return new Date(b.created_at) - new Date(a.created_at);
+        }
+        return 0;
+      });
+
       setQuestions((prevQuestions) => {
-        const combinedQuestions = reset ? questionsData : [...prevQuestions, ...questionsData];
+        const combinedQuestions = reset ? sortedQuestions : [...prevQuestions, ...sortedQuestions];
         const uniqueQuestions = combinedQuestions.reduce((unique, item) => {
           return unique.some((question) => question._id === item._id) ? unique : [...unique, item];
         }, []);
@@ -57,10 +67,23 @@ const QuestionPage = () => {
       setLikedQuestions((prevLikedQuestions) => ({ ...prevLikedQuestions, ...likedQuestionsMap }));
       setQuestionLikeCounts((prevCounts) => ({ ...prevCounts, ...questionLikeCountsMap }));
       setTotalQuestions(totalQuestionsCount);
+
+      fetchTopQuestions(); // Fetch top questions after main questions are set
     } catch (error) {
       setError(error.message);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchTopQuestions = async () => {
+    try {
+      const response = await axios.get('http://localhost:3001/questions?limit=5&sortBy=popular');
+      const topQuestionsData = response.data.questions;
+
+      setTopQuestions(topQuestionsData);
+    } catch (error) {
+      console.error('Error fetching top questions:', error);
     }
   };
 
@@ -95,6 +118,7 @@ const QuestionPage = () => {
           ...prevLikedQuestions,
           [questionId]: !prevLikedQuestions[questionId],
         }));
+        fetchTopQuestions(); // Refresh top questions
       } else {
         console.error('Failed to toggle like');
       }
@@ -116,6 +140,7 @@ const QuestionPage = () => {
 
       if (response.status === 204) {
         setQuestions(questions.filter((question) => question._id !== questionId));
+        fetchTopQuestions(); // Refresh top questions
       } else {
         console.error('Failed to delete question');
       }
@@ -156,10 +181,11 @@ const QuestionPage = () => {
           </a>
           <div className={styles.QuestionPageRightbarBubbles}>
             <h1>Top Questions</h1>
-            <p>Best practices for data fetching in a Next.js application with Server-Side Rendering (SSR)?</p>
-            <p>Async/Await Function Not Handling Errors Properly</p>
-            <p>What is the best modern tech stack we can use to create a Stackoverflow clone?</p>
-            <p>How can I get (query string) parameters from the URL in Next.js?</p>
+            {topQuestions.map((question) => (
+              <p key={question._id} onClick={() => directToQuestion(question._id)} style={{ cursor: 'pointer' }}>
+                {question.title}
+              </p>
+            ))}
             <h1>Popular Tags</h1>
             <button className={styles.TagsRightBar}>Mongo</button>
             <button className={styles.TagsRightBar}>Express</button>
