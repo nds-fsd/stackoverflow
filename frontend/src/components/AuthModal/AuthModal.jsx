@@ -46,7 +46,7 @@ const AuthModal = ({ show, handleClose, isLogin, onAuthSuccess }) => {
   return (
     <Modal show={show} onHide={handleClose} className={styles.popup}>
       <Modal.Header closeButton>
-        <Modal.Title>{isLogin ? 'Login' : 'Sign In'}</Modal.Title>
+        <Modal.Title>{isLogin ? 'Login' : 'Sign Up'}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {error && <p style={{ color: 'red' }}>{error}</p>}
@@ -87,7 +87,7 @@ const AuthModal = ({ show, handleClose, isLogin, onAuthSuccess }) => {
           </Form.Group>
 
           <Button variant='primary' type='submit'>
-            {isLogin ? 'Login' : 'Sign in'}
+            {isLogin ? 'Login' : 'Sign Up'}
           </Button>
         </Form>
       </Modal.Body>
