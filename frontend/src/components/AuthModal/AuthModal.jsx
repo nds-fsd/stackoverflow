@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import axios from 'axios';
 import styles from './AuthModal.module.css';
-import { setUserSession } from '../../_utils/localStorage.utils.js';
+import { setUserSession } from '../../_utils/localStorage.utils';
 
-const AuthModal = ({ show, handleClose, isLogin }) => {
+const AuthModal = ({ show, handleClose, isLogin, onAuthSuccess }) => {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -34,6 +34,7 @@ const AuthModal = ({ show, handleClose, isLogin }) => {
         setUserSession(sessionData);
         console.log('Storing session data:', sessionData); // Log for debugging
         setError(null); // Clear error message on successful login/registration
+        onAuthSuccess(); // Update authentication status
         handleClose();
       } else {
         throw new Error('Network response was not ok.');
@@ -46,7 +47,8 @@ const AuthModal = ({ show, handleClose, isLogin }) => {
   return (
     <Modal show={show} onHide={handleClose} className={styles.popup}>
       <Modal.Header closeButton>
-        <Modal.Title>{isLogin ? 'Login' : 'Sign up'}</Modal.Title>
+        <Modal.Title>{isLogin ? 'Login' : 'Sign Up'}</Modal.Title>
+
       </Modal.Header>
       <Modal.Body>
         {error && <p style={{ color: 'red' }}>{error}</p>}
@@ -87,7 +89,8 @@ const AuthModal = ({ show, handleClose, isLogin }) => {
           </Form.Group>
 
           <Button variant='primary' type='submit'>
-            {isLogin ? 'Login' : 'Sign up'}
+            {isLogin ? 'Login' : 'Sign Up'}
+
           </Button>
         </Form>
       </Modal.Body>

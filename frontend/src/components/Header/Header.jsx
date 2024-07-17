@@ -4,16 +4,25 @@ import styles from './Header.module.css';
 import AuthModal from '../AuthModal/AuthModal';
 import axios from 'axios';
 import ReactSearchBox from 'react-search-box';
-import { getUserSession } from '../../_utils/localStorage.utils'; // Ensure the correct path
+import { getUserSession, removeSession } from '../../_utils/localStorage.utils';
 
 const Header = () => {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [modalShow, setModalShow] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState(null);
   const [searchData, setSearchData] = useState([]);
 
-  const userSession = getUserSession(); // Ensure this gets the logged-in user session
+  useEffect(() => {
+    const userSession = getUserSession();
+    if (userSession) {
+      setIsAuthenticated(true);
+      setUser(userSession);
+    }
+    fetchSearchData(); // Fetch search data on component mount
+  }, []);
 
   const handleMenuToggle = () => {
     setMenuOpen(!menuOpen);
@@ -26,6 +35,20 @@ const Header = () => {
 
   const handleModalClose = () => {
     setModalShow(false);
+  };
+
+  const handleAuthSuccess = () => {
+    const userSession = getUserSession();
+    if (userSession) {
+      setIsAuthenticated(true);
+      setUser(userSession);
+    }
+  };
+
+  const handleLogout = () => {
+    removeSession();
+    setIsAuthenticated(false);
+    setUser(null);
   };
 
   const fetchSearchData = async () => {
@@ -50,10 +73,6 @@ const Header = () => {
       console.error('Error fetching search data:', error);
     }
   };
-
-  useEffect(() => {
-    fetchSearchData();
-  }, []);
 
   const handleSearchSelect = (record) => {
     // Log the selected record to debug
@@ -92,14 +111,25 @@ const Header = () => {
         />
       </div>
 
-      <button className={`${styles.btn} ${styles.loginBtn}`} onClick={() => handleModalShow(true)}>
-        Login
-      </button>
-      <button className={`${styles.btn} ${styles.signInBtn}`} onClick={() => handleModalShow(false)}>
-        Sign up
-      </button>
+      {isAuthenticated ? (
+        <>
+          <span className={styles.welcome}>Welcome, {user.username}!</span>
+          <button className={`${styles.btn} ${styles.logoutBtn}`} onClick={handleLogout}>
+            Logout
+          </button>
+        </>
+      ) : (
+        <>
+          <button className={`${styles.btn} ${styles.loginBtn}`} onClick={() => handleModalShow(true)}>
+            Login
+          </button>
+          <button className={`${styles.btn} ${styles.signInBtn}`} onClick={() => handleModalShow(false)}>
+            Sign up
+          </button>
+        </>
+      )}
 
-      <AuthModal show={modalShow} handleClose={handleModalClose} isLogin={isLogin} />
+      <AuthModal show={modalShow} handleClose={handleModalClose} isLogin={isLogin} onAuthSuccess={handleAuthSuccess} />
 
       <div className={`${styles.mobileMenu} ${menuOpen ? styles.open : ''}`}>
         <Link to='/'>
