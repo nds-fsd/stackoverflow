@@ -1,268 +1,197 @@
-/* Existing styles */
-
 .QuestionPageBody {
   display: grid;
-  grid-template-columns: repeat(6, 1fr); /* Six columns */
-  grid-template-rows: repeat(7, 1fr); /* Seven rows */
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(7, 1fr);
   height: 100vh;
-  align-items: stretch; /* Stretch to fill the cell */
-  justify-items: stretch; /* Stretch to fill the cell */
+  align-items: stretch;
+  justify-items: stretch;
   gap: 10px;
-  font-family: 'Exo', sans-serif; /* Fallback to sans-serif if Exo is not loaded */
+  font-family: 'Exo', sans-serif;
   background-color: black;
-  color: #222020;
+  color: #4a4a4a;
   overflow: auto;
 }
 
-.QuestionPageNavbar {
-  grid-row: 1 / 2; /* Start at the first row and end before the second row */
-  grid-column: 2 / 7; /* Start at the second column and end after the sixth column */
-  display: grid;
-  grid-template-columns: repeat(7, 1fr); /* Seven columns */
-  grid-template-rows: repeat(1, 1fr); /* One row */
-  align-items: center; /* Center content vertically */
-  justify-content: center; /* Center content horizontally */
-  background-color: #222020; /* Different background color to distinguish navbar */
-  color: white;
-  padding: 10px;
-  place-items: center; /* Shorthand to align items both horizontally and vertically at the center */
-}
-
-.QuestionPageLeftbar {
-  display: grid;
-  grid-row: 1 / 8; /* Start at the first row and end before the eighth row */
-  grid-column: 1 / 2; /* Start at the first column and end after the second column */
-  grid-template-columns: repeat(1, 1fr); /* One column */
-  grid-template-rows: repeat(7, 1fr); /* Seven rows */
-  justify-content: center; /* Center content horizontally */
-  background-color: black; /* Different background color to distinguish left bar */
-  color: white;
-  padding: 10px;
-  text-align: center; /* Ensures horizontal text alignment is centered */
-}
-
 .QuestionPageRightbar {
-  grid-row: 1 / 8; /* Start at the first row and end before the eighth row */
-  grid-column: 6 / 7; /* Start at the sixth column and end before the seventh column */
+  grid-row: 1 / 8;
+  grid-column: 1 / 2;
   display: grid;
-  grid-template-columns: repeat(1, 1fr); /* One column */
-  grid-template-rows: repeat(7, 1fr); /* Seven rows */
+  grid-template-columns: repeat(1, 1fr);
+  grid-template-rows: repeat(7, 1fr);
   align-content: flex-start;
   background-color: black;
   color: white;
-  overflow-y: auto; /* Enables vertical scrolling when content exceeds max-height */
-  width: 100%; /* Ensure full width of the parent container */
-  height: 100%; /* Ensure full height of the parent container */
-  padding: 10px; /* Space inside the component */
-  box-sizing: border-box; /* Includes padding and border in width and height calculation */
-  margin: 0; /* Ensure no additional margin affecting the size */
+  overflow-y: auto;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.QuestionPageRightbar p {
+margin-left: 5px;
 }
 
 .QuestionPageQuestions {
-  grid-row: 1 / 8; /* Start at the first row and end before the eighth row */
-  grid-column: 2 / 6; /* Start at the second column and end before the sixth column */
+  grid-row: 1 / 8;
+  grid-column: 2 / 7;
   display: grid;
-  grid-template-columns: repeat(1, 1fr); /* One column */
-  grid-template-rows: repeat(7, 1fr); /* Seven rows */
-  border-radius: 15px; /* Rounded corners */
-  align-items: center; /* Center content vertically */
-  justify-content: center; /* Center content horizontally */
-  background-color: black; /* Different background color to distinguish question area */
+  grid-template-columns: repeat(1, 1fr);
+  grid-template-rows: repeat(7, 1fr);
+  border-radius: 15px;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
   color: white;
   padding: 10px;
-  overflow-y: auto; /* Enables vertical scrolling when content exceeds max-height */
+  overflow-y: auto;
   list-style-type: none;
 }
 
-.QuestionPageSOLogo {
-  width: 80px; /* Set the width to 80 pixels */
-  height: auto; /* Maintain the aspect ratio */
-  align-items: center;
-  margin-left: 80px;
-}
-
-.no-bullets {
-  list-style-type: none;
-  align-items: center;
-}
-
-.LeftBarButton {
-  display: grid;
-  grid-row: 7 / 8; /* Start at the seventh row and end before the eighth row */
-  padding: 10px; /* Adjust padding to fit your design needs */
-  background-image: linear-gradient(to right, #bb5e11, #eb9f3c); /* Gradient from dark orange to light orange */
-  border: none; /* No border for a more modern look */
-  border-radius: 5px; /* Slightly rounded corners */
-  height: 60px;
-  color: white; /* Text color */
-  margin: 10px; /* Adds space around the button */
-  font-size: 16px; /* Suitable font size for readability */
-  font-weight: bold; /* Bold text to make it stand out */
-  cursor: pointer; /* Cursor changes to pointer to indicate it's clickable */
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease; /* Smooth transition for interactive feedback */
-  outline: none;
-
-  text-align: center;
-  align-items: center;
-  text-decoration: none;
+.sortDropdown {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end; 
+  margin-right: 20px;
+  margin-top: 20px;
   align-items: center;
 }
 
-.LeftBarButton:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow for 3D effect */
-  background-image: linear-gradient(to bottom right, #d68418, #d17122); /* Gradient from dark orange to light orange */
+.sortDropdown label {
+  margin-right: 10px; 
 }
 
-.LeftBarButton:focus {
-  box-shadow: 0 0 0 3px rgb(253, 110, 0); /* Focus state with a light orange glow */
+.sortDropdown select {
+  width: 150px; 
 }
 
-.OrangeSearchBar {
-  display: grid;
-  grid-column: 2 / 5;
-  width: 100%; /* Full width of the container */
-  padding: 12px 20px; /* Ample padding for easy text entry */
-  margin: 8px 0; /* Margin for some spacing around */
-  box-sizing: border-box; /* Include padding and border in the width */
-  border: 2px solid #ff7f50; /* Orange border */
-  border-radius: 4px; /* Slightly rounded borders for a modern look */
-  background-color: white; /* White background */
-  color: #333; /* Dark color for the text for readability */
-  font-size: 16px; /* Adequate font size for clear visibility */
-
-  /* Shadows for some depth - subtle but effective */
-  box-shadow: 0 2px 5px rgba(255, 127, 80, 0.4);
-
-  /* Transition for the border and box-shadow on focus */
-  transition:
-    border 0.3s ease,
-    box-shadow 0.3s ease;
+@media (max-width: 768px) {
+  .QuestionPageQuestions {
+    grid-column: 1 / -1; /* Ajuste de columnas para responsive */
+  }
 }
 
-.orangeSearchBar:focus {
-  outline: none; /* Remove the default focus outline */
-  border-color: #d68418; /* Darker orange for focus */
-  box-shadow: 0 0 8px rgba(255, 69, 0, 0.5); /* Brighter and bigger shadow on focus */
-}
+
 
 .questionBubble {
-  background-color: #151517; /* Dark background */
-  border-radius: 15px; /* Rounded corners */
-  padding: 20px; /* Space inside the bubble */
-  margin: 10px; /* Space outside the bubble */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  width: 100%; /* Full width of the parent */
-  max-width: 98%; /* Ensures responsiveness */
-  box-sizing: border-box; /* Includes padding in width calculation */
+  background-color: #4a4a4a;
+  border: 1px solid #4a4a4a;
+  border-radius: 4px;
+  padding: 20px;
+  margin: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 98%;
+  box-sizing: border-box;
+  line-height: 2; /* Ajustar el espaciado entre líneas */
+  font-size: 20px; /* Ajustar el tamaño de la fuente */
 }
 
+.questionBubble h2 {
+  font-size: 25px; /* Tamaño de fuente para el título */
+}
+
+.questionBubble ul {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.questionBubble li {
+  background-color: #2b2b2b;
+  color: white;
+  padding: 5px 10px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  list-style-type: none; /* Eliminar viñetas */
+}
+
+.questionBubble p {
+  margin-top: 10px;
+}
+
+.questionBubble p.author {
+  font-weight: bold; 
+}
+
+.questionBubble p.published {
+  font-weight: bold; 
+}
+
+
 .QuestionPageRightbarBubbles {
-  background-color: #151517; /* Dark background */
-  border-radius: 15px; /* Rounded corners */
-  padding: 20px; /* Space inside the bubble */
-  margin: 10px; /* Space outside the bubble */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  width: 90%; /* Fixed width, adjust as needed */
-  max-width: 100%; /* Ensures responsiveness */
-  box-sizing: border-box; /* Includes padding in width calculation */
+  background-color: #000000;
+  border: 1px solid #4a4a4a;
+  border-radius: 4px;
+  padding: 20px;
+  margin: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 100%;
+  box-sizing: border-box;
+  line-height: 2;
+}
+
+.QuestionPageRightbarBubbles h2 {
+margin: 20px 5px;
+
 }
 
 .TagsRightBar {
-  padding: 10px; /* Adjust padding to fit your design needs */
-  background: linear-gradient(to bottom right, #7e3aed, #d0b3ff); /* Gradient background */
-  border: none; /* No border for a more modern look */
-  border-radius: 5px; /* Slightly rounded corners */
+  padding: 10px;
+  background-color: #000000;
+  border: 1px solid #4a4a4a;
+  border-radius: 4px;
   height: 60px;
   width: 90%;
-  color: white; /* Text color */
-  margin: 10px; /* Adds space around the button */
-  font-size: 16px; /* Suitable font size for readability */
-  font-weight: bold; /* Bold text to make it stand out */
-  cursor: pointer; /* Cursor changes to pointer to indicate it's clickable */
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease; /* Smooth transition for interactive feedback */
+  color: white;
+  margin: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   outline: none;
   text-align: center;
   align-items: center;
 }
 
 .askNewQuestion {
-  padding: 10px;
-  background: linear-gradient(to bottom right, #7e3aed, #d0b3ff);
+  background-color: #4a4a4a;
+  color: rgb(255, 255, 255);
   border: none;
   border-radius: 5px;
-  height: 50px;
-  width: 100%;
-  color: white;
-  margin: 10px;
-  font-size: 16px;
-  font-weight: bold;
+  padding: 20px 40px;
   cursor: pointer;
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-  width: 83%; /* Fixed width, adjust as needed */
-
-  outline: none;
   text-align: center;
+  font-size: 25px;
+  margin: 20px auto;
+  display: block;
+  transition: background-color 0.3s ease;
   text-decoration: none;
 }
 
-/* Comment Input */
+.askNewQuestion:hover {
+  background-color: #000000;
+  color: white;
+}
+
+
 .commentInput {
   width: 100%;
-  min-height: 50px; /* Set a minimum height */
+  min-height: 50px;
   padding: 10px;
   margin: 0;
   box-sizing: border-box;
-  background-color: #2b2b2b;
   color: #f5f5f5;
-  border: 2px solid #2b2b2b;
-  border-radius: 10px;
+  background-color: #000000;
+  border: 1px solid #4a4a4a;
+  border-radius: 4px;
   font-size: 16px;
-  resize: vertical; /* Allow vertical resizing */
-  outline: none; /* removes the default focus outline */
+  resize: vertical;
+  outline: none;
   overflow: auto;
-}
-
-.commentInput::placeholder {
-  color: #f5f5f5;
-}
-
-.commentInput:focus {
-  border-color: #2b2b2b;
-}
-
-/* Comment Bubble */
-/* Comment Bubble */
-.questionBubblecomment {
-  background-color: #2b2b2b; /* Dark background */
-  border-radius: 15px; /* Rounded corners */
-  padding: 15px; /* Space inside the bubble */
-  margin: 10px 0; /* Space outside the bubble */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  width: 100%; /* Full width of the parent */
-  max-width: 98%; /* Ensures responsiveness */
-  box-sizing: border-box; /* Includes padding in width calculation */
-  display: flex; /* Enables flexbox */
-  align-items: flex-start; /* Align items to the start vertically */
-  position: relative; /* Necessary for absolute positioning of delete icon */
-}
-
-.profilePic {
-  width: 40px;
-  height: auto; /* Maintains the aspect ratio */
-  margin-right: 10px; /* Space between image and text */
-}
-
-.commentContent {
-  display: flex;
-  flex-direction: column; /* Stack username and comment vertically */
 }
 
 .commentUsername {
@@ -274,19 +203,92 @@
   color: #bbb;
 }
 
-/* Comment Text */
 .commentText {
   margin-top: 5px;
-  word-wrap: break-word; /* Ensures long words break to the next line */
-  white-space: pre-wrap; /* Preserves whitespace and ensures wrapping */
+  word-wrap: break-word;
+  white-space: pre-wrap;
 }
 
-/* Other styles remain unchanged */
+.submitButton {
+  padding: 10px;
+  background: linear-gradient(to bottom right, #7e3aed, #d0b3ff);
+  border: none;
+  border-radius: 5px;
+  height: 60px;
+  color: white;
+  margin: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 20%;
+  outline: none;
+  text-align: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.sortDropdown {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  color: white;
+}
+
+.sortDropdown label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.sortDropdown select {
+  padding: 5px 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 2px solid #ffffff;
+  background-color: #2b2b2b;
+  color: white;
+  cursor: pointer;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sortDropdown select:focus {
+  outline: none;
+  border-color: #d0b3ff;
+  box-shadow: 0 0 8px rgba(126, 58, 237, 0.5);
+}
+
+.loadMoreButton {
+  background-color: #4a4a4a;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 16px;
+  margin: 20px auto;
+  display: block;
+  transition: background-color 0.3s ease;
+}
+
+.loadMoreButton:hover {
+  background-color: #000000;
+  color: white;
+}
+
+.deleteIcon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
 
 .heartIcon {
   height: 100px;
   width: 100px;
-  background: url('heart.png'); /* Update the path to the correct image */
+  background: url('heart.png');
   background-position: left;
   cursor: pointer;
   position: absolute;
@@ -301,7 +303,7 @@
   align-items: center;
   justify-content: center;
   transition: all 100ms ease;
-  position: relative; /* Ensure it is positioned relative to the container */
+  position: relative;
 }
 
 .heartBg:hover {
@@ -329,92 +331,4 @@
 
 .likesAmount.liked {
   color: red;
-}
-
-.submitButton {
-  padding: 10px;
-  background: linear-gradient(to bottom right, #7e3aed, #d0b3ff);
-  border: none;
-  border-radius: 5px;
-  height: 60px;
-  color: white;
-  margin: 10px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-  width: 20%; /* Make it full width within the form */
-  outline: none;
-  text-align: center;
-  justify-content: center;
-  text-decoration: none;
-}
-
-.submitButton:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.submitButton:focus {
-  box-shadow: 0 0 0 3px rgb(253, 110, 0);
-}
-
-.deleteIcon {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-}
-
-/* Add these new styles for the dropdown */
-.sortDropdown {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-  color: white;
-}
-
-.sortDropdown label {
-  margin-right: 10px;
-  font-weight: bold;
-}
-
-.sortDropdown select {
-  padding: 5px 10px;
-  font-size: 16px;
-  border-radius: 5px;
-  border: 2px solid #7e3aed;
-  background-color: #2b2b2b;
-  color: white;
-  cursor: pointer;
-  transition:
-    border 0.3s ease,
-    box-shadow 0.3s ease;
-}
-
-.sortDropdown select:focus {
-  outline: none;
-  border-color: #d0b3ff;
-  box-shadow: 0 0 8px rgba(126, 58, 237, 0.5);
-}
-
-.loadMoreButton {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  cursor: pointer;
-  text-align: center;
-  font-size: 16px;
-  margin: 20px auto;
-  display: block;
-  transition: background-color 0.3s ease;
-}
-
-.loadMoreButton:hover {
-  background-color: #0056b3;
 }

@@ -26,11 +26,9 @@ function HeroSection() {
   return (
     <section className={styles['hero-section']}>
       <div className={styles['hero-content']}>
-        <h2>Every developer keeps a tab open for Stack Overflow</h2>
+        <h2>Every developer keeps a tab open for Devvit</h2>
 
-        <InfoBox className={styles['info-box']}>
-          <p>Discover the optimal solution to your technical query while lending a hand to others with theirs.</p>
-        </InfoBox>
+      
         <InfoBox className={styles['info-box']}>
           <p>Seeking a secure and confidential environment for your technical expertise?</p>
         </InfoBox>

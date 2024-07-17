@@ -1,40 +1,23 @@
 .header {
+  margin: auto;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 10px 20px;
   background-color: #000000;
-  color: #7e3aed;
+  color: #ffffff;
   font-family: 'Exo', sans-serif;
   z-index: 10;
-}
-
-.mobileMenu {
-  display: none;
-  flex-direction: column;
-  background-color: #000000e6;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 25%;
-  padding: 20px 0;
-  box-shadow: 0 2px 5px #00000033;
-  font-size: 1.25rem;
-  transition: transform 0.3s ease;
-  z-index: 100;
-}
-
-.mobileMenu.open {
-  display: flex;
+  border-bottom: 1px solid #4a4a4a;
 }
 
 .logo {
-  height: 3.5rem;
-  transform: translateX(-60px);
+  height: 2rem;
 }
 
 .menuToggle {
+  display: none;
   cursor: pointer;
 }
 
@@ -59,17 +42,52 @@
   transition: transform 0.3s;
 }
 
+.mobileMenu {
+  display: none;
+  flex-direction: column;
+  background-color: #000000e6;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 25%;
+  padding: 20px 0;
+  box-shadow: 0 2px 5px #00000033;
+  font-size: 1.25rem;
+  transition: transform 0.3s ease;
+  z-index: 100;
+}
+
+.mobileMenu.open {
+  display: flex;
+}
+
 .mobileMenu a {
-  color: #7e3aed;
+  color: #ffffff;
   text-decoration: none;
   padding: 10px 20px;
   transition: background-color 0.3s;
 }
 
 .mobileMenu a:hover {
-  background-color: #7e3aed;
-  color: #fff;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
   transform: translateX(5px);
+}
+
+.navMenu {
+  display: flex;
+  gap: 20px;
+}
+
+.navMenu a {
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 20px;
+  transition: background-color 0.3s;
+}
+
+.navMenu a:hover {
+  color: #4a4a4a;
 }
 
 @media (max-width: 768px) {
@@ -77,20 +95,21 @@
     display: block;
   }
 
-  .menuToggle:hover .hamburger {
-    background-color: #7e3aed;
+  .navMenu {
+    display: none;
   }
 }
+
 .searchBar {
   background-color: #000000;
-  border-color: #7e3aed;
+  border-color: #ffffff;
   border-radius: 4px;
   padding: 12px 20px;
-  width: 40%;
+  width: 35%;
   font-size: 1.2rem;
-  color: #000000;
+  color: #ffffff;
   font-family: 'Exo', sans-serif;
-  position: relative; /* Ensure the search bar itself is relatively positioned */
+  position: relative;
 }
 
 .searchBar input::placeholder {
@@ -100,60 +119,49 @@
 
 .searchBarDropdown {
   position: absolute;
-  top: 50px; /* Adjust this value based on the height of your search bar */
+  top: 50px;
   left: 0;
   width: 100%;
-  background-color: #000000; /* Match the background color with search bar */
-  z-index: 1000; /* Ensure the dropdown is on top of other elements */
+  background-color: #000000;
+  z-index: 1000;
   border-radius: 4px;
-  border: 1px solid #7e3aed;
-  max-height: 300px; /* Optional: Limit the height of the dropdown */
-  overflow-y: auto; /* Optional: Enable scrolling if there are many options */
-}
-
-.searchBarDropdown {
-  position: absolute;
-  top: 50px; /* Adjust this value based on the height of your search bar */
-  left: 0;
-  width: 100%;
-  background-color: #000000; /* Match the background color with search bar */
-  z-index: 1000; /* Ensure the dropdown is on top of other elements */
-  border-radius: 4px;
-  border: 1px solid #7e3aed;
-  max-height: 300px; /* Optional: Limit the height of the dropdown */
-  overflow-y: auto; /* Optional: Enable scrolling if there are many options */
+  border: 1px solid #ffffff;
+  max-height: 300px;
+  overflow-y: auto;
 }
 
 .searchBarDropdown a:hover {
-  background-color: #7e3aed; /* Change the background color on hover */
+  background-color: #ffffff;
 }
+
 .loginBtn {
   background-color: #000000ae;
-  color: #7e3aed;
-  border-radius: 15px;
-  border-color: #7e3aed;
-  padding: 10px 20px;
+  color: #ffffff;
+  border-radius: 4px;
+  border-color: #ffffff;
+  padding: 12px 20px;
   font-size: 1rem;
   cursor: pointer;
   font-family: 'Exo', sans-serif;
 }
+
 .signInBtn {
-  background-color: #7e3aed;
+  background-color: #000000ae;
   color: #ffffff;
-  border-radius: 15px;
-  border-color: #7e3aed;
-  padding: 10px 20px;
+  border-radius: 4px;
+  border-color: #ffffff;
+  padding: 12px 20px;
   font-size: 1rem;
   cursor: pointer;
   font-family: 'Exo', sans-serif;
 }
 
 .loginBtn:hover {
-  background-color: #7e3aed;
-  color: #ffffff;
+  background-color: #ffffff;
+  color: #000000;
 }
 
 .signInBtn:hover {
-  background-color: #000000ae;
-  color: #7e3aed;
+  background-color: #ffffff;
+  color: #000000;
 }

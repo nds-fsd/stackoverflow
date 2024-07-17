@@ -4,17 +4,25 @@ import styles from './Header.module.css';
 import AuthModal from '../AuthModal/AuthModal';
 import axios from 'axios';
 import ReactSearchBox from 'react-search-box';
-import { getUserToken, getUserSession } from '../../_utils/localStorage.utils'; // Ensure the correct path
+import { getUserSession, removeSession } from '../../_utils/localStorage.utils';
 
 const Header = () => {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [modalShow, setModalShow] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
-  const [questions, setQuestions] = useState([]);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState(null);
   const [searchData, setSearchData] = useState([]);
 
-  const userSession = '663d370a40d2aa2e407ce4c0'; // Ensure this gets the logged-in user session
+  useEffect(() => {
+    const userSession = getUserSession();
+    if (userSession) {
+      setIsAuthenticated(true);
+      setUser(userSession);
+    }
+    fetchSearchData(); // Fetch search data on component mount
+  }, []);
 
   const handleMenuToggle = () => {
     setMenuOpen(!menuOpen);
@@ -29,16 +37,27 @@ const Header = () => {
     setModalShow(false);
   };
 
-  useEffect(() => {
-    const fetchQuestions = async () => {
-      try {
-        const response = await axios.get('http://localhost:3001/questions');
-        setQuestions(response.data);
+  const handleAuthSuccess = () => {
+    const userSession = getUserSession();
+    if (userSession) {
+      setIsAuthenticated(true);
+      setUser(userSession);
+    }
+  };
 
-        // Log response data to debug
-        console.log('Fetched questions:', response.data);
+  const handleLogout = () => {
+    removeSession();
+    setIsAuthenticated(false);
+    setUser(null);
+  };
 
-        const searchData = response.data.map((question) => ({
+  const fetchSearchData = async () => {
+    try {
+      const response = await axios.get('http://localhost:3001/questions');
+      console.log('Fetched questions response:', response.data); // Debugging log
+
+      if (response.data.questions && Array.isArray(response.data.questions)) {
+        const searchData = response.data.questions.map((question) => ({
           key: question._id,
           value: question.title,
         }));
@@ -47,13 +66,13 @@ const Header = () => {
         console.log('Search data:', searchData);
 
         setSearchData(searchData);
-      } catch (error) {
-        console.error('Error fetching questions:', error);
+      } else {
+        console.error('Expected an array but got:', response.data);
       }
-    };
-
-    fetchQuestions();
-  }, []);
+    } catch (error) {
+      console.error('Error fetching search data:', error);
+    }
+  };
 
   const handleSearchSelect = (record) => {
     // Log the selected record to debug
@@ -78,6 +97,21 @@ const Header = () => {
         <img src='/assets/img/logo.png' alt='Logo' className={styles.logo} />
       </Link>
 
+      <nav className={styles.navMenu}>
+        <Link to='/'>
+          Home
+        </Link>
+        <Link to='/questions'>
+          Questions
+        </Link>
+        <Link to='/users'>
+          Users
+        </Link>
+        <Link to='/tags'>
+          Tags
+        </Link>
+      </nav>
+
       <div className={styles.searchBar}>
         <ReactSearchBox
           placeholder='Search for questions...'
@@ -86,7 +120,7 @@ const Header = () => {
           inputFontColor='#ffffff'
           inputBackgroundColor='#000000'
           inputHeight='40px'
-          inputBorderColor='#7e3aed'
+          inputBorderColor='#fff'
           dropDownHoverColor='#f0f0f0'
           className={styles.searchBarDropdown}
         />
@@ -102,7 +136,7 @@ const Header = () => {
       <AuthModal show={modalShow} handleClose={handleModalClose} isLogin={isLogin} />
 
       <div className={`${styles.mobileMenu} ${menuOpen ? styles.open : ''}`}>
-        <Link to='/'>
+      <Link to='/'>
           {' '}
           <svg xmlns='http://www.w3.org/2000/svg' width='18' height='18' fill='currentColor' viewBox='0 0 16 16'>
             <path d='M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4z' />
@@ -133,5 +167,6 @@ const Header = () => {
     </header>
   );
 };
+
 
 export default Header;

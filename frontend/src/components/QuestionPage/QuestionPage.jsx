@@ -154,12 +154,12 @@ const QuestionPage = () => {
             Ask Question
           </a>
           <div className={styles.QuestionPageRightbarBubbles}>
-            <h1>Top Questions</h1>
-            <p>Best practices for data fetching in a Next.js application with Server-Side Rendering (SSR)?</p>
+            <h2>Top 3 Questions</h2>
+        
             <p>Async/Await Function Not Handling Errors Properly</p>
             <p>What is the best modern tech stack we can use to create a Stackoverflow clone?</p>
             <p>How can I get (query string) parameters from the URL in Next.js?</p>
-            <h1>Popular Tags</h1>
+            <h2>Popular Tags</h2>
             <button className={styles.TagsRightBar}>Mongo</button>
             <button className={styles.TagsRightBar}>Express</button>
             <button className={styles.TagsRightBar}>React</button>
@@ -177,41 +177,49 @@ const QuestionPage = () => {
           </div>
           {questions.map((question) => (
             <div
-              className={styles.questionBubble}
-              key={question._id}
-              style={{ marginBottom: '20px', position: 'relative' }}
-              onClick={() => {
-                directToQuestion(question._id);
-              }}
-            >
-              {question.author &&
-                question.author._id === userId && ( // Use the actual user ID from the session
-                  <img
-                    src={deleteIcon}
-                    alt='Delete'
-                    className={styles.deleteIcon}
-                    onClick={(e) => handleDelete(question._id, e)}
-                  />
-                )}
-              <h2>{question.title}</h2>
-              <p>{question.body}</p>
-              <ul>
-                {question.tags && question.tags.map((tagId) => <li key={tagId}>{tagIdToNameMap[tagId] || tagId}</li>)}
-              </ul>
-              <p>Author: {question.author ? question.author.username : 'Unknown'}</p>
-              <p>Published: {question.created_at && new Date(question.created_at).toLocaleDateString()}</p>
-              <div className={styles.heartBg}>
-                <div
-                  className={`${styles.heartIcon} ${likedQuestions[question._id] ? styles.liked : ''}`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    toggleQuestionLike(question._id);
-                  }}
-                  style={{ backgroundImage: `url(${heartIcon})` }}
-                ></div>
-                <div className={styles.likesAmount}>{questionLikeCounts[question._id]}</div>
-              </div>
-            </div>
+  className={styles.questionBubble}
+  key={question._id}
+  style={{ marginBottom: '20px', position: 'relative' }}
+  onClick={() => {
+    directToQuestion(question._id);
+  }}
+>
+  {question.author &&
+    question.author._id === userId && (
+      <img
+        src={deleteIcon}
+        alt='Delete'
+        className={styles.deleteIcon}
+        onClick={(e) => handleDelete(question._id, e)}
+      />
+    )}
+  <h2>{question.title}</h2>
+  <h3>{question.body}</h3>
+  <ul>
+    {question.tags &&
+      question.tags.map((tagId) => (
+        <li key={tagId}>{tagIdToNameMap[tagId] || tagId}</li>
+      ))}
+  </ul>
+  <p className={`${styles.commentUsername} author`}>
+    Author: {question.author ? question.author.username : 'Unknown'}
+  </p>
+  <p className={`${styles.commentTime} published`}>
+    Published:{' '}
+    {question.created_at && new Date(question.created_at).toLocaleDateString()}
+  </p>
+  <div className={styles.heartBg}>
+    <div
+      className={`${styles.heartIcon} ${likedQuestions[question._id] ? styles.liked : ''}`}
+      onClick={(e) => {
+        e.stopPropagation();
+        toggleQuestionLike(question._id);
+      }}
+      style={{ backgroundImage: `url(${heartIcon})` }}
+    ></div>
+    <div className={styles.likesAmount}>{questionLikeCounts[question._id]}</div>
+  </div>
+</div>
           ))}
           {questions.length < totalQuestions && (
             <button className={styles.loadMoreButton} onClick={loadMoreQuestions}>
