@@ -21,11 +21,12 @@ const QuestionPage = () => {
   const [sortOption, setSortOption] = useState('popular'); // State to manage sorting option
   const [page, setPage] = useState(1); // Page state for pagination
   const [totalQuestions, setTotalQuestions] = useState(0); // Total number of questions
-
-  const userId = getUserIdFromToken(); // Get the actual user ID from the token
-  console.log('USERID: ' + userId); // Logging user ID for debugging
+  const [showLoginPrompt, setShowLoginPrompt] = useState(false);
 
   const fetchQuestionsAndTags = async (reset = false) => {
+    const userId = getUserIdFromToken(); // Get the actual user ID from the token
+    console.log('USERID: ' + userId); // Logging user ID for debugging
+
     try {
       if (reset) {
         setQuestions([]);
@@ -43,7 +44,7 @@ const QuestionPage = () => {
       const questionLikeCountsMap = {};
 
       questionsData.forEach((question) => {
-        likedQuestionsMap[question._id] = question.likes.includes(userId);
+        likedQuestionsMap[question._id] = userId ? question.likes.includes(userId) : false;
         questionLikeCountsMap[question._id] = question.likes.length;
       });
 
@@ -64,8 +65,8 @@ const QuestionPage = () => {
         return uniqueQuestions;
       });
       setTags(tagsResponse.data);
-      setLikedQuestions((prevLikedQuestions) => ({ ...prevLikedQuestions, ...likedQuestionsMap }));
-      setQuestionLikeCounts((prevCounts) => ({ ...prevCounts, ...questionLikeCountsMap }));
+      setLikedQuestions(likedQuestionsMap);
+      setQuestionLikeCounts(questionLikeCountsMap);
       setTotalQuestions(totalQuestionsCount);
 
       fetchTopQuestions(); // Fetch top questions after main questions are set
@@ -96,7 +97,25 @@ const QuestionPage = () => {
     fetchQuestionsAndTags();
   }, [page]);
 
+  useEffect(() => {
+    const handleAuthChange = () => {
+      fetchQuestionsAndTags(true);
+    };
+
+    window.addEventListener('authChange', handleAuthChange);
+
+    return () => {
+      window.removeEventListener('authChange', handleAuthChange);
+    };
+  }, []);
+
   const toggleQuestionLike = async (questionId) => {
+    const userId = getUserIdFromToken();
+    if (!userId) {
+      setShowLoginPrompt(true);
+      return;
+    }
+
     const method = likedQuestions[questionId] ? 'unlike' : 'like';
 
     try {
@@ -162,6 +181,12 @@ const QuestionPage = () => {
     <>
       <Header />
       <div className={styles.QuestionPageBody}>
+        {showLoginPrompt && (
+          <div className={styles.loginPrompt}>
+            <p>You must be logged in to like and comment</p>
+            <button onClick={() => setShowLoginPrompt(false)}>Close</button>
+          </div>
+        )}
         <div className={styles.QuestionPageRightbar}>
           <a href='/questions/new' className={styles.askNewQuestion}>
             Ask Question
@@ -199,7 +224,7 @@ const QuestionPage = () => {
               }}
             >
               {question.author &&
-                question.author._id === userId && ( // Use the actual user ID from the session
+                question.author._id === getUserIdFromToken() && ( // Use the actual user ID from the session
                   <img
                     src={deleteIcon}
                     alt='Delete'

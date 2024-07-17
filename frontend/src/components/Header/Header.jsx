@@ -43,12 +43,14 @@ const Header = () => {
       setIsAuthenticated(true);
       setUser(userSession);
     }
+    window.dispatchEvent(new Event('authChange'));
   };
 
   const handleLogout = () => {
     removeSession();
     setIsAuthenticated(false);
     setUser(null);
+    window.dispatchEvent(new Event('authChange')); // Trigger authChange event on logout
   };
 
   const fetchSearchData = async () => {

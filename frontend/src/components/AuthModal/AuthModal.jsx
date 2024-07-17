@@ -36,6 +36,7 @@ const AuthModal = ({ show, handleClose, isLogin, onAuthSuccess }) => {
         setError(null); // Clear error message on successful login/registration
         onAuthSuccess(); // Update authentication status
         handleClose();
+        window.dispatchEvent(new Event('authChange')); // Dispatch custom event
       } else {
         throw new Error('Network response was not ok.');
       }
@@ -48,7 +49,6 @@ const AuthModal = ({ show, handleClose, isLogin, onAuthSuccess }) => {
     <Modal show={show} onHide={handleClose} className={styles.popup}>
       <Modal.Header closeButton>
         <Modal.Title>{isLogin ? 'Login' : 'Sign Up'}</Modal.Title>
-
       </Modal.Header>
       <Modal.Body>
         {error && <p style={{ color: 'red' }}>{error}</p>}
@@ -90,7 +90,6 @@ const AuthModal = ({ show, handleClose, isLogin, onAuthSuccess }) => {
 
           <Button variant='primary' type='submit'>
             {isLogin ? 'Login' : 'Sign Up'}
-
           </Button>
         </Form>
       </Modal.Body>
