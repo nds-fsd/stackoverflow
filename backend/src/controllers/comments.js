@@ -24,8 +24,9 @@ const createComment = async (req, res) => {
     await newComment.save();
     console.log('Comment saved successfully', newComment);
 
+    // Optionally, update the question to include this comment
     await Question.findByIdAndUpdate(questionId, { $push: { comments: newComment._id } });
-    const questionData = await Question.findById(questionId).populate('author');
+    const questionData = await Question.findById(questionId).populate('author'); // Assuming the question has a 'user' field referring to its owner
     if (questionData) {
       const ownerEmail = questionData.author.email;
       const ownerUsername = questionData.author.username;
@@ -69,6 +70,7 @@ const deleteComment = async (req, res) => {
       return res.status(404).json({ message: 'Comment not found' });
     }
 
+    // Optionally, remove the comment reference from the question
     await Question.updateOne({ _id: deletedComment.questionId }, { $pull: { comments: commentId } });
 
     res.status(200).json({ message: 'Comment deleted successfully' });
