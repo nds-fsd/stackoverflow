@@ -398,11 +398,11 @@
 .sortDropdown select:focus {
   outline: none;
   border-color: #d0b3ff;
-  box-shadow: 0 0 8px rgba(126, 58, 237, 0.5);
+  box-shadow: 0 0 8px #7e3aed80;
 }
 
 .loadMoreButton {
-  background-color: #007bff;
+  background-color: #7e3aed;
   color: white;
   border: none;
   border-radius: 5px;
@@ -416,7 +416,7 @@
 }
 
 .loadMoreButton:hover {
-  background-color: #0056b3;
+  background-color: #7e3aed80;
 }
 
 .loginPrompt {
@@ -424,10 +424,11 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: white;
+  background-color: #000000;
   padding: 20px;
+  color: #ffff;
   border: 1px solid #ccc;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px #0000001a;
   z-index: 1000;
 }
 
@@ -437,7 +438,7 @@
 
 .loginPrompt button {
   padding: 5px 10px;
-  background-color: #007bff;
+  background-color: #7e3aed;
   color: white;
   border: none;
   border-radius: 5px;
@@ -445,5 +446,5 @@
 }
 
 .loginPrompt button:hover {
-  background-color: #0056b3;
+  background-color: #7e3aed;
 }
