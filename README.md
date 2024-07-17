@@ -49,12 +49,12 @@
 
 ##  Overview
 
-Add
+
 ---
 
 ##  Features
 
-Add
+
 ---
 
 ##  Repository Structure
@@ -522,6 +522,16 @@ npm test
 - [ ] `► ...`
 
 ---
+
+## Contributors
+
+- [Alex Bessedonato](https://github.com/alexbessedonato)
+- [Viktoria Kovacs](https://github.com/kovvik23)
+- [Noah Rebollar](https://github.com/NoahRebollar)
+- [Sofia Simeonoff](https://github.com/SofiaSimeonoff)
+
+---
+
 
 ##  Contributing
 
