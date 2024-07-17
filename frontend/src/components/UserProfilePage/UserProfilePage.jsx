@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import styles from './UserProfilePage.module.css';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
@@ -28,7 +27,7 @@ const UserProfilePage = () => {
 
   const fetchUserProfile = async () => {
     try {
-      const response = await axios.get(`http://localhost:3001/users/username/${username}`);
+      const response = await api().get()(`/users/username/${username}`);
       setUser(response.data);
     } catch (error) {
       setError(error.message);
@@ -39,7 +38,7 @@ const UserProfilePage = () => {
 
   const fetchUserQuestions = async () => {
     try {
-      const response = await axios.get(`http://localhost:3001/questions?authorUsername=${username}`);
+      const response = await api().get()(`/questions?authorUsername=${username}`);
       setQuestions(response.data.questions);
     } catch (error) {
       setError(error.message);
@@ -48,7 +47,7 @@ const UserProfilePage = () => {
 
   const fetchUserCommentsCount = async () => {
     try {
-      const response = await axios.get(`http://localhost:3001/users/${user._id}/comments-count`);
+      const response = await api().get()(`/users/${user._id}/comments-count`);
       setCommentsCount(response.data.commentsCount);
     } catch (error) {
       setError(error.message);
@@ -57,7 +56,7 @@ const UserProfilePage = () => {
 
   const fetchUserLikesCount = async () => {
     try {
-      const response = await axios.get(`http://localhost:3001/users/${user._id}/likes-count`);
+      const response = await api().get()(`/users/${user._id}/likes-count`);
       setLikesCount(response.data.likesCount);
     } catch (error) {
       setError(error.message);
