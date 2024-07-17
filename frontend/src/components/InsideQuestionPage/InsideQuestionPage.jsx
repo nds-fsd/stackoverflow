@@ -1,62 +1,188 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState, useRef } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import styles from './InsideQuestionPage.module.css';
 import Header from '../Header/Header.jsx';
 import Footer from '../Footer/Footer.jsx';
 import profilePic from './profilePic.png';
-import photographer from './photographer.png';
+import deleteIcon from './deleteIcon.png';
+import { getUserIdFromToken } from '../../_utils/localStorage.utils';
+import { api } from '../../_utils/api.js';
 
 const InsideQuestionPage = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [question, setQuestion] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [users, setUsers] = useState([]);
-  const [likeCount, setLikeCount] = useState(0);
-  const [liked, setLiked] = useState(false);
+  const [tags, setTags] = useState([]);
+  const [comments, setComments] = useState([]);
+  const [content, setContent] = useState('');
+  const [likeCounts, setLikeCounts] = useState({});
+  const [likedComments, setLikedComments] = useState({});
+  const [questionLikeCount, setQuestionLikeCount] = useState(0);
+  const [likedQuestion, setLikedQuestion] = useState(false);
+  const [topQuestions, setTopQuestions] = useState([]);
+  const textareaRef = useRef(null);
 
-  const toggleDisplay = () => {
-    setLikeCount((prevCount) => (prevCount === 0 ? 1 : 0));
-    setLiked((prevLiked) => !prevLiked);
+  const userId = getUserIdFromToken();
+  console.log('USERID: ' + userId);
+
+  useEffect(() => {
+    console.log('User ID from getUserIdFromToken function:', userId);
+  }, [userId]);
+
+  const toggleQuestionLike = async () => {
+    try {
+      const method = likedQuestion ? 'unlike' : 'like';
+      const response = await api().post(`/questions/${id}/${method}`, { userId });
+
+      setQuestionLikeCount(response.data.likeCount);
+      setLikedQuestion(!likedQuestion);
+    } catch (err) {
+      console.error('Error:', err);
+    }
+  };
+
+  const toggleLike = async (commentId) => {
+    try {
+      const method = likedComments[commentId] ? 'DELETE' : 'POST';
+      const response = await api().request({
+        url: '/likes',
+        method,
+        data: { commentId, userId },
+      });
+
+      fetchLikeCount(commentId);
+      setLikedComments((prevLikedComments) => ({
+        ...prevLikedComments,
+        [commentId]: !prevLikedComments[commentId],
+      }));
+    } catch (err) {
+      console.error('Error:', err);
+    }
+  };
+
+  const fetchLikeCount = async (commentId) => {
+    try {
+      const response = await api().get(`/likes/${commentId}`);
+      setLikeCounts((prevCounts) => ({ ...prevCounts, [commentId]: response.data.likeCount }));
+    } catch (error) {
+      console.error('Error fetching like count:', error);
+    }
+  };
+
+  const fetchUserLikes = async () => {
+    try {
+      const response = await api().get(`/user-likes/${userId}`);
+      const likedCommentIds = response.data.map((like) => like.commentId);
+      setLikedComments(
+        likedCommentIds.reduce((acc, commentId) => {
+          acc[commentId] = true;
+          return acc;
+        }, {}),
+      );
+    } catch (error) {
+      console.error('Error fetching user likes:', error);
+    }
+  };
+
+  const fetchQuestion = async () => {
+    try {
+      const response = await api().get(`/questions/${id}`);
+      setQuestion(response.data);
+      setQuestionLikeCount(response.data.likes.length);
+      setLikedQuestion(response.data.likes.includes(userId));
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchTags = async () => {
+    try {
+      const response = await api().get('/tags');
+      setTags(response.data);
+    } catch (error) {
+      console.error('Error fetching tags:', error);
+    }
+  };
+
+  const fetchUsers = async () => {
+    try {
+      const response = await api().get('/users');
+      setUsers(response.data);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchComments = async () => {
+    try {
+      const response = await api().get(`/comments/${id}`);
+      setComments(response.data);
+      response.data.forEach((comment) => fetchLikeCount(comment._id));
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
+  const fetchTopQuestions = async () => {
+    try {
+      const response = await api().get('/questions?limit=5&sortBy=popular');
+      setTopQuestions(response.data.questions);
+    } catch (error) {
+      console.error('Error fetching top questions:', error);
+    }
   };
 
   useEffect(() => {
-    const fetchQuestion = async () => {
-      try {
-        const response = await fetch(`http://localhost:3001/questions/${id}`);
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setQuestion(data);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchQuestion();
+    fetchTags();
+    fetchUsers();
+    fetchComments();
+    fetchUserLikes();
+    fetchTopQuestions();
   }, [id]);
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await fetch('http://localhost:3001/users');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setUsers(data);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    fetchUsers();
-  }, []);
+    try {
+      const response = await api().post('/comments', { questionId: id, userId, content });
+      setContent('');
+      fetchComments();
+
+      if (textareaRef.current) {
+        textareaRef.current.style.height = 'auto';
+      }
+    } catch (err) {
+      console.error('Error:', err);
+    }
+  };
+
+  const handleInput = () => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+  };
+
+  const handleDelete = async (commentId) => {
+    try {
+      const response = await api().delete(`/comments/${commentId}`);
+      fetchComments();
+    } catch (err) {
+      console.error('Error:', err);
+    }
+  };
+
+  const directToQuestion = (questionId) => {
+    navigate('/questions/' + questionId);
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -65,6 +191,11 @@ const InsideQuestionPage = () => {
   if (error) {
     return <div>Error: {error}</div>;
   }
+
+  const tagIdToNameMap = tags.reduce((map, tag) => {
+    map[tag._id] = tag.name;
+    return map;
+  }, {});
 
   return (
     <>
@@ -76,10 +207,11 @@ const InsideQuestionPage = () => {
           </a>
           <div className={styles.QuestionPageRightbarBubbles}>
             <h1>Top Questions</h1>
-            <p>Best practices for data fetching in a Next.js application with Server-Side Rendering (SSR)?</p>
-            <p>Async/Await Function Not Handling Errors Properly</p>
-            <p>What is the best modern tech stack we can use to create a Stackoverflow clone?</p>
-            <p>How can I get (query string) parameters from the URL in Next.js?</p>
+            {topQuestions.map((question) => (
+              <p key={question._id} onClick={() => directToQuestion(question._id)} style={{ cursor: 'pointer' }}>
+                {question.title}
+              </p>
+            ))}
             <h1>Popular Tags</h1>
             <button className={styles.TagsRightBar}>Mongo</button>
             <button className={styles.TagsRightBar}>Express</button>
@@ -92,65 +224,76 @@ const InsideQuestionPage = () => {
           {question && (
             <>
               <div className={styles.questionBubble}>
-                Asked by: {question.author} on {new Date(question.created_at).toLocaleDateString()}
+                <div className={styles.questionAuthor}>
+                  <img src={profilePic} alt='Profile' className={styles.profilePic} />
+                  <span>
+                    Asked by: {question.author ? question.author.username : 'Unknown'} on{' '}
+                    {new Date(question.created_at).toLocaleDateString()}
+                  </span>
+                </div>
                 <h1>{question.title}</h1>
                 <h3>{question.body}</h3>
-                <h5>Tags: {question.tags ? question.tags.join(', ') : 'No tags available'}</h5>
+                <h5>
+                  Tags:{' '}
+                  {question.tags
+                    ? question.tags.map((tagId) => tagIdToNameMap[tagId] || tagId).join(', ')
+                    : 'No tags available'}
+                </h5>
+                <div className={styles.heartBg}>
+                  <div
+                    className={`${styles.heartIcon} ${likedQuestion ? styles.liked : ''}`}
+                    onClick={toggleQuestionLike}
+                  ></div>
+                  <div className={styles.likesAmount}>{questionLikeCount}</div>
+                </div>
               </div>
 
               <div className={styles.questionBubble}>
-                <input className={styles.commentInput} name='commentInput' placeholder='Add a comment' />
+                <form onSubmit={handleSubmit} className={styles.commentForm}>
+                  <textarea
+                    className={styles.commentInput}
+                    name='commentInput'
+                    placeholder='Add a comment'
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                    onInput={handleInput}
+                    ref={textareaRef}
+                    required
+                  />
+                  <button type='submit' className={styles.submitButton}>
+                    Submit Comment
+                  </button>
+                </form>
                 <h3>Comments</h3>
-                <div className={styles.questionBubblecomment}>
-                  <img src={profilePic} alt='Profile' className={styles.profilePic} />
-                  <div className={styles.commentContent}>
-                    <div className={styles.commentUsername}>
-                      {users[1] && users[1].username}
-                      <span className={styles.commentTime}> • 4 hours ago</span>
-                    </div>
-                    <div className={styles.commentText}>
-                      It sounds like you're encountering a challenging issue with the WebSocket connection when accessed
-                      via an external server address. Here are some detailed steps and considerations that might help
-                      you troubleshoot and resolve this problem: Server Configuration: First, ensure that your Comfy UI
-                      server is configured to accept connections from all IP addresses, not just localhost. Sometimes
-                      servers are set up to listen only to local connections by default, which can cause issues when
-                      trying to access them externally. Firewall and Network Security: Check the firewall settings on
-                      your server. Firewalls can block incoming connections on the port used by your WebSocket server.
-                      Additionally, if you are using cloud services like AWS, Azure, or Google Cloud Platform, make sure
-                      that the security groups or network ACLs are configured to allow traffic on the required port.
-                      Good luck, and I hope this helps resolve your problem! If you need further assistance, feel free
-                      to ask.
-                      <div className={styles.heartBg}>
-                        <div
-                          className={`${styles.heartIcon} ${liked ? styles.liked : ''}`}
-                          onClick={toggleDisplay}
-                        ></div>
-                        <div className={styles.likesAmount}>{likeCount}</div>
+                {comments.map((comment) => (
+                  <div key={comment._id} className={styles.questionBubblecomment}>
+                    <img src={profilePic} alt='Profile' className={styles.profilePic} />
+                    {comment.userId._id === userId && (
+                      <img
+                        src={deleteIcon}
+                        alt='Delete'
+                        className={styles.deleteIcon}
+                        onClick={() => handleDelete(comment._id)}
+                      />
+                    )}
+                    <div className={styles.commentContent}>
+                      <div className={styles.commentUsername}>
+                        {comment.userId.username}
+                        <span className={styles.commentTime}> • {new Date(comment.createdAt).toLocaleString()}</span>
+                      </div>
+                      <div className={styles.commentText}>
+                        {comment.content}
+                        <div className={styles.heartBg}>
+                          <div
+                            className={`${styles.heartIcon} ${likedComments[comment._id] ? styles.liked : ''}`}
+                            onClick={() => toggleLike(comment._id)}
+                          ></div>
+                          <div className={styles.likesAmount}>{likeCounts[comment._id] || 0}</div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-
-                <div className={styles.questionBubblecomment}>
-                  <img src={photographer} alt='Profile' className={styles.profilePic} />
-                  <div className={styles.commentContent}>
-                    <div className={styles.commentUsername}>
-                      {users[2] && users[2].username}
-                      <span className={styles.commentTime}> • 23 minutes ago</span>
-                    </div>
-                    <div className={styles.commentText}>
-                      Why doesn't anyone try googling first, that's what it's for, also, there's chatGPT now, try going
-                      there first, this has been answered several times now, I see this every 2 days...
-                      <div className={styles.heartBg}>
-                        <div
-                          className={`${styles.heartIcon} ${liked ? styles.liked : ''}`}
-                          onClick={toggleDisplay}
-                        ></div>
-                        <div className={styles.likesAmount}>{likeCount}</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                ))}
               </div>
             </>
           )}

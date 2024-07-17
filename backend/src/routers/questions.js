@@ -5,6 +5,8 @@ const {
   createQuestion,
   editQuestion,
   deleteQuestion,
+  likeQuestion,
+  unlikeQuestion,
 } = require('../controllers/questions');
 const validateQuestion = require('../middlewares/questions');
 
@@ -15,8 +17,7 @@ router.get('/questions/:id', getQuestionById);
 router.post('/questions', validateQuestion, createQuestion);
 router.put('/questions/:id', validateQuestion, editQuestion);
 router.delete('/questions/:id', deleteQuestion);
+router.post('/questions/:id/like', likeQuestion);
+router.post('/questions/:id/unlike', unlikeQuestion);
 
 module.exports = router;
-
-
-

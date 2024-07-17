@@ -3,13 +3,17 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import Styles from './QuestionForm.module.css';
 import Header from '../Header/Header.jsx';
 import Footer from '../Footer/Footer.jsx';
-import axios from 'axios';
+import { getUserIdFromToken } from '../../_utils/localStorage.utils'; // Corrected path to your local storage utilities
+import { api } from '../../_utils/api.js';
 
 const QuestionForm = () => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [tags, setTags] = useState('');
   const navigate = useNavigate(); // Initialize useNavigate
+
+  const userId = getUserIdFromToken(); // Get the actual user ID from the token
+  console.log('USERID: ' + userId); // Logging user ID for debugging
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -18,18 +22,18 @@ const QuestionForm = () => {
       title,
       body,
       tags: tags.split(',').map((tag) => tag.trim()),
-      authorId: '60d0fe4f5311236168a109ca', // Hardcoded author ID for testing
+      authorId: userId, // Use the actual user ID from the token
     };
 
     try {
-      const response = await axios.post('http://localhost:3001/questions', questionData);
+      const response = await api().post('/questions', questionData);
       console.log('Question created successfully:', response.data);
       // Clear form
       setTitle('');
       setBody('');
       setTags('');
       // Navigate to the new question's page
-      navigate(`/question/${response.data._id}`);
+      navigate(`/questions/${response.data._id}`); // Ensure the path matches your route definition
     } catch (error) {
       if (error.response) {
         console.error('Server responded with a status code:', error.response.status);
