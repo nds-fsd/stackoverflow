@@ -30,7 +30,7 @@
 }
 
 .QuestionPageRightbar p {
-margin-left: 5px;
+  margin-left: 5px;
 }
 
 .QuestionPageQuestions {
@@ -51,18 +51,18 @@ margin-left: 5px;
 
 .sortDropdown {
   display: flex;
-  justify-content: flex-end; 
+  justify-content: flex-end;
   margin-right: 20px;
   margin-top: 20px;
   align-items: center;
 }
 
 .sortDropdown label {
-  margin-right: 10px; 
+  margin-right: 10px;
 }
 
 .sortDropdown select {
-  width: 150px; 
+  width: 150px;
 }
 
 @media (max-width: 768px) {
@@ -70,8 +70,6 @@ margin-left: 5px;
     grid-column: 1 / -1; /* Ajuste de columnas para responsive */
   }
 }
-
-
 
 .questionBubble {
   background-color: #4a4a4a;
@@ -113,13 +111,12 @@ margin-left: 5px;
 }
 
 .questionBubble p.author {
-  font-weight: bold; 
+  font-weight: bold;
 }
 
 .questionBubble p.published {
-  font-weight: bold; 
+  font-weight: bold;
 }
-
 
 .QuestionPageRightbarBubbles {
   background-color: #000000;
@@ -135,8 +132,7 @@ margin-left: 5px;
 }
 
 .QuestionPageRightbarBubbles h2 {
-margin: 20px 5px;
-
+  margin: 20px 5px;
 }
 
 .TagsRightBar {
@@ -151,7 +147,9 @@ margin: 20px 5px;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
   outline: none;
   text-align: center;
   align-items: center;
@@ -176,7 +174,6 @@ margin: 20px 5px;
   background-color: #000000;
   color: white;
 }
-
 
 .commentInput {
   width: 100%;
@@ -220,7 +217,9 @@ margin: 20px 5px;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
   width: 20%;
   outline: none;
   text-align: center;
@@ -248,7 +247,9 @@ margin: 20px 5px;
   background-color: #2b2b2b;
   color: white;
   cursor: pointer;
-  transition: border 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    border 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .sortDropdown select:focus {
@@ -331,4 +332,122 @@ margin: 20px 5px;
 
 .likesAmount.liked {
   color: red;
+}
+
+.submitButton {
+  padding: 10px;
+  background: linear-gradient(to bottom right, #7e3aed, #d0b3ff);
+  border: none;
+  border-radius: 5px;
+  height: 60px;
+  color: white;
+  margin: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  width: 20%; /* Make it full width within the form */
+  outline: none;
+  text-align: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.submitButton:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.submitButton:focus {
+  box-shadow: 0 0 0 3px rgb(253, 110, 0);
+}
+
+.deleteIcon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+/* Add these new styles for the dropdown */
+.sortDropdown {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  color: white;
+}
+
+.sortDropdown label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.sortDropdown select {
+  padding: 5px 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 2px solid #7e3aed;
+  background-color: #2b2b2b;
+  color: white;
+  cursor: pointer;
+  transition:
+    border 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.sortDropdown select:focus {
+  outline: none;
+  border-color: #d0b3ff;
+  box-shadow: 0 0 8px #7e3aed80;
+}
+
+.loadMoreButton {
+  background-color: #7e3aed;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 16px;
+  margin: 20px auto;
+  display: block;
+  transition: background-color 0.3s ease;
+}
+
+.loadMoreButton:hover {
+  background-color: #7e3aed80;
+}
+
+.loginPrompt {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #000000;
+  padding: 20px;
+  color: #ffff;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 10px #0000001a;
+  z-index: 1000;
+}
+
+.loginPrompt p {
+  margin-bottom: 10px;
+}
+
+.loginPrompt button {
+  padding: 5px 10px;
+  background-color: #7e3aed;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.loginPrompt button:hover {
+  background-color: #7e3aed;
 }

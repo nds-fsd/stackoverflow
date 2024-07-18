@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import Styles from './QuestionForm.module.css';
 import Header from '../Header/Header.jsx';
 import Footer from '../Footer/Footer.jsx';
-import axios from 'axios';
 import { getUserIdFromToken } from '../../_utils/localStorage.utils'; // Corrected path to your local storage utilities
+import { api } from '../../_utils/api.js';
 
 const QuestionForm = () => {
   const [title, setTitle] = useState('');
@@ -26,7 +26,7 @@ const QuestionForm = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:3001/questions', questionData);
+      const response = await api().post('/questions', questionData);
       console.log('Question created successfully:', response.data);
       // Clear form
       setTitle('');
