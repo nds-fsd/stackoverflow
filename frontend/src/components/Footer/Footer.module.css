@@ -1,14 +1,13 @@
 .footer {
-  border-top: 0.1rem solid #4A4a4a;
+  border-top: 0.1rem solid #4a4a4a;
   background-color: #222020;
   color: #fff;
   padding: 20px;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  font-family: 'Exo', sans-serif; /* Fallback to sans-serif if Exo is not loaded */
+  font-family: 'Exo', sans-serif;
 }
-
 
 .column {
   display: flex;
@@ -24,11 +23,10 @@
 .link {
   color: #fff;
   text-decoration: none;
-
 }
 
 .link:hover {
-  color: #4A4a4a;
+  color: #4a4a4a;
 }
 
 .socialLink {
@@ -38,10 +36,8 @@
 }
 
 .socialLink:hover {
-  color: #4A4a4a;
+  color: #4a4a4a;
 }
-
-
 
 .footerText {
   text-align: center;
