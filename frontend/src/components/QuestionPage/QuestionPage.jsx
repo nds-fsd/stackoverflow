@@ -165,7 +165,7 @@ const QuestionPage = () => {
   };
 
   if (loading && page === 1) {
-    return <div>Loading...</div>;
+    return <div className={styles.loadingBackground}>Loading...</div>;
     /*aqui meter el spinner en vez de Loading...*/
   }
 
