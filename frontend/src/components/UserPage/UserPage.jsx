@@ -11,6 +11,7 @@ const UserPage = () => {
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [sortCriteria, setSortCriteria] = useState('name'); // Default sorting criteria
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -35,6 +36,17 @@ const UserPage = () => {
     setFilteredUsers(newFilter);
   };
 
+  const handleSortChange = (criteria) => {
+    setSortCriteria(criteria);
+    let sortedUsers = [...filteredUsers];
+    if (criteria === 'name') {
+      sortedUsers.sort((a, b) => a.username.localeCompare(b.username));
+    } else if (criteria === 'ranking') {
+      sortedUsers.sort((a, b) => b.reputation - a.reputation);
+    }
+    setFilteredUsers(sortedUsers);
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -50,7 +62,25 @@ const UserPage = () => {
         <h1 className={styles.descriptionTitle}>Users</h1>
         <p className={styles.descriptionText}>Explore user profiles and their contributions.</p>
       </div>
-      <FilterSearchBar placeholder='Filter by username' onFilter={handleFilter} />
+      <div className={styles.filterContainer}>
+        <FilterSearchBar placeholder='Filter by username' onFilter={handleFilter} />
+        <div className={styles.sortOptionsContainer}>
+          <div className={styles.sortOptions}>
+            <button
+              className={`${styles.sortButton} ${sortCriteria === 'name' ? styles.active : ''}`}
+              onClick={() => handleSortChange('name')}
+            >
+              Name
+            </button>
+            <button
+              className={`${styles.sortButton} ${sortCriteria === 'ranking' ? styles.active : ''}`}
+              onClick={() => handleSortChange('ranking')}
+            >
+              Ranking
+            </button>
+          </div>
+        </div>
+      </div>
       <div className={styles.container}>
         {filteredUsers.map((user) => (
           <UserItem key={user._id} user={user} />

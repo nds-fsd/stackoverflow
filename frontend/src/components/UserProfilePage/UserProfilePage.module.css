@@ -85,7 +85,10 @@
   grid-template-columns: 1fr;
   gap: 20px;
   font-size: 18px;
-  color: #7e3aed;
+  color: #fff;
+  background-color: #333;
+  max-width: 45%;
+  padding: 20px;
 }
 
 .summaryItem {
@@ -114,7 +117,7 @@
 
 .userProfileQuestions li::before {
   content: '•';
-  color: #7e3aed;
+  color: #fff;
   position: absolute;
   left: 0;
   top: 0;
@@ -152,5 +155,5 @@
 
 .commentsLabel,
 .likesLabel {
-  color: #7e3aed;
+  color: #fff;
 }

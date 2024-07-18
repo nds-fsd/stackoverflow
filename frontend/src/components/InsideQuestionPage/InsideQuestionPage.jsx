@@ -23,7 +23,6 @@ const InsideQuestionPage = () => {
   const [questionLikeCount, setQuestionLikeCount] = useState(0);
   const [likedQuestion, setLikedQuestion] = useState(false);
   const [topQuestions, setTopQuestions] = useState([]);
-  const [navigating, setNavigating] = useState(false); // New state for navigation loading
   const textareaRef = useRef(null);
 
   const userId = getUserIdFromToken();
@@ -185,13 +184,8 @@ const InsideQuestionPage = () => {
     navigate('/questions/' + questionId);
   };
 
-  const handleProfileClick = (username) => {
-    setNavigating(true);
-    navigate(`/users/${username}`);
-  };
-
-  if (loading || navigating) {
-    return <div className={styles.loadingBackground}>Loading...</div>;
+  if (loading) {
+    return <div>Loading...</div>;
   }
 
   if (error) {
@@ -231,16 +225,7 @@ const InsideQuestionPage = () => {
             <>
               <div className={styles.questionBubble}>
                 <div className={styles.questionAuthor}>
-                  <img
-                    src={profilePic}
-                    alt='Profile'
-                    className={styles.profilePic}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleProfileClick(question.author.username);
-                    }}
-                    style={{ cursor: 'pointer' }}
-                  />
+                  <img src={profilePic} alt='Profile' className={styles.profilePic} />
                   <span>
                     Asked by: {question.author ? question.author.username : 'Unknown'} on{' '}
                     {new Date(question.created_at).toLocaleDateString()}
@@ -282,16 +267,7 @@ const InsideQuestionPage = () => {
                 <h3>Comments</h3>
                 {comments.map((comment) => (
                   <div key={comment._id} className={styles.questionBubblecomment}>
-                    <img
-                      src={profilePic}
-                      alt='Profile'
-                      className={styles.profilePic}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleProfileClick(comment.userId.username);
-                      }}
-                      style={{ cursor: 'pointer' }}
-                    />
+                    <img src={profilePic} alt='Profile' className={styles.profilePic} />
                     {comment.userId._id === userId && (
                       <img
                         src={deleteIcon}

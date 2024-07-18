@@ -40,18 +40,36 @@
   margin-bottom: 10px;
 }
 
+.reputation {
+  display: flex;
+  align-items: center;
+}
+
+.reputationIcon {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+}
+
 .user p {
   font-size: 13px;
   color: #fff;
   margin: 5px;
 }
 
-.tagsPlaceholder {
+.tagsContainer {
   grid-column: 1 / -1;
+  display: flex;
+  gap: 5px;
   padding: 2px;
-  background-color: #333;
   border-radius: 4px;
   color: #fff;
-  margin: 10px;
-  max-width: 60%;
+  margin-top: 10px;
+}
+
+.tag {
+  background-color: #4a4a4a;
+  color: #fff;
+  padding: 2px 5px;
+  border-radius: 4px;
 }

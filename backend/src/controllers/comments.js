@@ -10,8 +10,6 @@ const createComment = async (req, res) => {
     return res.status(400).json({ message: 'Invalid questionId or userId' });
   }
 
-  console.log('Received request body:', req.body);
-
   try {
     const newComment = new Comment({
       questionId,
@@ -19,14 +17,13 @@ const createComment = async (req, res) => {
       content,
     });
 
-    console.log('Attempting to save new comment:', newComment);
-
     await newComment.save();
-    console.log('Comment saved successfully', newComment);
 
     // Optionally, update the question to include this comment
     await Question.findByIdAndUpdate(questionId, { $push: { comments: newComment._id } });
-    const questionData = await Question.findById(questionId).populate('author'); // Assuming the question has a 'user' field referring to its owner
+
+    // Send notification email
+    const questionData = await Question.findById(questionId).populate('author');
     if (questionData) {
       const ownerEmail = questionData.author.email;
       const ownerUsername = questionData.author.username;
