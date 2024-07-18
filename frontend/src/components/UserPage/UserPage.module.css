@@ -35,3 +35,14 @@
   margin-top: 20px;
   border-radius: 4px;
 }
+
+/* UserPage.module.css */
+.loadingBackground {
+  background-color: black;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 24px;
+}
