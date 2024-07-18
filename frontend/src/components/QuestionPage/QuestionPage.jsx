@@ -23,10 +23,9 @@ const QuestionPage = () => {
   const [totalQuestions, setTotalQuestions] = useState(0);
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
 
-  const fetchQuestionsAndTags = async (reset = false) => {
-    const userId = getUserIdFromToken();
-    console.log('USERID: ' + userId);
+  const userId = getUserIdFromToken();
 
+  const fetchQuestionsAndTags = async (reset = false) => {
     try {
       if (reset) {
         setQuestions([]);
@@ -48,25 +47,17 @@ const QuestionPage = () => {
         questionLikeCountsMap[question._id] = question.likes.length;
       });
 
-      const sortedQuestions = [...questionsData].sort((a, b) => {
-        if (sortOption === 'popular') {
-          return (b.likes?.length || 0) - (a.likes?.length || 0);
-        } else if (sortOption === 'new') {
-          return new Date(b.created_at) - new Date(a.created_at);
-        }
-        return 0;
-      });
-
       setQuestions((prevQuestions) => {
-        const combinedQuestions = reset ? sortedQuestions : [...prevQuestions, ...sortedQuestions];
+        const combinedQuestions = reset ? questionsData : [...prevQuestions, ...questionsData];
         const uniqueQuestions = combinedQuestions.reduce((unique, item) => {
           return unique.some((question) => question._id === item._id) ? unique : [...unique, item];
         }, []);
         return uniqueQuestions;
       });
+
       setTags(tagsResponse.data);
-      setLikedQuestions(likedQuestionsMap);
-      setQuestionLikeCounts(questionLikeCountsMap);
+      setLikedQuestions((prevLikedQuestions) => ({ ...prevLikedQuestions, ...likedQuestionsMap }));
+      setQuestionLikeCounts((prevCounts) => ({ ...prevCounts, ...questionLikeCountsMap }));
       setTotalQuestions(totalQuestionsCount);
 
       fetchTopQuestions(); // Fetch top questions after main questions are set
@@ -81,7 +72,6 @@ const QuestionPage = () => {
     try {
       const response = await api().get('/questions?limit=5&sortBy=popular');
       const topQuestionsData = response.data.questions;
-
       setTopQuestions(topQuestionsData);
     } catch (error) {
       console.error('Error fetching top questions:', error);
@@ -108,6 +98,10 @@ const QuestionPage = () => {
       window.removeEventListener('authChange', handleAuthChange);
     };
   }, []);
+
+  useEffect(() => {
+    fetchQuestionsAndTags(true);
+  }, [userId]);
 
   const toggleQuestionLike = async (questionId) => {
     const userId = getUserIdFromToken();
