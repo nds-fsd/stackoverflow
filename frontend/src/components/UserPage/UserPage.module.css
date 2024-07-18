@@ -1,3 +1,12 @@
+/* In a global CSS file, e.g., index.css */
+body {
+  background-color: black;
+  color: rgb(0, 0, 0);
+  margin: 0;
+  padding: 0;
+  font-family: 'Exo', sans-serif; /* Apply your preferred font family globally */
+}
+
 .descriptionContainer {
   padding: 50px;
   background-color: #000000;
