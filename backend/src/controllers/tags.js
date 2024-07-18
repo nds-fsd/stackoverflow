@@ -1,4 +1,5 @@
 const Tag = require('../mongo/data/schemas/tag');
+const Question = require('../mongo/data/schemas/question');
 
 const getTags = async (req, res) => {
   try {
@@ -19,7 +20,7 @@ const getTagById = async (req, res) => {
     res.json(tag);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Error fetching tag', error });
+    res.status500().json({ message: 'Error fetching tag', error });
   }
 };
 
@@ -59,9 +60,38 @@ const deleteTag = async (req, res) => {
   }
 };
 
+const getPopularTags = async (req, res) => {
+  try {
+    const tags = await Tag.find();
+
+    const tagPopularity = await Promise.all(
+      tags.map(async (tag) => {
+        const questions = await Question.find({ tags: tag._id });
+        const popularity = questions.reduce((acc, question) => {
+          return acc + question.likes.length + question.comments.length;
+        }, 0);
+        const latestQuestionDate =
+          questions.length > 0
+            ? questions.reduce((latest, question) => {
+                return new Date(question.created_at) > new Date(latest.created_at) ? question : latest;
+              }).created_at
+            : null;
+
+        return { ...tag.toObject(), popularity, latestQuestionDate };
+      }),
+    );
+
+    res.json(tagPopularity);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   getTags,
   getTagById,
   createTag,
   deleteTag,
+  getPopularTags,
 };
