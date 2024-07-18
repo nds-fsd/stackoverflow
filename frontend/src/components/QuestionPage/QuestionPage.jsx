@@ -23,9 +23,9 @@ const QuestionPage = () => {
   const [totalQuestions, setTotalQuestions] = useState(0);
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
 
-  const userId = getUserIdFromToken();
-
   const fetchQuestionsAndTags = async (reset = false) => {
+    const userId = getUserIdFromToken();
+
     try {
       if (reset) {
         setQuestions([]);
@@ -98,10 +98,6 @@ const QuestionPage = () => {
       window.removeEventListener('authChange', handleAuthChange);
     };
   }, []);
-
-  useEffect(() => {
-    fetchQuestionsAndTags(true);
-  }, [userId]);
 
   const toggleQuestionLike = async (questionId) => {
     const userId = getUserIdFromToken();

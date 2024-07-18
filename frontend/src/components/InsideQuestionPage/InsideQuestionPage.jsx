@@ -23,22 +23,38 @@ const InsideQuestionPage = () => {
   const [questionLikeCount, setQuestionLikeCount] = useState(0);
   const [likedQuestion, setLikedQuestion] = useState(false);
   const [topQuestions, setTopQuestions] = useState([]);
-  const [navigating, setNavigating] = useState(false); // New state for navigation loading
-  const [page, setPage] = useState(1); // Pagination state
+  const [navigating, setNavigating] = useState(false);
+  const [page, setPage] = useState(1);
   const textareaRef = useRef(null);
 
-  const userId = getUserIdFromToken();
-  console.log('USERID: ' + userId);
-
-  useEffect(() => {
-    console.log('User ID from getUserIdFromToken function:', userId);
-  }, [userId]);
+  const fetchAllData = async (userId) => {
+    setLoading(true);
+    try {
+      await Promise.all([
+        fetchQuestion(userId),
+        fetchTags(),
+        fetchUsers(),
+        fetchComments(userId),
+        fetchUserLikes(userId),
+        fetchTopQuestions(page),
+      ]);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const toggleQuestionLike = async () => {
-    try {
-      const method = likedQuestion ? 'unlike' : 'like';
-      const response = await api().post(`/questions/${id}/${method}`, { userId });
+    const userId = getUserIdFromToken();
+    if (!userId) {
+      setShowLoginPrompt(true);
+      return;
+    }
 
+    const method = likedQuestion ? 'unlike' : 'like';
+    try {
+      const response = await api().post(`/questions/${id}/${method}`, { userId });
       setQuestionLikeCount(response.data.likeCount);
       setLikedQuestion(!likedQuestion);
     } catch (err) {
@@ -47,9 +63,15 @@ const InsideQuestionPage = () => {
   };
 
   const toggleLike = async (commentId) => {
+    const userId = getUserIdFromToken();
+    if (!userId) {
+      setShowLoginPrompt(true);
+      return;
+    }
+
+    const method = likedComments[commentId] ? 'DELETE' : 'POST';
     try {
-      const method = likedComments[commentId] ? 'DELETE' : 'POST';
-      const response = await api().request({
+      await api().request({
         url: '/likes',
         method,
         data: { commentId, userId },
@@ -74,7 +96,12 @@ const InsideQuestionPage = () => {
     }
   };
 
-  const fetchUserLikes = async () => {
+  const fetchUserLikes = async (userId) => {
+    if (!userId) {
+      setLikedComments({});
+      return;
+    }
+
     try {
       const response = await api().get(`/user-likes/${userId}`);
       const likedCommentIds = response.data.map((like) => like.commentId);
@@ -89,12 +116,12 @@ const InsideQuestionPage = () => {
     }
   };
 
-  const fetchQuestion = async () => {
+  const fetchQuestion = async (userId) => {
     try {
       const response = await api().get(`/questions/${id}`);
       setQuestion(response.data);
       setQuestionLikeCount(response.data.likes.length);
-      setLikedQuestion(response.data.likes.includes(userId));
+      setLikedQuestion(userId ? response.data.likes.includes(userId) : false);
     } catch (error) {
       setError(error.message);
     } finally {
@@ -122,13 +149,32 @@ const InsideQuestionPage = () => {
     }
   };
 
-  const fetchComments = async () => {
+  const fetchComments = async (userId) => {
     try {
       const response = await api().get(`/comments/${id}`);
       setComments(response.data);
-      response.data.forEach((comment) => fetchLikeCount(comment._id));
+      response.data.forEach((comment) => {
+        fetchLikeCount(comment._id);
+        if (userId && comment.likes) {
+          setLikedComments((prevLikedComments) => ({
+            ...prevLikedComments,
+            [comment._id]: comment.likes.includes(userId),
+          }));
+        }
+      });
     } catch (error) {
       setError(error.message);
+    }
+  };
+
+  const fetchTopQuestions = async (page) => {
+    try {
+      const response = await api().get(`/questions?limit=5&sortBy=popular&page=${page}`);
+      const newQuestions = response.data.questions;
+      setTopQuestions((prevQuestions) => [...prevQuestions, ...newQuestions]);
+      await fetchLikeCountsForQuestions(newQuestions);
+    } catch (error) {
+      console.error('Error fetching top questions:', error);
     }
   };
 
@@ -145,25 +191,23 @@ const InsideQuestionPage = () => {
     }
   };
 
-  const fetchTopQuestions = async (page) => {
-    try {
-      const response = await api().get(`/questions?limit=5&sortBy=popular&page=${page}`);
-      const newQuestions = response.data.questions;
-      setTopQuestions((prevQuestions) => [...prevQuestions, ...newQuestions]);
-      await fetchLikeCountsForQuestions(newQuestions);
-    } catch (error) {
-      console.error('Error fetching top questions:', error);
-    }
-  };
+  useEffect(() => {
+    const userId = getUserIdFromToken();
+    fetchAllData(userId);
+  }, [id, page]);
 
   useEffect(() => {
-    fetchQuestion();
-    fetchTags();
-    fetchUsers();
-    fetchComments();
-    fetchUserLikes();
-    fetchTopQuestions(page);
-  }, [id, page]);
+    const handleAuthChange = () => {
+      const userId = getUserIdFromToken();
+      fetchAllData(userId);
+    };
+
+    window.addEventListener('authChange', handleAuthChange);
+
+    return () => {
+      window.removeEventListener('authChange', handleAuthChange);
+    };
+  }, []);
 
   const handleLoadMore = () => {
     setPage((prevPage) => prevPage + 1);
@@ -173,9 +217,10 @@ const InsideQuestionPage = () => {
     e.preventDefault();
 
     try {
+      const userId = getUserIdFromToken();
       const response = await api().post('/comments', { questionId: id, userId, content });
       setContent('');
-      fetchComments();
+      fetchComments(userId);
 
       if (textareaRef.current) {
         textareaRef.current.style.height = 'auto';
@@ -194,8 +239,9 @@ const InsideQuestionPage = () => {
 
   const handleDelete = async (commentId) => {
     try {
+      const userId = getUserIdFromToken();
       const response = await api().delete(`/comments/${commentId}`);
-      fetchComments();
+      fetchComments(userId);
     } catch (err) {
       console.error('Error:', err);
     }
@@ -317,7 +363,7 @@ const InsideQuestionPage = () => {
                           }}
                           style={{ cursor: 'pointer' }}
                         />
-                        {comment.userId._id === userId && (
+                        {comment.userId._id === getUserIdFromToken() && (
                           <img
                             src={deleteIcon}
                             alt='Delete'
