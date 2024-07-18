@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import UserItem from './UserItem/UserItem';
@@ -15,7 +14,7 @@ const UserPage = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/users');
+        const response = await api().get()('/users');
         setUsers(response.data);
         setFilteredUsers(response.data); // Initially show all users
       } catch (error) {

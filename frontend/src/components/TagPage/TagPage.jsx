@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import TagItem from './TagItem/TagItem';
@@ -15,7 +14,7 @@ const TagPage = () => {
   useEffect(() => {
     const fetchTags = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/tags');
+        const response = api().get()('/tags');
         setTags(response.data);
         setFilteredTags(response.data); // Initially show all tags
       } catch (error) {
