@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
-import axios from 'axios';
 import styles from './AuthModal.module.css';
 import { setUserSession } from '../../_utils/localStorage.utils';
+import { api } from '../../_utils/api.js';
 
 const AuthModal = ({ show, handleClose, isLogin, onAuthSuccess }) => {
   const [email, setEmail] = useState('');
@@ -23,8 +23,8 @@ const AuthModal = ({ show, handleClose, isLogin, onAuthSuccess }) => {
     }
 
     try {
-      const url = isLogin ? 'http://localhost:3001/auth/login' : 'http://localhost:3001/auth/register';
-      const response = await axios.post(url, userData);
+      const url = isLogin ? '/auth/login' : '/auth/register';
+      const response = await api().post(url, userData);
 
       if (response.status === 200 || response.status === 201) {
         const sessionData = {
@@ -32,11 +32,10 @@ const AuthModal = ({ show, handleClose, isLogin, onAuthSuccess }) => {
           user: response.data.user,
         };
         setUserSession(sessionData);
-        console.log('Storing session data:', sessionData); // Log for debugging
-        setError(null); // Clear error message on successful login/registration
-        onAuthSuccess(); // Update authentication status
+        setError(null);
+        onAuthSuccess();
         handleClose();
-        window.dispatchEvent(new Event('authChange')); // Dispatch custom event
+        window.dispatchEvent(new Event('authChange'));
       } else {
         throw new Error('Network response was not ok.');
       }
@@ -46,49 +45,52 @@ const AuthModal = ({ show, handleClose, isLogin, onAuthSuccess }) => {
   };
 
   return (
-    <Modal show={show} onHide={handleClose} className={styles.popup}>
-      <Modal.Header closeButton>
-        <Modal.Title>{isLogin ? 'Login' : 'Sign Up'}</Modal.Title>
+    <Modal show={show} onHide={handleClose} dialogClassName={styles.modal}>
+      <Modal.Header closeButton className={styles.modalHeader}>
+        <Modal.Title className={styles.modalTitle}>{isLogin ? 'Login' : 'Sign Up'}</Modal.Title>
       </Modal.Header>
-      <Modal.Body>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+      <Modal.Body className={styles.modalBody}>
+        {error && <p className={styles.error}>{error}</p>}
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId='formBasicEmail'>
-            <Form.Label>Email</Form.Label>
+            <Form.Label className={styles.formLabel}>Email</Form.Label>
             <Form.Control
               type='email'
               name='email'
               placeholder='Enter your email'
               required
               onChange={(event) => setEmail(event.target.value)}
+              className={styles.formControl}
             />
           </Form.Group>
 
           {!isLogin && (
             <Form.Group controlId='formBasicUserName'>
-              <Form.Label>Username</Form.Label>
+              <Form.Label className={styles.formLabel}>Username</Form.Label>
               <Form.Control
                 type='text'
                 name='username'
                 placeholder='Enter your username'
                 required
                 onChange={(event) => setUsername(event.target.value)}
+                className={styles.formControl}
               />
             </Form.Group>
           )}
 
           <Form.Group controlId='formBasicPassword'>
-            <Form.Label>Password</Form.Label>
+            <Form.Label className={styles.formLabel}>Password</Form.Label>
             <Form.Control
               type='password'
               name='password'
               placeholder='Enter your password'
               required
               onChange={(event) => setPassword(event.target.value)}
+              className={styles.formControl}
             />
           </Form.Group>
 
-          <Button variant='primary' type='submit'>
+          <Button type='submit' className={styles.submitButton}>
             {isLogin ? 'Login' : 'Sign Up'}
           </Button>
         </Form>

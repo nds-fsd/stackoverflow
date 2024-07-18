@@ -7,7 +7,7 @@
 .descriptionTitle {
   font-size: 35px;
   margin-bottom: 8px;
-  background: linear-gradient(to bottom right, #7e3aed, #bf67f2);
+  background: linear-gradient(to bottom right, #fff, #4a4a4a);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;

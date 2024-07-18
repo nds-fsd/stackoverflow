@@ -9,34 +9,33 @@
 
 .advice {
   width: 380px;
-  height: 190px;
+  height: auto; 
   position: absolute;
   top: 156px;
   right: 5vw;
-  font-size: 12px;
-  padding: -5px 20px;
-  background: linear-gradient(to bottom right, #7c3aed, #a61cf5);
+  font-size: 16px; 
+  padding: 20px; 
+  background: #4a4a4a;
   color: #ffffff;
   border-radius: 10px;
   margin-top: 4px;
+  text-align: left; 
+  line-height: 2;
 }
-.advice h3 {
-  padding-left: 15px;
-}
-.advice h4 {
-  padding-left: 15px;
-}
-.advice li {
-  margin-bottom: 4px;
+
+.advice h3, .advice h4 {
+  margin: 0; 
+  padding: 15px; 
 }
 
 .form h1 {
   font-size: 35px;
   font-weight: bold;
-  background: linear-gradient(to bottom right, #7e3aed, #bf67f2);
-  -webkit-background-clip: text; /* Para navegadores WebKit como Chrome y Safari */
-  background-clip: text; /* Define la región de recorte como el texto */
-  color: transparent; /* Hace que el texto sea transparente */
+  background-color: white;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin: 40px 10px;
 }
 
 .form {
@@ -44,88 +43,54 @@
   flex-direction: column;
   width: 100%;
   padding: 20px;
-  margin-left: 20px;
+  margin-left: 50px;
 }
 
-.title {
-  font-size: 20px;
-  color: aliceblue;
-  background-color: #0e0d0d;
-  border: 1px solid #7e3aed;
-  border-radius: 5px;
-  padding: 15px;
-  margin-bottom: 10px;
-  width: 865px;
-  height: auto;
-}
-.title input {
-  width: 99%;
-  height: 20px;
-  border-radius: 5px;
-  margin-top: 10px;
-  color: whitesmoke;
-  background-color: transparent;
-  border: 1px solid #7e3aed;
-  padding: 4px;
-}
-
-.question {
-  font-size: 20px;
-  color: aliceblue;
-  background-color: #0e0d0d;
-  border: 1px solid #7e3aed;
-  border-radius: 5px;
-  padding: 15px;
-  margin-bottom: 10px;
-  width: 865px;
-  height: auto;
-  margin-top: 20px;
-}
-.question textarea {
-  width: 99%;
-  border-radius: 5px;
-  margin-top: 10px;
-  color: whitesmoke;
-  background-color: transparent;
-  border: 1px solid #7e3aed;
-  padding: 4px;
-  margin-top: 10px;
-}
-
+.title,
+.question,
 .tags {
-  font-size: 20px;
-  color: aliceblue;
-  background-color: #0e0d0d;
-  border: 1px solid #7e3aed;
-  border-radius: 5px;
-  padding: 15px;
-  margin-bottom: 10px;
-  width: 865px;
-  height: auto;
-  margin-top: 20px;
+  font-size: 25px;
+  color: white;
+  background-color: #000000;
+  border: 1px solid #4a4a4a;
+  border-radius: 4px;
+  padding: 20px;
+  margin-bottom: 30px;
+  width: 100%; 
+  max-width: 865px;
 }
+
+.title input,
+.question textarea,
 .tags input {
-  width: 99%;
-  height: 20px;
+  width: calc(100% - 20px); /* Ajustar el ancho del input */
+  height: 50px;
   border-radius: 5px;
   margin-top: 10px;
-  color: #f5f5f5;
+  color: whitesmoke;
   background-color: transparent;
-  border: 1px solid #7e3aed;
-  padding: 4px;
+  border: 1px solid #4a4a4a;
+  padding: 8px;
+  font-size: 20px; 
 }
 
 .submit {
-  width: 80px;
-  height: 40px;
+  width: 120px; /* Aumentar el ancho del botón */
+  height: 50px; /* Aumentar la altura del botón */
   border-radius: 5px;
-  padding: 5px;
-  margin-top: 15px;
+  margin-top: 20px;
   border: 0;
-  font-size: 16px;
-  background-color: #7e3aed;
-  color: aliceblue;
+  font-size: 18px;
+  background-color: #4a4a4a;
+  color: white;
+  cursor: pointer;
 }
+
+.submit:hover {
+  background-color: #000000;
+  color: white;
+}
+
 
 @media (max-width: 1024px) {
   .advice {
@@ -140,11 +105,11 @@
   .tags {
     margin-left: 20px;
     width: 90%;
-    .title input,
-    .question textarea,
-    .tags input {
-      width: 98%;
-    }
+  }
+  .title input,
+  .question textarea,
+  .tags input {
+    width: 98%;
   }
 }
 

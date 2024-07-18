@@ -6,8 +6,8 @@
 }
 
 .hero-content {
-  max-width: 1200px;
-  margin: auto;
+  margin-left: 40px;
+  margin-right: 40px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -15,48 +15,47 @@
 }
 
 .hero-content h2 {
+  max-width: 100%;
+  margin-top: 150px;
+  margin-bottom: 60px;
   color: #ffffff;
-  font-size: 2.5rem;
-  letter-spacing: 1rem;
-  text-shadow: 4px 4px 4px #7e3aed;
+  font-size: 3rem;
+  letter-spacing: 0.5rem;
+  text-shadow: 4px 4px 4px rgb(157, 154, 154);
   text-transform: uppercase;
-  font-weight: bold;
 }
 
 .info-box {
-  flex-basis: calc(50% - 20px);
-  background: linear-gradient(to bottom right, #7e3aed, #d0b3ff);
-  border-radius: 15px;
-  padding: 20px;
-  margin: 10px;
-  transition:
-    opacity 0.5s ease,
-    transform 0.5s ease;
+  border: 1px dotted #4a4a4a;
+  border-radius: 4px;
+  padding: 40px;
+  margin-top: 90px;
   box-sizing: border-box;
-  margin-bottom: 10px;
-  font-size: 1.5rem;
-  color: #ffffff;
+  font-size: 1.4rem;
+  color: #fff;
+  margin-bottom: 90px;
 }
 
 .box {
+ 
   color: #ffffff;
-  flex-basis: calc(50% - 20px);
-  background: #222022;
-  border: none;
-  border-radius: 10px;
-  padding: 20px;
-  margin: 10px;
+  border: 1px solid #4a4a4a;
+  flex-basis: calc(50% - 40px);
+  border-radius: 4px;
+  padding: 80px;
+  margin: auto;
   box-sizing: border-box;
 }
 
 .box img {
-  max-width: 40%;
-  height: auto;
+  width: 280px;
+  height: 200px;
+  margin-bottom: 40px;
 }
 
 .styles.box p {
   flex-basis: calc(100% - 50px);
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   margin-bottom: 10px;
   color: #ffffff;
   border-radius: 10px;
@@ -72,12 +71,13 @@
   justify-content: center;
   list-style-type: none;
   padding: 0;
+  margin-top: 50px;
 }
 
 .tag-list li {
   font-size: 1rem;
-  margin-bottom: 10px;
-  color: #00c200;
+  margin-bottom: 100px;
+  color: #fff;
   border-radius: 10px;
   padding: 10px;
   margin-right: 10px;
@@ -88,7 +88,7 @@
   margin-top: 25px;
   margin-bottom: 15px;
   font-size: 1.2rem;
-  background-color: #7e3aed;
+  background-color: #4a4a4a;
   border: none;
   border-radius: 5px;
   color: #fff;
@@ -98,5 +98,6 @@
 }
 
 .box button:hover {
-  background-color: #b491ed;
+  color: #fff;
+  background-color: #000000;
 }
