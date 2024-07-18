@@ -207,7 +207,7 @@ const InsideQuestionPage = () => {
     <>
       <Header />
       <div className={styles.QuestionPageBody}>
-        <div className={styles.QuestionPageRightbar}>
+        <div className={styles.QuestionPageLeftbar}>
           <a href='/questions/new' className={styles.askNewQuestion}>
             Ask Question
           </a>
