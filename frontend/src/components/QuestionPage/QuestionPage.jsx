@@ -250,7 +250,7 @@ const QuestionPage = () => {
                 <span>Author: {question.author ? question.author.username : 'Unknown'}</span>
               </div>
               <br></br>
-              <h2>{question.title}</h2>
+              <h1>{question.title}</h1>
               <p>{question.body}</p>
               <ul>
                 {question.tags && question.tags.map((tagId) => <li key={tagId}>{tagIdToNameMap[tagId] || tagId}</li>)}

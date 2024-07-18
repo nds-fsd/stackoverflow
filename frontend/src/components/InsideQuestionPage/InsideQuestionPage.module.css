@@ -62,7 +62,7 @@
 
 .QuestionPageQuestions {
   grid-row: 1 / 8;
-  grid-column: 2 / 6;
+  grid-column: 2 / 7; /* Fill the right side of the page */
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   grid-template-rows: repeat(7, 1fr);
@@ -74,6 +74,8 @@
   padding: 10px;
   overflow-y: auto;
   list-style-type: none;
+  width: 100%; /* Ensure it takes full width */
+  padding-right: 80px; /* Add padding to the right */
 }
 
 @media (max-width: 768px) {
@@ -89,11 +91,11 @@
   padding: 20px;
   margin: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 98%;
+  width: 100%; /* Ensure it takes full width */
   box-sizing: border-box;
   line-height: 2;
   font-size: 20px;
+  padding-right: 20px; /* Add padding to the right */
 }
 
 .questionBubble h2 {
@@ -140,10 +142,17 @@
   max-width: 100%;
   box-sizing: border-box;
   line-height: 2;
+  text-align: left; /* Align text to the left */
 }
 
 .QuestionPageRightbarBubbles h2 {
   margin: 20px 5px;
+  text-align: left; /* Align text to the left */
+}
+
+.QuestionPageRightbarBubbles p {
+  text-align: left; /* Align text to the left */
+  margin-left: 0; /* Remove any extra margin on the left */
 }
 
 .TagsRightBar {
@@ -243,7 +252,7 @@
 }
 
 .submitButton:focus {
-  box-shadow: 0 0 0 3px rgb(253, 110, 0);
+  box-shadow: 0 0 0 3px rgb(255, 255, 255);
 }
 
 .deleteIcon {
@@ -402,7 +411,7 @@
 /* Comment Input */
 .commentInput {
   width: 100%;
-  min-height: 50px; /* Set a minimum height */
+  min-height: 50px;
   padding: 10px;
   margin: 0;
   box-sizing: border-box;
@@ -411,8 +420,8 @@
   border: 2px solid #2b2b2b;
   border-radius: 10px;
   font-size: 16px;
-  resize: vertical; /* Allow vertical resizing */
-  outline: none; /* removes the default focus outline */
+  resize: vertical;
+  outline: none;
   overflow: auto;
 }
 
@@ -426,28 +435,28 @@
 
 /* Comment Bubble */
 .questionBubblecomment {
-  background-color: #2b2b2b; /* Light gray background */
-  border-radius: 15px; /* Rounded corners */
-  padding: 15px; /* Space inside the bubble */
-  margin: 10px 0; /* Space outside the bubble */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  width: 100%; /* Full width of the parent */
-  max-width: 98%; /* Ensures responsiveness */
-  box-sizing: border-box; /* Includes padding in width calculation */
-  display: flex; /* Enables flexbox */
-  align-items: flex-start; /* Align items to the start vertically */
-  position: relative; /* Necessary for absolute positioning of delete icon */
+  background-color: #2b2b2b;
+  border-radius: 15px;
+  padding: 15px;
+  margin: 10px 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%; /* Ensure it takes full width */
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+  padding-right: 80px; /* Add padding to the right */
 }
 
 .profilePic {
   width: 40px;
-  height: auto; /* Maintains the aspect ratio */
-  margin-right: 10px; /* Space between image and text */
+  height: auto;
+  margin-right: 10px;
 }
 
 .commentContent {
   display: flex;
-  flex-direction: column; /* Stack username and comment vertically */
+  flex-direction: column;
 }
 
 .commentUsername {
@@ -459,19 +468,16 @@
   color: #bbb;
 }
 
-/* Comment Text */
 .commentText {
   margin-top: 5px;
-  word-wrap: break-word; /* Ensures long words break to the next line */
-  white-space: pre-wrap; /* Preserves whitespace and ensures wrapping */
+  word-wrap: break-word;
+  white-space: pre-wrap;
 }
-
-/* Other styles remain unchanged */
 
 .heartIcon {
   height: 100px;
   width: 100px;
-  background: url('heart.png'); /* Update the path to the correct image */
+  background: url('heart.png');
   background-position: left;
   cursor: pointer;
   position: absolute;
@@ -486,7 +492,7 @@
   align-items: center;
   justify-content: center;
   transition: all 100ms ease;
-  position: relative; /* Ensure it is positioned relative to the container */
+  position: relative;
 }
 
 .heartBg:hover {
@@ -518,7 +524,7 @@
 
 .submitButton {
   padding: 10px;
-  background: linear-gradient(to bottom right, #7e3aed, #d0b3ff);
+  background: black; /* Change background to black */
   border: none;
   border-radius: 5px;
   height: 60px;
@@ -530,7 +536,7 @@
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease;
-  width: 20%; /* Make it full width within the form */
+  width: 15%; /* Make it less wide */
   outline: none;
   text-align: center;
   justify-content: center;
@@ -538,11 +544,11 @@
 }
 
 .submitButton:hover {
+  background-color: #222020; /* Change hover background to a darker shade */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-
 .submitButton:focus {
-  box-shadow: 0 0 0 3px rgb(253, 110, 0);
+  box-shadow: 0 0 0 3px rgb(255, 255, 255);
 }
 
 .deleteIcon {
@@ -554,13 +560,12 @@
   cursor: pointer;
 }
 
-/* Specific styles for moving comment likes and like amount to the left */
 .commentBubblecomment .heartBg {
-  left: -80px; /* Adjust this value to move the heartBg to the left */
+  left: -80px;
 }
 
 .commentBubblecomment .likesAmount {
-  padding-left: 153px; /* Adjust this value to move the likesAmount to the left */
+  padding-left: 153px;
 }
 
 .questionAuthor {
@@ -576,7 +581,6 @@
   margin-right: 10px;
 }
 
-/* InsideQuestionPage.module.css */
 .loadingBackground {
   background-color: black;
   height: 100vh;
