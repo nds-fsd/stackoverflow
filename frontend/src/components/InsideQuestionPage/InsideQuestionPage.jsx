@@ -24,7 +24,7 @@ const InsideQuestionPage = () => {
   const [likedQuestion, setLikedQuestion] = useState(false);
   const [topQuestions, setTopQuestions] = useState([]);
   const [navigating, setNavigating] = useState(false);
-  const [page, setPage] = useState(1);
+  const [showLoginPrompt, setShowLoginPrompt] = useState(false);
   const textareaRef = useRef(null);
 
   const fetchAllData = async (userId) => {
@@ -36,7 +36,7 @@ const InsideQuestionPage = () => {
         fetchUsers(),
         fetchComments(userId),
         fetchUserLikes(userId),
-        fetchTopQuestions(page),
+        fetchTopQuestions(), // Fetch top questions without pagination
       ]);
     } catch (error) {
       setError(error.message);
@@ -167,34 +167,19 @@ const InsideQuestionPage = () => {
     }
   };
 
-  const fetchTopQuestions = async (page) => {
+  const fetchTopQuestions = async () => {
     try {
-      const response = await api().get(`/questions?limit=5&sortBy=popular&page=${page}`);
-      const newQuestions = response.data.questions;
-      setTopQuestions((prevQuestions) => [...prevQuestions, ...newQuestions]);
-      await fetchLikeCountsForQuestions(newQuestions);
+      const response = await api().get('/questions?limit=5&sortBy=popular');
+      setTopQuestions(response.data.questions);
     } catch (error) {
       console.error('Error fetching top questions:', error);
-    }
-  };
-
-  const fetchLikeCountsForQuestions = async (questions) => {
-    try {
-      const newLikeCounts = {};
-      for (const question of questions) {
-        const response = await api().get(`/likes/question/${question._id}`);
-        newLikeCounts[question._id] = response.data.likeCount;
-      }
-      setLikeCounts((prevCounts) => ({ ...prevCounts, ...newLikeCounts }));
-    } catch (error) {
-      console.error('Error fetching like counts:', error);
     }
   };
 
   useEffect(() => {
     const userId = getUserIdFromToken();
     fetchAllData(userId);
-  }, [id, page]);
+  }, [id]);
 
   useEffect(() => {
     const handleAuthChange = () => {
@@ -209,15 +194,16 @@ const InsideQuestionPage = () => {
     };
   }, []);
 
-  const handleLoadMore = () => {
-    setPage((prevPage) => prevPage + 1);
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const userId = getUserIdFromToken();
+    if (!userId) {
+      setShowLoginPrompt(true);
+      return;
+    }
+
     try {
-      const userId = getUserIdFromToken();
       const response = await api().post('/comments', { questionId: id, userId, content });
       setContent('');
       fetchComments(userId);
@@ -273,20 +259,23 @@ const InsideQuestionPage = () => {
     <>
       <Header />
       <div className={styles.QuestionPageBody}>
+        {showLoginPrompt && (
+          <div className={styles.loginPrompt}>
+            <p>You must be logged in to like and comment</p>
+            <button onClick={() => setShowLoginPrompt(false)}>Close</button>
+          </div>
+        )}
         <div className={styles.QuestionPageLeftbar}>
           <a href='/questions/new' className={styles.askNewQuestion}>
             Ask Question
           </a>
           <div className={styles.QuestionPageRightbarBubbles}>
             <h1>Top Questions</h1>
-            {topQuestions.map((question, index) => (
+            {topQuestions.map((question) => (
               <p key={question._id} onClick={() => directToQuestion(question._id)} style={{ cursor: 'pointer' }}>
-                {index + 1}. {question.title}
+                {question.title}
               </p>
             ))}
-            <button onClick={handleLoadMore} className={styles.loadMoreButton}>
-              Load More
-            </button>
             <h1>Popular Tags</h1>
             <button className={styles.TagsRightBar}>Mongo</button>
             <button className={styles.TagsRightBar}>Express</button>
