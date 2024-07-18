@@ -282,27 +282,31 @@ const InsideQuestionPage = () => {
                 <h3>Comments</h3>
                 {comments.map((comment) => (
                   <div key={comment._id} className={styles.questionBubblecomment}>
-                    <img
-                      src={profilePic}
-                      alt='Profile'
-                      className={styles.profilePic}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleProfileClick(comment.userId.username);
-                      }}
-                      style={{ cursor: 'pointer' }}
-                    />
-                    {comment.userId._id === userId && (
-                      <img
-                        src={deleteIcon}
-                        alt='Delete'
-                        className={styles.deleteIcon}
-                        onClick={() => handleDelete(comment._id)}
-                      />
+                    {comment.userId && (
+                      <>
+                        <img
+                          src={profilePic}
+                          alt='Profile'
+                          className={styles.profilePic}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleProfileClick(comment.userId.username);
+                          }}
+                          style={{ cursor: 'pointer' }}
+                        />
+                        {comment.userId._id === userId && (
+                          <img
+                            src={deleteIcon}
+                            alt='Delete'
+                            className={styles.deleteIcon}
+                            onClick={() => handleDelete(comment._id)}
+                          />
+                        )}
+                      </>
                     )}
                     <div className={styles.commentContent}>
                       <div className={styles.commentUsername}>
-                        {comment.userId.username}
+                        {comment.userId ? comment.userId.username : 'Unknown'}
                         <span className={styles.commentTime}> • {new Date(comment.createdAt).toLocaleString()}</span>
                       </div>
                       <div className={styles.commentText}>
