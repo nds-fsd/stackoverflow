@@ -165,7 +165,7 @@ const QuestionPage = () => {
   };
 
   if (loading && page === 1) {
-    return <div>Loading...</div>;
+    return <div className={styles.loadingBackground}>Loading...</div>;
     /*aqui meter el spinner en vez de Loading...*/
   }
 
@@ -177,6 +177,10 @@ const QuestionPage = () => {
     map[tag._id] = tag.name;
     return map;
   }, {});
+
+  const handleProfileClick = (username) => {
+    navigate(`/users/${username}`);
+  };
 
   return (
     <>
@@ -234,7 +238,16 @@ const QuestionPage = () => {
                   />
                 )}
               <div className={styles.questionAuthor}>
-                <img src={profilePic} alt='Profile' className={styles.profilePic} />
+                <img
+                  src={profilePic}
+                  alt='Profile'
+                  className={styles.profilePic}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleProfileClick(question.author.username);
+                  }}
+                  style={{ cursor: 'pointer' }}
+                />
                 <span>Author: {question.author ? question.author.username : 'Unknown'}</span>
               </div>
               <br></br>

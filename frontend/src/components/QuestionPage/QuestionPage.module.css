@@ -451,3 +451,14 @@
 .loginPrompt button:hover {
   background-color: #7e3aed;
 }
+
+/* QuestionPage.module.css */
+.loadingBackground {
+  background-color: black;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 24px;
+}
