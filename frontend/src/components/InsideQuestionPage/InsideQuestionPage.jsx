@@ -24,6 +24,7 @@ const InsideQuestionPage = () => {
   const [likedQuestion, setLikedQuestion] = useState(false);
   const [topQuestions, setTopQuestions] = useState([]);
   const [navigating, setNavigating] = useState(false); // New state for navigation loading
+  const [page, setPage] = useState(1); // Pagination state
   const textareaRef = useRef(null);
 
   const userId = getUserIdFromToken();
@@ -131,10 +132,25 @@ const InsideQuestionPage = () => {
     }
   };
 
-  const fetchTopQuestions = async () => {
+  const fetchLikeCountsForQuestions = async (questions) => {
     try {
-      const response = await api().get('/questions?limit=5&sortBy=popular');
-      setTopQuestions(response.data.questions);
+      const newLikeCounts = {};
+      for (const question of questions) {
+        const response = await api().get(`/likes/question/${question._id}`);
+        newLikeCounts[question._id] = response.data.likeCount;
+      }
+      setLikeCounts((prevCounts) => ({ ...prevCounts, ...newLikeCounts }));
+    } catch (error) {
+      console.error('Error fetching like counts:', error);
+    }
+  };
+
+  const fetchTopQuestions = async (page) => {
+    try {
+      const response = await api().get(`/questions?limit=5&sortBy=popular&page=${page}`);
+      const newQuestions = response.data.questions;
+      setTopQuestions((prevQuestions) => [...prevQuestions, ...newQuestions]);
+      await fetchLikeCountsForQuestions(newQuestions);
     } catch (error) {
       console.error('Error fetching top questions:', error);
     }
@@ -146,8 +162,12 @@ const InsideQuestionPage = () => {
     fetchUsers();
     fetchComments();
     fetchUserLikes();
-    fetchTopQuestions();
-  }, [id]);
+    fetchTopQuestions(page);
+  }, [id, page]);
+
+  const handleLoadMore = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -213,11 +233,14 @@ const InsideQuestionPage = () => {
           </a>
           <div className={styles.QuestionPageRightbarBubbles}>
             <h1>Top Questions</h1>
-            {topQuestions.map((question) => (
+            {topQuestions.map((question, index) => (
               <p key={question._id} onClick={() => directToQuestion(question._id)} style={{ cursor: 'pointer' }}>
-                {question.title}
+                {index + 1}. {question.title}
               </p>
             ))}
+            <button onClick={handleLoadMore} className={styles.loadMoreButton}>
+              Load More
+            </button>
             <h1>Popular Tags</h1>
             <button className={styles.TagsRightBar}>Mongo</button>
             <button className={styles.TagsRightBar}>Express</button>
