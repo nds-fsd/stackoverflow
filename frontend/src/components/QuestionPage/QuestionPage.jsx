@@ -178,6 +178,10 @@ const QuestionPage = () => {
     return map;
   }, {});
 
+  const handleProfileClick = (username) => {
+    navigate(`/users/${username}`);
+  };
+
   return (
     <>
       <Header />
@@ -234,7 +238,16 @@ const QuestionPage = () => {
                   />
                 )}
               <div className={styles.questionAuthor}>
-                <img src={profilePic} alt='Profile' className={styles.profilePic} />
+                <img
+                  src={profilePic}
+                  alt='Profile'
+                  className={styles.profilePic}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleProfileClick(question.author.username);
+                  }}
+                  style={{ cursor: 'pointer' }}
+                />
                 <span>Author: {question.author ? question.author.username : 'Unknown'}</span>
               </div>
               <br></br>
