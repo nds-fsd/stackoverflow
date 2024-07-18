@@ -3,11 +3,11 @@ import styles from './QuestionPage.module.css';
 import Header from '../Header/Header.jsx';
 import Footer from '../Footer/Footer.jsx';
 import { useNavigate } from 'react-router-dom';
-import deleteIcon from './deleteIcon.png'; // Ensure the correct import path
-import heartIcon from './heart.png'; // Ensure the correct import path
-import profilePic from './profilePic.png'; // Import the profile picture
-import { getUserIdFromToken } from '../../_utils/localStorage.utils'; // Corrected path to your local storage utilities
-import { api } from '../../_utils/api'; // Ensure this path is correct Correct the import path
+import deleteIcon from './deleteIcon.png';
+import heartIcon from './heart.png';
+import profilePic from './profilePic.png';
+import { getUserIdFromToken } from '../../_utils/localStorage.utils';
+import { api } from '../../_utils/api';
 
 const QuestionPage = () => {
   const navigate = useNavigate();
@@ -18,14 +18,14 @@ const QuestionPage = () => {
   const [error, setError] = useState(null);
   const [likedQuestions, setLikedQuestions] = useState({});
   const [questionLikeCounts, setQuestionLikeCounts] = useState({});
-  const [sortOption, setSortOption] = useState('popular'); // State to manage sorting option
-  const [page, setPage] = useState(1); // Page state for pagination
-  const [totalQuestions, setTotalQuestions] = useState(0); // Total number of questions
+  const [sortOption, setSortOption] = useState('popular');
+  const [page, setPage] = useState(1);
+  const [totalQuestions, setTotalQuestions] = useState(0);
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
 
   const fetchQuestionsAndTags = async (reset = false) => {
-    const userId = getUserIdFromToken(); // Get the actual user ID from the token
-    console.log('USERID: ' + userId); // Logging user ID for debugging
+    const userId = getUserIdFromToken();
+    console.log('USERID: ' + userId);
 
     try {
       if (reset) {
