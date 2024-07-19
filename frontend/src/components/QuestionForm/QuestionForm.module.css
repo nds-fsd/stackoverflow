@@ -9,23 +9,24 @@
 
 .advice {
   width: 380px;
-  height: auto; 
+  height: auto;
   position: absolute;
   top: 156px;
   right: 5vw;
-  font-size: 16px; 
-  padding: 20px; 
+  font-size: 16px;
+  padding: 20px;
   background: #4a4a4a;
   color: #ffffff;
   border-radius: 10px;
   margin-top: 4px;
-  text-align: left; 
+  text-align: left;
   line-height: 2;
 }
 
-.advice h3, .advice h4 {
-  margin: 0; 
-  padding: 15px; 
+.advice h3,
+.advice h4 {
+  margin: 0;
+  padding: 15px;
 }
 
 .form h1 {
@@ -56,7 +57,7 @@
   border-radius: 4px;
   padding: 20px;
   margin-bottom: 30px;
-  width: 100%; 
+  width: 100%;
   max-width: 865px;
 }
 
@@ -71,7 +72,7 @@
   background-color: transparent;
   border: 1px solid #4a4a4a;
   padding: 8px;
-  font-size: 20px; 
+  font-size: 20px;
 }
 
 .submit {
@@ -90,7 +91,6 @@
   background-color: #000000;
   color: white;
 }
-
 
 @media (max-width: 1024px) {
   .advice {
@@ -111,6 +111,37 @@
   .tags input {
     width: 98%;
   }
+}
+
+.loginPrompt {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: black;
+  padding: 20px;
+  color: #ffffff;
+  border: 1px solid #4a4a4a;
+  box-shadow: 0 2px 10px #0000001a;
+  z-index: 1000;
+  border-radius: 4px;
+}
+
+.loginPrompt p {
+  margin-bottom: 10px;
+}
+
+.loginPrompt button {
+  padding: 5px 10px;
+  background-color: #4a4a4a;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.loginPrompt button:hover {
+  background-color: #333131;
 }
 
 @media (max-width: 480px) {
