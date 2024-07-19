@@ -292,6 +292,8 @@ To ensure the proper functioning of your project in a local development environm
 ```sh
 MONGO_URL=<your_mongodb_uri>
 JWT_SECRET=<your_jwt_secret>
+EMAIL_ADDRESS=<your_app_email_address>
+EMAIL_PASSWORD=<your_app_password>
 ```
 
 **Global `.env`:**
