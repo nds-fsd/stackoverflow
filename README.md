@@ -36,7 +36,7 @@
 > - [Use Case Diagram](#use-case-diagram)
 > - [Architecture Flow](#architecture-flow)
 > - [Repository Structure](#repository-structure)
-> - [Modules](#modules)
+> - [Dependencies](#dependencies)
 > - [Getting Started](#getting-started)
 >   - [Installation](#installation)
 >   - [Running Devvit](#running-devvit)
@@ -242,7 +242,7 @@ The architecture is divided into three main sections: Frontend, Backend, and Dep
 
 ---
 
-## Modules
+## Dependencies
 
 <details closed><summary>Frontend</summary>
 
