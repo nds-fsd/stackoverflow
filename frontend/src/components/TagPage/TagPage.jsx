@@ -17,9 +17,9 @@ const TagPage = () => {
     const fetchTags = async () => {
       try {
         const response = await api().get('/tags/popular-tags');
-        console.log(response.data); // Log response to debug the tags data
-        setTags(response.data);
-        setFilteredTags(response.data); // Initially show all tags
+        const filteredTags = response.data.filter((tag) => tag.latestQuestionDate !== null);
+        setTags(filteredTags);
+        setFilteredTags(filteredTags); // Initially show all filtered tags
       } catch (error) {
         setError(error.message);
       } finally {
