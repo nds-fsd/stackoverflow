@@ -17,6 +17,7 @@ const TagPage = () => {
     const fetchTags = async () => {
       try {
         const response = await api().get('/tags/popular-tags');
+        console.log(response.data); // Log response to debug the tags data
         setTags(response.data);
         setFilteredTags(response.data); // Initially show all tags
       } catch (error) {
@@ -47,7 +48,7 @@ const TagPage = () => {
       sortedTags.sort((a, b) => b.askedThisYear - a.askedThisYear);
     } else if (criteria === 'popular') {
       sortedTags.sort((a, b) => b.popularity - a.popularity);
-    } else if (criteria === 'new') {
+    } else if (criteria === 'recent') {
       sortedTags.sort((a, b) => new Date(b.latestQuestionDate) - new Date(a.latestQuestionDate));
     }
     setFilteredTags(sortedTags);
@@ -89,10 +90,10 @@ const TagPage = () => {
               Name
             </button>
             <button
-              className={`${styles.sortButton} ${sortCriteria === 'new' ? styles.active : ''}`}
-              onClick={() => handleSortChange('new')}
+              className={`${styles.sortButton} ${sortCriteria === 'recent' ? styles.active : ''}`}
+              onClick={() => handleSortChange('recent')}
             >
-              New
+              Recent
             </button>
           </div>
         </div>
