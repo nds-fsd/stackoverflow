@@ -3,7 +3,7 @@
 </p>
 <h2 align="center">DEVVIT, A STACKOVERFLOW CLONE</h2>
 <p align="center">
-  <img src="https://img.shields.io/github/languages/top/nds-fsd/stackoverflow?style=flat&color=0080ff" alt="repo-top-language">
+<img src="https://img.shields.io/github/languages/top/nds-fsd/stackoverflow?style=flat&color=0080ff" alt="repo-top-language">
 <a href="https://makeapullrequest.com/">
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square" alt="PRs Welcome">
   </a>
@@ -251,8 +251,7 @@ The architecture is divided into three main sections: Frontend, Backend, and Dep
 | **React**                 | Used to develop the user interface.                                                     |
 | **Vite**                  | A build tool that offers a fast development experience for React projects.              |
 | **React Router DOM**      | Manages navigation between different sections of the application.                       |
-| **Axios**                 | Used for making HTTP requests to the backend or external services.                      |
-| **Dotenv**                | Manages environment variables during the development of the application.                |
+| **Axios**                 | Used for making HTTP requests to the backend.                      |
 | **react-search-box**      | Used in the `Header.jsx` component for implementing a search box functionality.         |
 
 </details>
@@ -265,7 +264,6 @@ The architecture is divided into three main sections: Frontend, Backend, and Dep
 | **Mongoose**              | Provides a schema-based solution for modeling application data with MongoDB.            |
 | **Bcryptjs**              | Used to encrypt passwords before storing them in the database.                          |
 | **JWT (jsonwebtoken)**    | Allows for secure authentication and information transmission between parties as a JSON object. |
-| **Axios**                 | Also used in the backend to make HTTP requests to external services.                    |
 | **Cors**                  | Enables Cross-Origin Resource Sharing in the Express server.                            |
 | **Dotenv**                | Manages environment variables in the Express server.                                    |
 | **Nodemon**               | Automatically restarts the Node.js server when file changes are detected during development. |
@@ -317,7 +315,7 @@ Run the application
 ```sh
 npm run dev
 ```
-This command will start both the backend server and the frontend development server.
+This command will start both the backend server and the frontend development server using turbo.
 
 ---
 
@@ -326,6 +324,7 @@ This command will start both the backend server and the frontend development ser
 - [ ] Allow editing of questions and comments
 - [ ] Implement feature of voting
 - [ ] Improve the inputs for tags when submitting a question
+- [ ] Create a page for each tag with relevant statistics
 - [ ] Implement comprehensive testing
 - [ ] Refine the user reputation system to ensure more accurate and fair calculations based on user activity and contribution quality, and upvotes
 - [ ] Enhance security by implementing more secure ID handling methods, such as using UUIDs or other non-sequential identifiers to prevent enumeration attacks and improve overall data security
