@@ -346,13 +346,13 @@ This command will start both the backend server and the frontend development ser
 
 Contributions are welcome! Here are several ways you can contribute:
 
-- **[Submit Pull Requests](https://github.com/nds-fsd/stackoverflow/blob/main/CONTRIBUTING.md)**: Review open PRs, and submit your own PRs.
-- **[Join the Discussions](https://github.com/nds-fsd/stackoverflow/discussions)**: Share your insights, provide feedback, or ask questions.
+- **[Submit Pull Requests](https://github.com/nds-fsd/stackoverflow/pulls)**: Review open PRs, and submit your own PRs.
 - **[Report Issues](https://github.com/nds-fsd/stackoverflow/issues)**: Submit bugs found or log feature requests for Stackoverflow.
 
 <details closed>
     <summary>Contributing Guidelines</summary>
 
+	
 1. **Fork the Repository**: Start by forking the project repository to your GitHub account.
 2. **Clone Locally**: Clone the forked repository to your local machine using a Git client.
    ```sh
@@ -377,7 +377,3 @@ Once your PR is reviewed and approved, it will be merged into the main branch.
 
 </details>
 
-
-[**Return**](#-quick-links)
-
----
