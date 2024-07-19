@@ -1,14 +1,13 @@
 <p align="center">
-  <img src="frontend/public/assets/img/logo.png" width="100" />
+  <img src="frontend/public/assets/img/logo.png" width="200" />
 </p>
+<h2 align="center">DEVVIT, A STACKOVERFLOW CLONE</h2>
 <p align="center">
-    <h1 align="center">DEVVIT, A STACKOVERFLOW CLONE</h1>
+  <img src="https://img.shields.io/github/languages/top/nds-fsd/stackoverflow?style=flat&color=0080ff" alt="repo-top-language">
+<a href="https://makeapullrequest.com/">
+    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square" alt="PRs Welcome">
+  </a>
 </p>
-<p align="center">
-	<img src="https://img.shields.io/github/last-commit/nds-fsd/stackoverflow?style=flat&logo=git&logoColor=white&color=0080ff" alt="last-commit">
-	<img src="https://img.shields.io/github/languages/top/nds-fsd/stackoverflow?style=flat&color=0080ff" alt="repo-top-language">
-	<img src="https://img.shields.io/github/languages/count/nds-fsd/stackoverflow?style=flat&color=0080ff" alt="repo-language-count">
-<p>
 <p align="center">
 		<em>Developed with the software and tools below:</em>
 </p>
@@ -30,29 +29,84 @@
 </p>
 <hr>
 
-##  Quick Links
+## Quick Links
 
-> - [ Overview](#-overview)
-> - [ Features](#-features)
-> - [ Repository Structure](#-repository-structure)
-> - [ Modules](#-modules)
-> - [ Getting Started](#-getting-started)
->   - [ Installation](#-installation)
->   - [ Running stackoverflow](#-running-stackoverflow)
->   - [ Tests](#-tests)
-> - [ Project Roadmap](#-project-roadmap)
-> - [ Contributing](#-contributing)
-> - [ License](#-license)
-> - [ Acknowledgments](#-acknowledgments)
-
----
-
-##  Overview
-
+> - [Overview](#overview)
+> - [Features](#features)
+> - [Use Case Diagram](#use-case-diagram)
+> - [Architecture Flow](#architecture-flow)
+> - [Repository Structure](#repository-structure)
+> - [Modules](#modules)
+> - [Getting Started](#getting-started)
+>   - [Installation](#installation)
+>   - [Running Devvit](#running-devvit)
+> - [Further Development and Improvements](#further-development-and-improvements)
+> - [Contributors](#contributors)
+> - [Contributing](#contributing)
 
 ---
 
-##  Features
+## Overview
+
+DEVVIT is a StackOverflow clone that provides a platform for developers to ask questions, share knowledge, and connect with the community. Users can register, log in, ask questions, write comments, and like content. The system manages user authentication, tracks likes, and updates reputations accordingly.
+
+Our frontend is deployed using Netlify and can be accessed via [https://devvit.netlify.app/](https://devvit.netlify.app/). The backend services are hosted on Koyeb, ensuring scalability and reliability.
+
+---
+
+## Features
+
+- **User Authentication**: Secure registration and login system to manage user accounts and protect user data.
+- **Question and Comment Operations**: Users can create, read, and delete questions and comments.
+- **Like and Unlike**: Users can like and unlike comments and questions, helping to highlight valuable contributions and manage content quality.
+- **Email Notification System**: Managed by Handlebars, our email notification system sends emails to users when they sign up or when someone comments on their questions, ensuring they stay updated on important activities.
+- **Reputation Management**: Tracks likes on user comments to update user reputations, encouraging active and helpful participation.
+
+
+---
+
+## Use Case Diagram
+
+<p align="center">
+  <img src="frontend/public/assets/diagrams/use-case-diagram.jpeg" width="50%" />
+</p>
+
+The use case diagram illustrates the various interactions between the users and the DEVVIT system. 
+
+- **User**: Represents any individual using the system. Users can perform various actions such as registering, logging in, posting questions, writing comments, and liking content.
+- **Question**: Users can create, read, and delete questions. Each question can be tagged with relevant topics and receive comments from other users.
+- **Comment**: Users can write, read, and delete comments on questions. Comments can also be liked by other users.
+- **Like**: Users can like and remove likes from both questions and comments, contributing to the reputation system.
+- **Tag**: Questions can be tagged with relevant keywords to facilitate easier searching and categorization.
+
+---
+
+## Architecture Flow
+
+<p align="center">
+  <img src="frontend/public/assets/diagrams/architecture-flow-diagram.jpeg" width="45%" />
+</p>
+
+
+The architecture is divided into three main sections: Frontend, Backend, and Deployment.
+
+### Frontend
+- **App.jsx**: The entry point of the frontend application, built with React. It orchestrates the rendering of various components and pages.
+- **Components**: Reusable UI elements that form the building blocks of the application’s user interface.
+- **Utils**: Utility functions and helpers that support the frontend operations, including API calls and local storage management.
+
+### Backend
+- **Controllers**: Handle the request and response logic for different routes. This includes managing user authentication, questions, comments, likes, and tags.
+- **Middlewares**: Functions that process requests before they reach the controllers, providing functionalities like authentication checks and data validation.
+- **Routers**: Define the API endpoints and map them to the corresponding controller functions.
+- **Services**: Contain the business logic and interact with the database, sending and retrieving data as needed.
+- **MongoDB Connection**: Manages the connection to the MongoDB database, ensuring data is stored and retrieved efficiently.
+- **Email Templates**: Handlebars templates used to generate dynamic content for email notifications sent to users.
+
+### Deployment
+- **GitHub Actions**: Automates the CI/CD pipeline, running tests, and deploying the application whenever changes are pushed to the repository.
+- **Docker**: Containerizes the application, ensuring it runs consistently across different environments.
+- **Koyeb**: The hosting platform where the application is deployed, providing scalability and reliability.
 
 
 ---
@@ -188,338 +242,93 @@
 
 ---
 
-##  Modules
+## Modules
 
-<details closed><summary>.</summary>
+<details closed><summary>Frontend</summary>
 
-| File                                                                                            | Summary                                         |
-| ---                                                                                             | ---                                             |
-| [turbo.json](https://github.com/nds-fsd/stackoverflow/blob/master/turbo.json)                   |  `turbo.json`          |
-| [package.json](https://github.com/nds-fsd/stackoverflow/blob/master/package.json)               |  `package.json`        |
-| [docker-compose.yaml](https://github.com/nds-fsd/stackoverflow/blob/master/docker-compose.yaml) |  `docker-compose.yaml` |
-| [package-lock.json](https://github.com/nds-fsd/stackoverflow/blob/master/package-lock.json)     |  `package-lock.json`   |
-
-</details>
-
-<details closed><summary>backend</summary>
-
-| File                                                                                      | Summary                                          |
-| ---                                                                                       | ---                                              |
-| [Dockerfile](https://github.com/nds-fsd/stackoverflow/blob/master/backend/Dockerfile)     |  `backend/Dockerfile`   |
-| [package.json](https://github.com/nds-fsd/stackoverflow/blob/master/backend/package.json) | `backend/package.json` |
+| Technology                | Summary                                                                                 |
+| ------------------------- | --------------------------------------------------------------------------------------- |
+| **React**                 | Used to develop the user interface.                                                     |
+| **Vite**                  | A build tool that offers a fast development experience for React projects.              |
+| **React Router DOM**      | Manages navigation between different sections of the application.                       |
+| **Axios**                 | Used for making HTTP requests to the backend or external services.                      |
+| **Dotenv**                | Manages environment variables during the development of the application.                |
+| **react-search-box**      | Used in the `Header.jsx` component for implementing a search box functionality.         |
 
 </details>
 
-<details closed><summary>backend.src</summary>
-
-| File                                                                                  | Summary                                          |
-| ---                                                                                   | ---                                              |
-| [index.js](https://github.com/nds-fsd/stackoverflow/blob/master/backend/src/index.js) | `backend/src/index.js` |
-
-</details>
-
-<details closed><summary>backend.src.email-templates</summary>
-
-| File                                                                                                                  | Summary                                                                  |
-| ---                                                                                                                   | ---                                                                      |
-| [commentemail.hbs](https://github.com/nds-fsd/stackoverflow/blob/master/backend/src/email-templates/commentemail.hbs) | `backend/src/email-templates/commentemail.hbs` |
-| [welcome.hbs](https://github.com/nds-fsd/stackoverflow/blob/master/backend/src/email-templates/welcome.hbs)           | `backend/src/email-templates/welcome.hbs`      |
-
-</details>
-
-<details closed><summary>backend.src.mongo.connection</summary>
-
-| File                                                                                                   | Summary                                                           |
-| ---                                                                                                    | ---                                                               |
-| [index.js](https://github.com/nds-fsd/stackoverflow/blob/master/backend/src/mongo/connection/index.js) | `backend/src/mongo/connection/index.js` |
-
-</details>
-
-<details closed><summary>backend.src.service</summary>
-
-| File                                                                                                          | Summary                                                          |
-| ---                                                                                                           | ---                                                              |
-| [email.service.js](https://github.com/nds-fsd/stackoverflow/blob/master/backend/src/service/email.service.js) | `backend/src/service/email.service.js` |
-
-</details>
-
-<details closed><summary>backend.src.controllers</summary>
-
-| File                                                                                                              | Summary                                                              |
-| ---                                                                                                               | ---                                                                  |
-| [comments.js](https://github.com/nds-fsd/stackoverflow/blob/master/backend/src/controllers/comments.js)           |   `backend/src/controllers/comments.js`      |
-| [tags.js](https://github.com/nds-fsd/stackoverflow/blob/master/backend/src/controllers/tags.js)                   |   `backend/src/controllers/tags.js`          |
-| [authenticator.js](https://github.com/nds-fsd/stackoverflow/blob/master/backend/src/controllers/authenticator.js) |   `backend/src/controllers/authenticator.js` |
-| [users.js](https://github.com/nds-fsd/stackoverflow/blob/master/backend/src/controllers/users.js)                 |   `backend/src/controllers/users.js`         |
-| [like.js](https://github.com/nds-fsd/stackoverflow/blob/master/backend/src/controllers/like.js)                   |   `backend/src/controllers/like.js`          |
-| [questions.js](https://github.com/nds-fsd/stackoverflow/blob/master/backend/src/controllers/questions.js)         |   `backend/src/controllers/questions.js`     |
-
-</details>
-
-<details closed><summary>backend.src.middlewares</summary>
-
-| File                                                                                                      | Summary                                                          |
-| ---                                                                                                       | ---                                                              |
-| [comments.js](https://github.com/nds-fsd/stackoverflow/blob/master/backend/src/middlewares/comments.js)   |   `backend/src/middlewares/comments.js`  |
-| [users.js](https://github.com/nds-fsd/stackoverflow/blob/master/backend/src/middlewares/users.js)         |   `backend/src/middlewares/users.js`     |
-| [questions.js](https://github.com/nds-fsd/stackoverflow/blob/master/backend/src/middlewares/questions.js) |   `backend/src/middlewares/questions.js` |
-
-</details>
-
-<details closed><summary>backend.src.routers</summary>
-
-| File                                                                                                          | Summary                                                          |
-| ---                                                                                                           | ---                                                              |
-| [comments.js](https://github.com/nds-fsd/stackoverflow/blob/master/backend/src/routers/comments.js)           |   `backend/src/routers/comments.js`      |
-| [tags.js](https://github.com/nds-fsd/stackoverflow/blob/master/backend/src/routers/tags.js)                   |   `backend/src/routers/tags.js`          |
-| [authenticator.js](https://github.com/nds-fsd/stackoverflow/blob/master/backend/src/routers/authenticator.js) |   `backend/src/routers/authenticator.js` |
-| [users.js](https://github.com/nds-fsd/stackoverflow/blob/master/backend/src/routers/users.js)                 |   `backend/src/routers/users.js`         |
-| [like.js](https://github.com/nds-fsd/stackoverflow/blob/master/backend/src/routers/like.js)                   |   `backend/src/routers/like.js`          |
-| [questions.js](https://github.com/nds-fsd/stackoverflow/blob/master/backend/src/routers/questions.js)         |   `backend/src/routers/questions.js`     |
-
-</details>
-
-<details closed><summary>frontend</summary>
-
-| File                                                                                           | Summary                                             |
-| ---                                                                                            | ---                                                 |
-| [index.html](https://github.com/nds-fsd/stackoverflow/blob/master/frontend/index.html)         |   `frontend/index.html`     |
-| [vite.config.js](https://github.com/nds-fsd/stackoverflow/blob/master/frontend/vite.config.js) |   `frontend/vite.config.js` |
-| [package.json](https://github.com/nds-fsd/stackoverflow/blob/master/frontend/package.json)     |   `frontend/package.json`   |
-
-</details>
-
-<details closed><summary>frontend.public</summary>
-
-| File                                                                                          | Summary                                                |
-| ---                                                                                           | ---                                                    |
-| [_redirects](https://github.com/nds-fsd/stackoverflow/blob/master/frontend/public/_redirects) |   `frontend/public/_redirects` |
-
-</details>
-
-<details closed><summary>frontend.src</summary>
-
-| File                                                                                     | Summary                                            |
-| ---                                                                                      | ---                                                |
-| [App.jsx](https://github.com/nds-fsd/stackoverflow/blob/master/frontend/src/App.jsx)     |   `frontend/src/App.jsx`   |
-| [index.css](https://github.com/nds-fsd/stackoverflow/blob/master/frontend/src/index.css) |   `frontend/src/index.css` |
-| [main.jsx](https://github.com/nds-fsd/stackoverflow/blob/master/frontend/src/main.jsx)   |   `frontend/src/main.jsx`  |
-
-</details>
-
-<details closed><summary>frontend.src.components.FilterSeachBar</summary>
-
-| File                                                                                                                                                 | Summary                                                                                       |
-| ---                                                                                                                                                  | ---                                                                                           |
-| [FilterSearchBar.module.css](https://github.com/nds-fsd/stackoverflow/blob/master/frontend/src/components/FilterSeachBar/FilterSearchBar.module.css) |   `frontend/src/components/FilterSeachBar/FilterSearchBar.module.css` |
-| [FilterSearchBar.jsx](https://github.com/nds-fsd/stackoverflow/blob/master/frontend/src/components/FilterSeachBar/FilterSearchBar.jsx)               |   `frontend/src/components/FilterSeachBar/FilterSearchBar.jsx`        |
-
-</details>
-
-<details closed><summary>frontend.src.components.HomePage</summary>
-
-| File                                                                                                               | Summary                                                                   |
-| ---                                                                                                                | ---                                                                       |
-| [HomePage.jsx](https://github.com/nds-fsd/stackoverflow/blob/master/frontend/src/components/HomePage/HomePage.jsx) |   `frontend/src/components/HomePage/HomePage.jsx` |
-
-</details>
-
-<details closed><summary>frontend.src.components.AuthModal</summary>
-
-| File                                                                                                                                | Summary                                                                            |
-| ---                                                                                                                                 | ---                                                                                |
-| [AuthModal.jsx](https://github.com/nds-fsd/stackoverflow/blob/master/frontend/src/components/AuthModal/AuthModal.jsx)               |   `frontend/src/components/AuthModal/AuthModal.jsx`        |
-| [AuthModal.module.css](https://github.com/nds-fsd/stackoverflow/blob/master/frontend/src/components/AuthModal/AuthModal.module.css) |   `frontend/src/components/AuthModal/AuthModal.module.css` |
-
-</details>
-
-<details closed><summary>frontend.src.components.HeroSection</summary>
-
-| File                                                                                                                                      | Summary                                                                                |
-| ---                                                                                                                                       | ---                                                                                    |
-| [HeroSection.jsx](https://github.com/nds-fsd/stackoverflow/blob/master/frontend/src/components/HeroSection/HeroSection.jsx)               |   `frontend/src/components/HeroSection/HeroSection.jsx`        |
-| [HeroSection.module.css](https://github.com/nds-fsd/stackoverflow/blob/master/frontend/src/components/HeroSection/HeroSection.module.css) |   `frontend/src/components/HeroSection/HeroSection.module.css` |
-
-</details>
-
-<details closed><summary>frontend.src.components.InsideQuestionPage</summary>
-
-| File                                                                                                                                                           | Summary                                                                                              |
-| ---                                                                                                                                                            | ---                                                                                                  |
-| [InsideQuestionPage.module.css](https://github.com/nds-fsd/stackoverflow/blob/master/frontend/src/components/InsideQuestionPage/InsideQuestionPage.module.css) |   `frontend/src/components/InsideQuestionPage/InsideQuestionPage.module.css` |
-| [InsideQuestionPage.jsx](https://github.com/nds-fsd/stackoverflow/blob/master/frontend/src/components/InsideQuestionPage/InsideQuestionPage.jsx)               |   `frontend/src/components/InsideQuestionPage/InsideQuestionPage.jsx`        |
-
-</details>
-
-<details closed><summary>frontend.src.components.Header</summary>
-
-| File                                                                                                                       | Summary                                                                      |
-| ---                                                                                                                        | ---                                                                          |
-| [Header.module.css](https://github.com/nds-fsd/stackoverflow/blob/master/frontend/src/components/Header/Header.module.css) |   `frontend/src/components/Header/Header.module.css` |
-| [Header.jsx](https://github.com/nds-fsd/stackoverflow/blob/master/frontend/src/components/Header/Header.jsx)               |   `frontend/src/components/Header/Header.jsx`        |
-
-</details>
-
-<details closed><summary>frontend.src.components.UserPage</summary>
-
-| File                                                                                                                             | Summary                                                                          |
-| ---                                                                                                                              | ---                                                                              |
-| [UserPage.jsx](https://github.com/nds-fsd/stackoverflow/blob/master/frontend/src/components/UserPage/UserPage.jsx)               |   `frontend/src/components/UserPage/UserPage.jsx`        |
-| [UserPage.module.css](https://github.com/nds-fsd/stackoverflow/blob/master/frontend/src/components/UserPage/UserPage.module.css) |   `frontend/src/components/UserPage/UserPage.module.css` |
-
-</details>
-
-<details closed><summary>frontend.src.components.UserPage.UserItem</summary>
-
-| File                                                                                                                                      | Summary                                                                                   |
-| ---                                                                                                                                       | ---                                                                                       |
-| [UserItem.jsx](https://github.com/nds-fsd/stackoverflow/blob/master/frontend/src/components/UserPage/UserItem/UserItem.jsx)               |   `frontend/src/components/UserPage/UserItem/UserItem.jsx`        |
-| [UserItem.module.css](https://github.com/nds-fsd/stackoverflow/blob/master/frontend/src/components/UserPage/UserItem/UserItem.module.css) |   `frontend/src/components/UserPage/UserItem/UserItem.module.css` |
-
-</details>
-
-<details closed><summary>frontend.src.components.FeaturesSection</summary>
-
-| File                                                                                                                                                  | Summary                                                                                        |
-| ---                                                                                                                                                   | ---                                                                                            |
-| [FeaturesSection.module.css](https://github.com/nds-fsd/stackoverflow/blob/master/frontend/src/components/FeaturesSection/FeaturesSection.module.css) |   `frontend/src/components/FeaturesSection/FeaturesSection.module.css` |
-| [FeaturesSection.jsx](https://github.com/nds-fsd/stackoverflow/blob/master/frontend/src/components/FeaturesSection/FeaturesSection.jsx)               |   `frontend/src/components/FeaturesSection/FeaturesSection.jsx`        |
-
-</details>
-
-<details closed><summary>frontend.src.components.UserProfilePage</summary>
-
-| File                                                                                                                                                  | Summary                                                                                        |
-| ---                                                                                                                                                   | ---                                                                                            |
-| [UserProfilePage.module.css](https://github.com/nds-fsd/stackoverflow/blob/master/frontend/src/components/UserProfilePage/UserProfilePage.module.css) |   `frontend/src/components/UserProfilePage/UserProfilePage.module.css` |
-| [UserProfilePage.jsx](https://github.com/nds-fsd/stackoverflow/blob/master/frontend/src/components/UserProfilePage/UserProfilePage.jsx)               |   `frontend/src/components/UserProfilePage/UserProfilePage.jsx`        |
-
-</details>
-
-<details closed><summary>frontend.src.components.QuestionForm</summary>
-
-| File                                                                                                                                         | Summary                                                                                  |
-| ---                                                                                                                                          | ---                                                                                      |
-| [QuestionForm.module.css](https://github.com/nds-fsd/stackoverflow/blob/master/frontend/src/components/QuestionForm/QuestionForm.module.css) |   `frontend/src/components/QuestionForm/QuestionForm.module.css` |
-| [QuestionForm.jsx](https://github.com/nds-fsd/stackoverflow/blob/master/frontend/src/components/QuestionForm/QuestionForm.jsx)               |   `frontend/src/components/QuestionForm/QuestionForm.jsx`        |
-
-</details>
-
-<details closed><summary>frontend.src.components.TagPage</summary>
-
-| File                                                                                                                          | Summary                                                                        |
-| ---                                                                                                                           | ---                                                                            |
-| [TagPage.jsx](https://github.com/nds-fsd/stackoverflow/blob/master/frontend/src/components/TagPage/TagPage.jsx)               |   `frontend/src/components/TagPage/TagPage.jsx`        |
-| [TagPage.module.css](https://github.com/nds-fsd/stackoverflow/blob/master/frontend/src/components/TagPage/TagPage.module.css) |   `frontend/src/components/TagPage/TagPage.module.css` |
-
-</details>
-
-<details closed><summary>frontend.src.components.TagPage.TagItem</summary>
-
-| File                                                                                                                                  | Summary                                                                                |
-| ---                                                                                                                                   | ---                                                                                    |
-| [TagItem.jsx](https://github.com/nds-fsd/stackoverflow/blob/master/frontend/src/components/TagPage/TagItem/TagItem.jsx)               |   `frontend/src/components/TagPage/TagItem/TagItem.jsx`        |
-| [TagItem.module.css](https://github.com/nds-fsd/stackoverflow/blob/master/frontend/src/components/TagPage/TagItem/TagItem.module.css) |   `frontend/src/components/TagPage/TagItem/TagItem.module.css` |
-
-</details>
-
-<details closed><summary>frontend.src.components.QuestionPage</summary>
-
-| File                                                                                                                                         | Summary                                                                                  |
-| ---                                                                                                                                          | ---                                                                                      |
-| [QuestionPage.module.css](https://github.com/nds-fsd/stackoverflow/blob/master/frontend/src/components/QuestionPage/QuestionPage.module.css) |   `frontend/src/components/QuestionPage/QuestionPage.module.css` |
-| [QuestionPage.jsx](https://github.com/nds-fsd/stackoverflow/blob/master/frontend/src/components/QuestionPage/QuestionPage.jsx)               |   `frontend/src/components/QuestionPage/QuestionPage.jsx`        |
-
-</details>
-
-<details closed><summary>frontend.src.components.Footer</summary>
-
-| File                                                                                                                       | Summary                                                                      |
-| ---                                                                                                                        | ---                                                                          |
-| [Footer.module.css](https://github.com/nds-fsd/stackoverflow/blob/master/frontend/src/components/Footer/Footer.module.css) |   `frontend/src/components/Footer/Footer.module.css` |
-| [Footer.jsx](https://github.com/nds-fsd/stackoverflow/blob/master/frontend/src/components/Footer/Footer.jsx)               |   `frontend/src/components/Footer/Footer.jsx`        |
-
-</details>
-
-<details closed><summary>frontend.src._utils</summary>
-
-| File                                                                                                                    | Summary                                                               |
-| ---                                                                                                                     | ---                                                                   |
-| [api.js](https://github.com/nds-fsd/stackoverflow/blob/master/frontend/src/_utils/api.js)                               |   `frontend/src/_utils/api.js`                |
-| [localStorage.utils.js](https://github.com/nds-fsd/stackoverflow/blob/master/frontend/src/_utils/localStorage.utils.js) |   `frontend/src/_utils/localStorage.utils.js` |
-
-</details>
-
-<details closed><summary>.github.workflows</summary>
-
-| File                                                                                                                | Summary                                                            |
-| ---                                                                                                                 | ---                                                                |
-| [prod-deployment.yaml](https://github.com/nds-fsd/stackoverflow/blob/master/.github/workflows/prod-deployment.yaml) | `.github/workflows/prod-deployment.yaml` |
-
-</details>
-
-<details closed><summary>emails.emails</summary>
-
-| File                                                                                                    | Summary                                                    |
-| ---                                                                                                     | ---                                                        |
-| [commentemail.jsx](https://github.com/nds-fsd/stackoverflow/blob/master/emails/emails/commentemail.jsx) | `emails/emails/commentemail.jsx` |
-| [welcome.jsx](https://github.com/nds-fsd/stackoverflow/blob/master/emails/emails/welcome.jsx)           | `emails/emails/welcome.jsx`      |
+<details closed><summary>Backend</summary>
+
+| Technology                | Summary                                                                                 |
+| ------------------------- | --------------------------------------------------------------------------------------- |
+| **Express**               | A web application framework for Node.js that simplifies the creation of web servers.    |
+| **Mongoose**              | Provides a schema-based solution for modeling application data with MongoDB.            |
+| **Bcryptjs**              | Used to encrypt passwords before storing them in the database.                          |
+| **JWT (jsonwebtoken)**    | Allows for secure authentication and information transmission between parties as a JSON object. |
+| **Axios**                 | Also used in the backend to make HTTP requests to external services.                    |
+| **Cors**                  | Enables Cross-Origin Resource Sharing in the Express server.                            |
+| **Dotenv**                | Manages environment variables in the Express server.                                    |
+| **Nodemon**               | Automatically restarts the Node.js server when file changes are detected during development. |
+| **Handlebars**            | A templating engine that helps build semantic HTML structures with dynamic data for sending emails or generating other HTML views. |
 
 </details>
 
 ---
 
-##  Getting Started
+## Getting Started
 
-***Requirements***
+### Installation
 
 Ensure you have the following dependencies installed on your system:
 
-* **JavaScript**: `version x.y.z`
+- **Node.js**: Visit [Node.js](https://nodejs.org/) and download the LTS version for your operating system. This installer includes npm (Node Package Manager).
+- **npm**: Installed automatically with Node.js. Verify the installation by running `npm -v` in your terminal.
+- **Git**: Visit [Git](https://git-scm.com/) to download the version for your operating system. Git Bash is recommended for Windows users.
 
-###  Installation
+### Configuration of Environment Variables
 
-1. Clone the stackoverflow repository:
+To ensure the proper functioning of your project in a local development environment, it is essential to configure environment variables. These variables facilitate secure communication with databases and external services without including sensitive information directly in the code. You will need to create `.env` files in the appropriate directories for the frontend and backend, allowing you to handle important configurations securely and flexibly.
+
+**Backend `.env`:**
 
 ```sh
-git clone https://github.com/nds-fsd/stackoverflow
+MONGO_URL=<your_mongodb_uri>
+JWT_SECRET=<your_jwt_secret>
 ```
 
-2. Change to the project directory:
+**Global `.env`:**
 
 ```sh
+REACT_APP_BACKEND_URL=<your_backend_url>
+```
+
+
+### Running Devvit 
+
+Clone the repository and install the dependencies:
+
+```sh
+git clone https://github.com/nds-fsd/stackoverflow.git
 cd stackoverflow
-```
-
-3. Install the dependencies:
-
-```sh
 npm install
 ```
 
-###  Running stackoverflow
-
-Use the following command to run stackoverflow:
-
+Run the application
 ```sh
-node app.js
+npm run dev
 ```
-
-###  Tests
-
-To execute tests, run:
-
-```sh
-npm test
-```
+This command will start both the backend server and the frontend development server.
 
 ---
 
-##  Project Roadmap
+## Further Development and Improvements
 
-- [X] `► INSERT-TASK-1`
-- [ ] `► INSERT-TASK-2`
-- [ ] `► ...`
+- [ ] Allow editing of questions and comments
+- [ ] Implement feature of voting
+- [ ] Improve the inputs for tags when submitting a question
+- [ ] Implement comprehensive testing
+- [ ] Refine the user reputation system to ensure more accurate and fair calculations based on user activity and contribution quality, and upvotes
+- [ ] Enhance security by implementing more secure ID handling methods, such as using UUIDs or other non-sequential identifiers to prevent enumeration attacks and improve overall data security
 
 ---
 
@@ -537,13 +346,13 @@ npm test
 
 Contributions are welcome! Here are several ways you can contribute:
 
-- **[Submit Pull Requests](https://github.com/nds-fsd/stackoverflow/blob/main/CONTRIBUTING.md)**: Review open PRs, and submit your own PRs.
-- **[Join the Discussions](https://github.com/nds-fsd/stackoverflow/discussions)**: Share your insights, provide feedback, or ask questions.
+- **[Submit Pull Requests](https://github.com/nds-fsd/stackoverflow/pulls)**: Review open PRs, and submit your own PRs.
 - **[Report Issues](https://github.com/nds-fsd/stackoverflow/issues)**: Submit bugs found or log feature requests for Stackoverflow.
 
 <details closed>
     <summary>Contributing Guidelines</summary>
 
+	
 1. **Fork the Repository**: Start by forking the project repository to your GitHub account.
 2. **Clone Locally**: Clone the forked repository to your local machine using a Git client.
    ```sh
@@ -568,12 +377,3 @@ Once your PR is reviewed and approved, it will be merged into the main branch.
 
 </details>
 
----
-
-##  Acknowledgments
-
-- List any resources, contributors, inspiration, etc. here.
-
-[**Return**](#-quick-links)
-
----
