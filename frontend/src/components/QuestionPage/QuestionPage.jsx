@@ -7,7 +7,7 @@ import deleteIcon from './deleteIcon.png'; // Ensure the correct import path
 import heartIcon from './heart.png'; // Ensure the correct import path
 import profilePic from './profilePic.png'; // Import the profile picture
 import { getUserIdFromToken } from '../../_utils/localStorage.utils'; // Corrected path to your local storage utilities
-import { api } from '../../_utils/api.js';
+import { api } from '../../_utils/api'; // Ensure this path is correct Correct the import path
 
 const QuestionPage = () => {
   const navigate = useNavigate();
@@ -166,7 +166,6 @@ const QuestionPage = () => {
 
   if (loading && page === 1) {
     return <div className={styles.loadingBackground}>Loading...</div>;
-    /*aqui meter el spinner en vez de Loading...*/
   }
 
   if (error) {
@@ -251,7 +250,7 @@ const QuestionPage = () => {
                 <span>Author: {question.author ? question.author.username : 'Unknown'}</span>
               </div>
               <br></br>
-              <h2>{question.title}</h2>
+              <h1>{question.title}</h1>
               <p>{question.body}</p>
               <ul>
                 {question.tags && question.tags.map((tagId) => <li key={tagId}>{tagIdToNameMap[tagId] || tagId}</li>)}
