@@ -39,7 +39,7 @@
 > - [Modules](#modules)
 > - [Getting Started](#getting-started)
 >   - [Installation](#installation)
->   - [Running stackoverflow](#running-stackoverflow)
+>   - [Running Devvit](#running-devvit)
 > - [Further Development and Improvements](#further-development-and-improvements)
 > - [Contributors](#contributors)
 > - [Contributing](#contributing)
@@ -57,7 +57,7 @@ Our frontend is deployed using Netlify and can be accessed via [https://devvit.n
 ## Features
 
 - **User Authentication**: Secure registration and login system to manage user accounts and protect user data.
-- **CRUD Operations**: Full CRUD (Create, Read, Update, Delete) functionality for questions, comments, and tags, allowing users to interact with the platform efficiently.
+- **Question and Comment Operations**: Users can create, read, and delete questions and comments.
 - **Like and Unlike**: Users can like and unlike comments and questions, helping to highlight valuable contributions and manage content quality.
 - **Email Notification System**: Managed by Handlebars, our email notification system sends emails to users when they sign up or when someone comments on their questions, ensuring they stay updated on important activities.
 - **Reputation Management**: Tracks likes on user comments to update user reputations, encouraging active and helpful participation.
@@ -311,34 +311,16 @@ Clone the repository and install the dependencies:
 git clone https://github.com/nds-fsd/stackoverflow.git
 cd stackoverflow
 npm install
-
-1. Clone the devvit repository:
-
-```sh
-git clone https://github.com/nds-fsd/stackoverflow
 ```
 
-2. Change to the project directory:
-
-```sh
-cd stackoverflow
-```
-
-3. Install the dependencies:
-
-```sh
-npm install
-```
-
-###  Running stackoverflow
-
+Run the application
 ```sh
 npm run dev
 ```
 This command will start both the backend server and the frontend development server.
 
-
 ---
+
 ## Further Development and Improvements
 
 - [ ] Allow editing of questions and comments
