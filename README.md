@@ -303,7 +303,7 @@ REACT_APP_BACKEND_URL=<your_backend_url>
 ```
 
 
-#### Running Devvit 
+### Running Devvit 
 
 Clone the repository and install the dependencies:
 
