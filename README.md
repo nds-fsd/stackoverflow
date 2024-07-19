@@ -68,7 +68,7 @@ Our frontend is deployed using Netlify and can be accessed via [https://devvit.n
 ## Use Case Diagram
 
 <p align="center">
-  <img src="frontend/public/assets/diagrams/use-case-diagram.jpeg" width="50%" />
+  <img src="frontend/public/assets/diagrams/use-case-diagram.jpeg" width="45%" />
 </p>
 
 The use case diagram illustrates the various interactions between the users and the DEVVIT system. 
@@ -84,7 +84,7 @@ The use case diagram illustrates the various interactions between the users and 
 ## Architecture Flow
 
 <p align="center">
-  <img src="frontend/public/assets/diagrams/architecture-flow-diagram.jpeg" width="45%" />
+  <img src="frontend/public/assets/diagrams/architecture-flow-diagram.jpeg" width="60%" />
 </p>
 
 
