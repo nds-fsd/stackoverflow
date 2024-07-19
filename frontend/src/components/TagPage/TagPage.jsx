@@ -11,15 +11,19 @@ const TagPage = () => {
   const [filteredTags, setFilteredTags] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [sortCriteria, setSortCriteria] = useState('popular');
+  const [sortCriteria, setSortCriteria] = useState('popular'); // Default sorting criteria
 
   useEffect(() => {
     const fetchTags = async () => {
       try {
         const response = await api().get('/tags/popular-tags');
         const filteredTags = response.data.filter((tag) => tag.latestQuestionDate !== null);
-        setTags(filteredTags);
-        setFilteredTags(filteredTags); // Initially show all filtered tags
+
+        // Ensure default sorting by popularity
+        const sortedTags = filteredTags.sort((a, b) => b.popularity - a.popularity);
+
+        setTags(sortedTags);
+        setFilteredTags(sortedTags); // Initially show all filtered tags
       } catch (error) {
         setError(error.message);
       } finally {
