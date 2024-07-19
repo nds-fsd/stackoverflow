@@ -1,12 +1,12 @@
 <p align="center">
   <img src="frontend/public/assets/img/logo.png" width="200" />
 </p>
+<h2 align="center">DEVVIT, A STACKOVERFLOW CLONE</h2>
 <p align="center">
-    <h2 align="center">DEVVIT, A STACKOVERFLOW CLONE</h2>
-</p>
-<p align="center">
-	<img src="https://img.shields.io/github/languages/top/nds-fsd/stackoverflow?style=flat&color=0080ff" alt="repo-top-language">
-	<img src="https://img.shields.io/github/languages/count/nds-fsd/stackoverflow?style=flat&color=0080ff" alt="repo-language-count">
+  <img src="https://img.shields.io/github/languages/top/nds-fsd/stackoverflow?style=flat&color=0080ff" alt="repo-top-language">
+<a href="https://makeapullrequest.com/">
+    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square" alt="PRs Welcome">
+  </a>
 </p>
 <p align="center">
 		<em>Developed with the software and tools below:</em>
@@ -50,7 +50,7 @@
 
 DEVVIT is a StackOverflow clone that provides a platform for developers to ask questions, share knowledge, and connect with the community. Users can register, log in, ask questions, write comments, and like content. The system manages user authentication, tracks likes, and updates reputations accordingly.
 
-Our website is deployed using Netlify and can be accessed via [https://devvit.netlify.app/](https://devvit.netlify.app/).
+Our frontend is deployed using Netlify and can be accessed via [https://devvit.netlify.app/](https://devvit.netlify.app/). The backend services are hosted on Koyeb, ensuring scalability and reliability.
 
 ---
 
@@ -60,7 +60,7 @@ Our website is deployed using Netlify and can be accessed via [https://devvit.ne
 - **CRUD Operations**: Full CRUD (Create, Read, Update, Delete) functionality for questions, comments, and tags, allowing users to interact with the platform efficiently.
 - **Like and Unlike**: Users can like and unlike comments and questions, helping to highlight valuable contributions and manage content quality.
 - **Email Notification System**: Managed by Handlebars, our email notification system sends emails to users when they sign up or when someone comments on their questions, ensuring they stay updated on important activities.
-- **Reputation Management**: Tracks likes on user comments and questions to update user reputations, encouraging active and helpful participation.
+- **Reputation Management**: Tracks likes on user comments to update user reputations, encouraging active and helpful participation.
 
 
 ---
