@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { Schema, model } = require('mongoose');
+const { Schema, model } = mongoose;
 
 const questionSchema = new Schema({
   title: { type: String, required: true },
@@ -12,7 +12,7 @@ const questionSchema = new Schema({
   deleted_at: { type: Date },
   votes: { type: Number, default: 0 },
   views: { type: Number, default: 0 },
-  likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }], // Added likes field
+  likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 });
 
 questionSchema.pre('save', function (next) {

@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const Like = require('../mongo/data/schemas/like');
+const Comment = require('../mongo/data/schemas/comment');
+const User = require('../mongo/data/schemas/user');
 
 const createLike = async (req, res) => {
   const { userId, commentId } = req.body;
@@ -15,8 +17,14 @@ const createLike = async (req, res) => {
     }
 
     const newLike = new Like({ userId, commentId });
-
     await newLike.save();
+
+    // Increment the user's reputation by 1
+    const comment = await Comment.findById(commentId);
+    if (comment) {
+      await User.findByIdAndUpdate(comment.userId, { $inc: { reputation: 1 } });
+    }
+
     res.status(201).json(newLike);
   } catch (error) {
     console.error('Error saving like:', error);
@@ -35,6 +43,12 @@ const deleteLike = async (req, res) => {
     const existingLike = await Like.findOneAndDelete({ userId, commentId });
     if (!existingLike) {
       return res.status(404).json({ message: 'Like not found' });
+    }
+
+    // Decrement the user's reputation by 1
+    const comment = await Comment.findById(commentId);
+    if (comment) {
+      await User.findByIdAndUpdate(comment.userId, { $inc: { reputation: -1 } });
     }
 
     res.status(200).json({ message: 'Like deleted successfully' });

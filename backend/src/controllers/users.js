@@ -1,6 +1,7 @@
 const Comment = require('../mongo/data/schemas/comment');
 const Like = require('../mongo/data/schemas/like');
 const User = require('../mongo/data/schemas/user');
+const Question = require('../mongo/data/schemas/question');
 
 const getUserCommentsCount = async (req, res) => {
   try {
@@ -28,7 +29,33 @@ const getUsers = async (req, res) => {
   try {
     const queryStrings = req.query || {};
     const allUsers = await User.find(queryStrings).where('deleted_at').equals(null);
-    res.json(allUsers);
+
+    // Get top tags for each user
+    const usersWithTags = await Promise.all(
+      allUsers.map(async (user) => {
+        const questions = await Question.find({ author: user._id }).populate('tags');
+        const tagCount = {};
+        questions.forEach((question) => {
+          if (question.tags) {
+            question.tags.forEach((tag) => {
+              tagCount[tag.name] = (tagCount[tag.name] || 0) + 1;
+            });
+          }
+        });
+
+        const topTags = Object.entries(tagCount)
+          .sort(([, a], [, b]) => b - a)
+          .slice(0, 2)
+          .map(([name]) => name);
+
+        return {
+          ...user.toObject(),
+          topTags,
+        };
+      }),
+    );
+
+    res.json(usersWithTags);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error fetching users', error });

@@ -12,11 +12,20 @@ const UserItem = ({ user }) => {
         <Link to={`/users/${user.username}`} className={styles.userLink}>
           {user.username}
         </Link>
-        <p>{user.reputation}</p>
+        <div className={styles.reputation}>
+          <img src='/assets/icons/reputation.svg' alt='Reputation Icon' className={styles.reputationIcon} />
+          <p>{user.reputation}</p>
+        </div>
       </div>
-      <div className={styles.tagsPlaceholder}>
-        <p>Tags Placeholder</p>
-      </div>
+      {user.topTags && user.topTags.length > 0 && (
+        <div className={styles.tagsContainer}>
+          {user.topTags.map((tag, index) => (
+            <span key={index} className={styles.tag}>
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

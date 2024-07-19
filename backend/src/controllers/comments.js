@@ -11,8 +11,6 @@ const createComment = async (req, res) => {
     return res.status(400).json({ message: 'Invalid questionId or userId' });
   }
 
-  console.log('Received request body:', req.body);
-
   try {
     const newComment = new Comment({
       questionId,
@@ -20,10 +18,7 @@ const createComment = async (req, res) => {
       content,
     });
 
-    console.log('Attempting to save new comment:', newComment);
-
     await newComment.save();
-    console.log('Comment saved successfully', newComment);
 
     // Optionally, update the question to include this comment
     await Question.findByIdAndUpdate(questionId, { $push: { comments: newComment._id } });

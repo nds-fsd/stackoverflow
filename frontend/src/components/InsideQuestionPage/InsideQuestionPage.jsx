@@ -237,13 +237,8 @@ const InsideQuestionPage = () => {
     navigate('/questions/' + questionId);
   };
 
-  const handleProfileClick = (username) => {
-    setNavigating(true);
-    navigate(`/users/${username}`);
-  };
-
-  if (loading || navigating) {
-    return <div className={styles.loadingBackground}>Loading...</div>;
+  if (loading) {
+    return <div>Loading...</div>;
   }
 
   if (error) {
@@ -289,16 +284,7 @@ const InsideQuestionPage = () => {
             <>
               <div className={styles.questionBubble}>
                 <div className={styles.questionAuthor}>
-                  <img
-                    src={profilePic}
-                    alt='Profile'
-                    className={styles.profilePic}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleProfileClick(question.author.username);
-                    }}
-                    style={{ cursor: 'pointer' }}
-                  />
+                  <img src={profilePic} alt='Profile' className={styles.profilePic} />
                   <span>
                     Asked by: {question.author ? question.author.username : 'Unknown'} on{' '}
                     {new Date(question.created_at).toLocaleDateString()}
